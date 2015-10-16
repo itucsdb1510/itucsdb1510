@@ -3,6 +3,7 @@ import os
 
 from flask import Flask
 from flask import render_template
+from pip._vendor.requests.packages.urllib3.util.timeout import current_time
 
 
 app = Flask(__name__)
@@ -12,6 +13,11 @@ app = Flask(__name__)
 def home():
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
+
+@app.route('/teams')
+def teams_page():
+    now = datetime.datetime.now();
+    return render_template('teams.html', current_time=now.ctime())
 
 
 if __name__ == '__main__':

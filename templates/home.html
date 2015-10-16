@@ -2,15 +2,9 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <title>Home</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
-  </head>
-  <body>
-  	<h1>Hello from esin</h1>
-    <h1>Hello,Zehra!</h1>
-
-    <footer>
-      <div id="datetime">{{ current_time }}</div>
-    </footer>
-  </body>
-</html>
+  	{% extends "layout.html" %}
+  	{% block title %}Home{% endblock %}
+  	{% block content %}
+	<h4>Hello form Esin!</h4>
+	<h1>Hello, Zehra !</h1>
+{% endblock %}

@@ -15,7 +15,6 @@ a {
   text-decoration: underline;
 }
 
-div#datetime {
-  font-size: 80%;
-  text-align: right;
+nav li{
+	display: inline; margin-right: 1em; font-size: 80%;
 }
