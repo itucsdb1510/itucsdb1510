@@ -19,6 +19,10 @@ def teams_page():
     now = datetime.datetime.now();
     return render_template('teams.html', current_time=now.ctime())
 
+@app.route('/topics')
+def topics_page():
+    now = datetime.datetime.now();
+    return render_template('topics.html', current_time=now.ctime())
 
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))

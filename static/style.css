@@ -13,8 +13,11 @@ h1, h2, h3, h4 {
 a {
   color: #6F6F6F;
   text-decoration: underline;
+  font-size: 12pt;
 }
 
 nav li{
-	display: inline; margin-right: 1em; font-size: 80%;
+	display: inline;
+	margin-right: 1em;
+	font-size: 80%;
 }
