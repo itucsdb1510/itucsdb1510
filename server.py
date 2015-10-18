@@ -34,6 +34,12 @@ def scores_page():
     now = datetime.datetime.now();
     return render_template('scores.html', current_time=now.ctime())
 
+@app.route('/login')
+def login_page():
+    now = datetime.datetime.now();
+    return render_template('login.html', current_time=now.ctime())
+
+
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))
     app.run(host='0.0.0.0', port=int(PORT))
