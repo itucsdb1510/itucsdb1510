@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Login Page</title>
+
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='loginstyle.css') }}" />
+
+
+<header>
+<h1>Welcome to login page!</h1>
+</header>
+
+<nav>
+<a href="{{ url_for('home') }}">Get back to home page</a><br><br>
+
+Follow us:<br>
+<a href="https://www.facebook.com/">Facebook</a><br>
+<a href="https://www.twittercom/">Twitter</a><br>
+
+</nav>
+
+<div class="left1">
+<center>
+<form >
+  Login with your email:<br>
+  <input type="text" name="txtemail">
+  <br>
+  Password:<br>
+  <input type="text" name="txtpassword" >
+  <br><br>
+  <bord>
+  <input type="Submit" value="Login"></bord><br><br>
+</form>
+</center>
+</div>
+
+
+<div class="left2">
+<form >
+  <b>	If this is your first visit...</b><br>
+  <center>
+
+  Name: <br>
+  <input type="text" name="txtisim">  <br>
+  Surname: <br>
+  <input type="text" name="txtsoyisim"> <br>
+  Email:<br>
+  <input type="text" name="txtposta">
+  <br>
+  Password:<br>
+  <input type="text" name="txtsifre" >
+  <br><br>
+  <bord>
+  <input type="Submit" value="Register"></bord>
+</form>
+</div>
+
+<footer>
+Copyright © bicycling.com
+</footer>
