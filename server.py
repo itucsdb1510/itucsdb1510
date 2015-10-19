@@ -19,15 +19,41 @@ def teams_page():
     now = datetime.datetime.now();
     return render_template('teams.html', current_time=now.ctime())
 
+@app.route('/races')
+def races_page():
+    now = datetime.datetime.now();
+    return render_template('race.html', current_time=now.ctime())
+
+@app.route('/activity')
+def activity_page():
+    now = datetime.datetime.now();
+    return render_template('activity.html', current_time=now.ctime())
+
+@app.route('/racecalendar')
+def racecalendar_page():
+    now = datetime.datetime.now();
+    return render_template('racecalendar.html', current_time=now.ctime())
+
 @app.route('/topics')
 def topics_page():
     now = datetime.datetime.now();
     return render_template('topics.html', current_time=now.ctime())
 
+@app.route('/trails')
+def trails_page():
+    now = datetime.datetime.now();
+    return render_template('trails.html', current_time=now.ctime())
+
+@app.route('/scores')
+def scores_page():
+    now = datetime.datetime.now();
+    return render_template('scores.html', current_time=now.ctime())
+
 @app.route('/login')
 def login_page():
     now = datetime.datetime.now();
     return render_template('login.html', current_time=now.ctime())
+
 
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))
