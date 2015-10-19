@@ -4,24 +4,50 @@
 <meta charset="UTF-8">
 
 <title>Login Page</title>
-
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+	
+	
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='loginstyle.css') }}" />
+	
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
 
 
-<header>
-<h1>Welcome to login page!</h1>
-</header>
+<body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <p class="navbar-text">BICYLING.com</p>
+    </div>
+     <div>
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        </ul>
+    </div>
+  </div>
+</nav>
 
-<nav>
+
+
+<nave>
 <a href="{{ url_for('home') }}">Get back to home page</a><br><br>
 
 Follow us:<br>
 <a href="https://www.facebook.com/">Facebook</a><br>
+<div class="navbar-text pull-right"></div>
 <a href="https://www.twittercom/">Twitter</a><br>
+</nave>
 
-</nav>
 
+<arkaplan>
 <div class="left1">
 <center>
 <form >
@@ -38,25 +64,9 @@ Follow us:<br>
 </div>
 
 
-<div class="left2">
-<form >
-  <b>	If this is your first visit...</b><br>
-  <center>
 
-  Name: <br>
-  <input type="text" name="txtisim">  <br>
-  Surname: <br>
-  <input type="text" name="txtsoyisim"> <br>
-  Email:<br>
-  <input type="text" name="txtposta">
-  <br>
-  Password:<br>
-  <input type="text" name="txtsifre" >
-  <br><br>
-  <bord>
-  <input type="Submit" value="Register"></bord>
-</form>
-</div>
+</arkaplan>
+</body>
 
 <footer>
 Copyright © bicycling.com

@@ -1,18 +1,57 @@
+arkaplan{
+background-image: url("static/tema.jpeg");
+}
+
+.navbar-default {
+    background-color: #660033;
+    border-color: #E7E7E7;
+    font-weight: bold
+}
 
 header {
-    background-color:#C0C0C0;
+    background-color:black;
     color:purple;
     text-align:center;
     padding:5px;
 }
-nav {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:430px;
-    width:250px;
-    float:left;
-    padding:5px;
+
+body {
+  background-color: black;
+  color: #6F6F6F;
+  font-family: 'Droid Sans', 'Helvetica', 'sans';
+  font-size: 14pt;
+  margin: 2ex 2em;
 }
+
+h1, h2, h3, h4 {
+  color: #E9601A;
+}
+
+a {
+  color: #6F6F6F;
+  text-decoration: underline;
+  font-size: 12pt;
+}
+
+nav li{
+	display: inline;
+	margin-right: 1em;
+	font-size: 80%;
+}
+
+
+
+nave {
+    line-height:30px;
+    background-color:#FF9966;
+    height:430px;
+    width:200px;
+    float:left;
+    font-weight: bold;
+    padding:9px;
+}
+
+
 
 footer {
     background-color:black;
@@ -23,34 +62,20 @@ footer {
 }
 
 .left1{
-   position: relative;
+	 position: relative;
    top: 30px;
    float: left;
-   left: 0.50%;
-   height:150px;
-   width: 33.00%;
-     opacity: 0.85;
-   background-color:#F37474;
-
+   left: 5%;
+   height:200px;
+   width: 35.00%;
+   opacity: 0.80;
+ 
+    background-color:#FFCC99;
+   font-family: 'Droid Sans', 'Helvetica', 'sans';
+   font-size: 14pt;
+   margin: 2ex 2em;
 }
 
-.left2{
-   position: relative;
-   top: 30px;
-   float: left;
-   height:300px;
-   left: 1.50%;
-   width: 33.00%;
-     opacity: 0.85;
-    background-color:#F374CD
-
-}
-
-nav li{
-	display: inline;
-	margin-right: 1em;
-	font-size: 80%;
-}
 bord {
 	    border: 5px solid #008080;
 }
