@@ -19,6 +19,21 @@ def teams_page():
     now = datetime.datetime.now();
     return render_template('teams.html', current_time=now.ctime())
 
+@app.route('/races')
+def races_page():
+    now = datetime.datetime.now();
+    return render_template('race.html', current_time=now.ctime())
+
+@app.route('/activity')
+def activity_page():
+    now = datetime.datetime.now();
+    return render_template('activity.html', current_time=now.ctime())
+
+@app.route('/racecalendar')
+def racecalendar_page():
+    now = datetime.datetime.now();
+    return render_template('racecalendar.html', current_time=now.ctime())
+
 @app.route('/topics')
 def topics_page():
     now = datetime.datetime.now();
