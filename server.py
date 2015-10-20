@@ -49,6 +49,11 @@ def scores_page():
     now = datetime.datetime.now();
     return render_template('scores.html', current_time=now.ctime())
 
+@app.route('/message')
+def message_page():
+    now = datetime.datetime.now();
+    return render_template('message.html', current_time=now.ctime())
+
 @app.route('/login')
 def login_page():
     now = datetime.datetime.now();
