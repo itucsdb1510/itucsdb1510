@@ -54,7 +54,11 @@ def message_page():
     now = datetime.datetime.now();
     return render_template('message.html', current_time=now.ctime())
 
-@app.route('/news')
+@app.route('/salescommercials')
+def salescommercials_page():
+    now = datetime.datetime.now();
+    return render_template('salescommercials.html', current_time=now.ctime())
+
 def news_page():
     now = datetime.datetime.now();
     return render_template('news.html', current_time=now.ctime())
