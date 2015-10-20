@@ -31,6 +31,7 @@ a {
   color: #6F6F6F;
   text-decoration: underline;
   font-size: 12pt;
+  text-align: right;
 }
 
 nav li{
@@ -69,7 +70,7 @@ footer {
    height:200px;
    width: 35.00%;
    opacity: 0.80;
- 
+
     background-color:#FFCC99;
    font-family: 'Droid Sans', 'Helvetica', 'sans';
    font-size: 14pt;
@@ -78,4 +79,73 @@ footer {
 
 bord {
 	    border: 5px solid #008080;
+}
+
+.mobile-social-share {
+    background: none repeat scroll 0 0 #EEEEEE;
+    display: block !important;
+    min-height: 70px !important;
+    margin: 50px 0;
+}
+
+body {
+    color: #777777;
+    font-family: "Lato","Helvetica Neue","Arial","Helvetica",sans-serif;
+    font-size: 13px;
+    line-height: 19.5px;
+}
+
+
+@import url(http://fonts.googleapis.com/css?family=Raleway+Dots);
+@import url(http://fonts.googleapis.com/css?family=Advent+Pro:400,200,700);
+@import url(http://weloveiconfonts.com/api/?family=entypo);
+/* entypo */
+[class*="entypo-"]:before {
+  font-family: 'entypo', sans-serif;
+}
+
+
+section #services {
+  text-align: left;
+  transform: translatez(0);
+}
+
+section #services li {
+  width: 30px;
+  height: 30px;
+  margin: 20px;
+
+}
+section #services li div {
+  width: 1px;
+  height: 1px;
+  color: #74d4b3;
+  font-size: 3.4em;
+  text-align: right;
+  line-height: 30px;
+  background-color: #fff;
+  transition: all 0.5s ease;
+}
+section #services li div:hover {
+  transform: rotate(360deg);
+  border-radius: 100px;
+}
+section #services li span {
+  width: 120px;
+  height: 20px;
+  display: block;
+  padding: 15px 0px;
+  color: #fff;
+  font-family: 'Advent Pro', sans-serif;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  text-align: right;
+}
+
+hr{
+	line-height: 10px;
+}
+
+t14{
+font-size:16p;
 }
