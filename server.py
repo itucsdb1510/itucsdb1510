@@ -69,6 +69,11 @@ def login_page():
     now = datetime.datetime.now();
     return render_template('login.html', current_time=now.ctime())
 
+@app.route('/signup')
+def signup_page():
+    now = datetime.datetime.now();
+    return render_template('signup.html', current_time=now.ctime())
+
 
 if __name__ == '__main__':
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))

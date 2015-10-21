@@ -40,8 +40,6 @@ nav li{
 	font-size: 80%;
 }
 
-
-
 nave {
     line-height:30px;
     background-color:#FF9966;
@@ -52,8 +50,6 @@ nave {
     padding:9px;
 }
 
-
-
 footer {
     background-color:black;
     color:white;
@@ -62,18 +58,28 @@ footer {
     padding:5px;
 }
 
+zaman {
+	width: 120px;
+    height:75px;
+  	position:absolute;
+  	left:1250px;
+    font-weight: bold;
+
+}
+
 .left1{
-	 position: relative;
+	position: relative;
+	 font-weight: bold;
    top: 30px;
    float: left;
-   left: 5%;
+   left: 15%;
    height:200px;
    width: 35.00%;
    opacity: 0.80;
 
-    background-color:#FFCC99;
+   background-color:#FFCC99;
    font-family: 'Droid Sans', 'Helvetica', 'sans';
-   font-size: 14pt;
+   font-size: 12pt;
    margin: 2ex 2em;
 }
 
@@ -142,9 +148,13 @@ section #services li span {
   text-align: right;
 }
 
+
 hr{
 	line-height: 10px;
+
 }
+ und{
+  text-decoration: underline;}
 
 t14{
 font-size:16p;

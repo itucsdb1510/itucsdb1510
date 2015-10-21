@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>Login Page</title>
+<title>Sign-Up </title>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <script
@@ -12,12 +12,6 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
  <script src="js/prefixfree.min.js"></script>
-
-<style>
-@import url(http://fonts.googleapis.com/css?family=Raleway+Dots);
-@import url(http://fonts.googleapis.com/css?family=Advent+Pro:400,200,700);
-@import url(http://weloveiconfonts.com/api/?family=entypo);
-</style>
 
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='loginstyle.css') }}" />
@@ -58,7 +52,7 @@
 
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					      <li><a href="{{ url_for('signup_page') }}"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+					      <li><a href="{{ url_for('login_page') }}"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
 					      <ul class="nav navbar-nav navbar-right">
 					</ul>
 				</ul>
@@ -70,29 +64,6 @@
 <zaman>
 <div id="datetime"><und>Last refresh</und><br>{{ current_time }}</div>
 </zaman>
-
-<nave>
-
-<br>
-<t14>Follow us:</t14><br>
- <section>
-  <ul id='services'>
-    <li>   <div class='entypo-facebook'></div>
-      <a href="https://www.facebook.com/">Facebook</a>
-    </li><hr>
-    <li> <div class='entypo-twitter'></div>
-      <a href="https://www.twitter.com/">Twitter</a>
-    </li><hr>
-    <li>
-      <div class='entypo-linkedin'></div>
-      <a href="https://tr.linkedin.com/">LinkedIn</a>
-    </li>
-
-  </ul>
-</section>
-
-
-</nave>
 
 
 <arkaplan>
