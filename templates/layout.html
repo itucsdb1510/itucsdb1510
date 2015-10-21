@@ -25,15 +25,13 @@
 					<li><a href="{{ url_for('teams_page') }}"> List teams</a></li>
 					<li><a href="{{ url_for('topics_page') }}"> Topic List</a></li>
 					<li><a href="{{ url_for('races_page') }}"> Race List</a></li>
-					<li><a href="{{ url_for('activity_page') }}">
-							SocialActivity List</a></li>
-					<li><a href="{{ url_for('racecalendar_page') }}">
-							RaceCalendar</a></li>
+					<li><a href="{{ url_for('activity_page') }}">SocialActivity List</a></li>
+					<li><a href="{{ url_for('racecalendar_page') }}">RaceCalendar</a></li>
 					<li><a href="{{ url_for('topics_page') }}"> Topic List</a></li>
 					<li><a href="{{ url_for('trails_page') }}"> Trails</a></li>
 					<li><a href="{{ url_for('message_page') }}"> Messages</a></li>
 					<li><a href="{{ url_for('news_page') }}"> News</a></li>
-					<li><a href="{{ url_for('sales_page') }}"> Sales and Commercials</a></li>
+
 
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Score Table <span
@@ -56,6 +54,10 @@
 	{% block content %}{% endblock %}
 	<footer>
 		<div id="datetime">{{ current_time }}</div>
+
 	</footer>
+	<footer2>
+Copyright © bicycling.com
+</footer2>
 </body>
 </html>

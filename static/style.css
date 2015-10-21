@@ -22,4 +22,10 @@ nav li{
 	font-size: 80%;
 }
 
-
+footer2 {
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;
+}

@@ -59,10 +59,6 @@ def news_page():
     now = datetime.datetime.now();
     return render_template('news.html', current_time=now.ctime())
 
-@app.route('/sales')
-def sales_page():
-    now = datetime.datetime.now();
-    return render_template('sales.html', current_time=now.ctime())
 
 @app.route('/login')
 def login_page():

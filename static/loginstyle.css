@@ -1,19 +1,10 @@
-arkaplan{
-background-image: url("static/tema.jpeg");
-}
-
 .navbar-default {
     background-color: #660033;
     border-color: #E7E7E7;
     font-weight: bold
 }
 
-header {
-    background-color:black;
-    color:purple;
-    text-align:center;
-    padding:5px;
-}
+
 
 body {
   background-color: black;
@@ -41,6 +32,7 @@ nav li{
 }
 
 nave {
+	z-index: 1;
     line-height:30px;
     background-color:#FF9966;
     height:430px;
@@ -48,14 +40,6 @@ nave {
     float:left;
     font-weight: bold;
     padding:9px;
-}
-
-footer {
-    background-color:black;
-    color:white;
-    clear:both;
-    text-align:center;
-    padding:5px;
 }
 
 zaman {
@@ -159,3 +143,104 @@ hr{
 t14{
 font-size:16p;
 }
+
+@import url(http://fonts.googleapis.com/css?family=Exo:100,200,400);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:700,400,300);
+
+
+.grad{
+	position: absolute;
+	top: 70px;
+	left: -20px;
+	right: -40px;
+	bottom: -40px;
+	width: auto;
+	height: auto;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0.5)), color-stop(100%,rgba(80,50,0,0.65))); /* Chrome,Safari4+ */
+	z-index: 1;
+	opacity: 0.7;
+}
+
+headerdown{
+	position: absolute;
+	top:550px;
+	left: calc(50% - 100px);
+	font-weigh:bold;
+	z-index: 2;
+}
+
+
+.gi-4x{font-size: 4em;}
+
+headerup2{
+	position: absolute;
+	top: calc(50% - 110px);
+	left: calc(50% + 30px);
+	font-weigh:bold;
+	z-index: 2;
+}
+
+.header{
+	position: absolute;
+	top: calc(50% - 50px);
+	left: calc(50% - 325px);
+	z-index: 2;
+}
+
+.header div{
+	float: left;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 35px;
+	font-weight: 200;
+}
+
+.header div span{
+	color: #5379fa !important;
+}
+
+ortamenu{
+	position: absolute;
+	top: calc(50% - 75px);
+	left: calc(50% - 50px);
+	height: 150px;
+	width: 350px;
+	padding: 10px;
+	z-index: 2;
+}
+
+txt{
+	width: 250px;
+	height: 30px;
+	background: transparent;
+	color: #fff;
+	font-family: 'Exo', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	padding: 4px;
+}
+
+label.filebutton {
+    width:120px;
+    height:40px;
+    overflow:hidden;
+    position:relative;
+    background-color:#ccc;
+}
+
+label span input {
+    z-index: 999;
+    line-height: 0;
+    font-size: 50px;
+    position: absolute;
+    top: -2px;
+    left: -700px;
+    opacity: 0;
+    filter: alpha(opacity = 0);
+    -ms-filter: "alpha(opacity=0)";
+    cursor: pointer;
+    _cursor: hand;
+    margin: 0;
+    padding:0;
+}
+
