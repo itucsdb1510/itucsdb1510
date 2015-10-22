@@ -44,6 +44,7 @@ def trails_page():
     now = datetime.datetime.now();
     return render_template('trails.html', current_time=now.ctime())
 
+
 @app.route('/scores')
 def scores_page():
     now = datetime.datetime.now();
@@ -69,6 +70,12 @@ def login_page():
 def signup_page():
     now = datetime.datetime.now();
     return render_template('signup.html', current_time=now.ctime())
+
+@app.route('/experiences')
+def experiences_page():
+    now = datetime.datetime.now();
+    return render_template('experiences.html', current_time=now.ctime())
+
 
 
 if __name__ == '__main__':
