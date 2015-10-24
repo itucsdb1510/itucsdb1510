@@ -29,23 +29,15 @@ def teams_page():
 
 
 
-@app.route('/team/<int:key>', methods=['GET', 'POST'])
+@app.route('/team/<int:key>')
 def team_page(key):
-     if request.method == 'GET':
-        team = app.store.get_team(key)
-        now = datetime.datetime.now()
-        return render_template('team.html', team=team,
-                               current_time=now.ctime())
-     else:
-        title = request.form['title']
-        year = request.form['year']
-        app.store.update_team(key, title, year)
-        return redirect(url_for('team_page', key=app.store.last_key))
+    team = app.store.get_team(key)
+    now = datetime.datetime.now()
+    return render_template('team.html', team=team,
+                           current_time=now.ctime())
 
 
 @app.route('/teams/add')
-@app.route('/team/<int:key>/edit')
-def team_edit_page(key=None):
-    team = app.store.get_team(key) if key is not None else None
+def team_edit_page():
     now = datetime.datetime.now()
-    return render_template('team_edit.html', team=team, current_time=now.ctime())
+    return render_template('team_edit.html', current_time=now.ctime())

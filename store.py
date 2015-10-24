@@ -9,10 +9,7 @@ class Store:
 
     def delete_team(self, key):
         del self.teams[key]
-
-    def update_team(self, key, title, year):
-        self.teams[key].title = title
-        self.teams[key].year = year
+        self.last_key -= 1
 
     def get_team(self, key):
         return self.teams[key]
