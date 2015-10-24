@@ -22,7 +22,6 @@
 			<div>
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="{{ url_for('home') }}">Home</a></li>
-					<li><a href="{{ url_for('teams_page') }}"> List teams</a></li>
 					<li><a href="{{ url_for('topics_page') }}"> Topic List</a></li>
 					<li><a href="{{ url_for('races_page') }}"> Race List</a></li>
 					<li><a href="{{ url_for('activity_page') }}">SocialActivity List</a></li>
@@ -31,7 +30,6 @@
 					<li><a href="{{ url_for('trails_page') }}"> Trails</a></li>
 					<li><a href="{{ url_for('message_page') }}"> Messages</a></li>
 					<li><a href="{{ url_for('news_page') }}"> News</a></li>
-					<li><a href="{{ url_for('team_edit_page') }}">Add team</a></li>
 
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Score Table <span
@@ -39,6 +37,15 @@
 						<ul class="dropdown-menu">
 							<li><a href="{{ url_for('scores_page') }}">Members</a></li>
 							<li><a href="#">Teams</a></li>
+
+						</ul>
+					</li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Team Page <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ url_for('team_edit_page') }}">Add Team</a></li>
+							<li><a href="{{ url_for('teams_page') }}"> List Teams</a></li>
 
 						</ul>
 					</li>
