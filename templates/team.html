@@ -3,6 +3,22 @@
 {% block content %}
     <h2>{{ team.title }}</h2>
     <table>
+     <tr>
+        <th>Score: </th>
+        <td>{{ team.score }}</td>
+      </tr>
+      <tr>
+        <th>Founder: </th>
+        <td>{{ team.founder }}</td>
+      </tr>
+      <tr>
+        <th>Members: </th>
+        <td>{{ team.members }}</td>
+      </tr>
+      <tr>
+        <th>Total Member Number: </th>
+        <td>{{ team.member_count}}</td>
+      </tr>
       <tr>
         <th>Year: </th>
         <td>{{ team.year }}</td>

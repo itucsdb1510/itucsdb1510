@@ -22,8 +22,12 @@ def teams_page():
         return redirect(url_for('teams_page'))
     else:
         title = request.form['title']
+        score = request.form['score']
+        founder = request.form['founder']
+        members = request.form['members']
+        member_count = request.form['member_count']
         year = request.form['year']
-        team = Team(title, year)
+        team = Team(title, score, founder, members, member_count, year)
         app.store.add_team(team)
         return redirect(url_for('team_page', key=app.store.last_key))
 
