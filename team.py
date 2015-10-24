@@ -1,8 +1,8 @@
 class Team:
-    def __init__(self, title, score, founder, members, member_count, year=None):
+    def __init__(self, title, score, founder, year=None):
         self.title = title
         self.score = score
         self.founder = founder
-        self.members = members
-        self.member_count = member_count
+        self.members = founder
+        self.member_count = 1
         self.year = year
