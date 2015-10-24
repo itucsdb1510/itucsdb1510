@@ -16,3 +16,6 @@ class Store:
 
     def get_teams(self):
         return sorted(self.teams.items())
+
+    def addMember(self, key):
+        self.teams[key].member_count = 5

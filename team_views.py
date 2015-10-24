@@ -31,13 +31,16 @@ def teams_page():
 
 
 
-@app.route('/team/<int:key>')
+@app.route('/team/<int:key>', methods=['GET', 'POST'])
 def team_page(key):
-    team = app.store.get_team(key)
-    now = datetime.datetime.now()
-    return render_template('team.html', team=team,
-                           current_time=now.ctime())
-
+    if request.method == 'GET':
+        team = app.store.get_team(key)
+        now = datetime.datetime.now()
+        return render_template('team.html', team=team,
+                               current_time=now.ctime())
+    else:
+        app.store.addMember(key)
+        return redirect(url_for('team_page', key=app.store.last_key))
 
 @app.route('/teams/add')
 def team_edit_page():
