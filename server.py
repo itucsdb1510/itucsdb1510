@@ -70,7 +70,10 @@ def experiences_page():
     now = datetime.datetime.now();
     return render_template('experiences.html', current_time=now.ctime())
 
-
+@app.route('/forum')
+def forum_page():
+    now = datetime.datetime.now();
+    return render_template('forum.html', current_time=now.ctime())
 
 if __name__ == '__main__':
     app.store = Store()
