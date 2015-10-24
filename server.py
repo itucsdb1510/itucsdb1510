@@ -75,6 +75,22 @@ def forum_page():
     now = datetime.datetime.now();
     return render_template('forum.html', current_time=now.ctime())
 
+@app.route('/bike_add')
+def bike_add_page():
+    now = datetime.datetime.now();
+    return render_template('bike_add.html', current_time=now.ctime())
+
+@app.route('/bike_delete_update_list')
+def bike_delete_update_list_page():
+    now = datetime.datetime.now();
+    return render_template('bike_delete_update_list.html', current_time=now.ctime())
+
+@app.route('/bike_update')
+def bike_update_page():
+    now = datetime.datetime.now();
+    return render_template('bike_update.html', current_time=now.ctime())
+
+
 if __name__ == '__main__':
     app.store = Store()
     PORT = int(os.getenv('VCAP_APP_PORT', '5000'))

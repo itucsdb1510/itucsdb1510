@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    </head>
+
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='loginstyle.css') }}" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Byclicing</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+					<li><a href="{{ url_for('teams_page') }}"> List teams</a></li>
+					<li><a href="{{ url_for('topics_page') }}"> Topic List</a></li>
+					<li><a href="{{ url_for('races_page') }}"> Race List</a></li>
+					<li><a href="{{ url_for('activity_page') }}">
+							SocialActivity List</a></li>
+					<li><a href="{{ url_for('racecalendar_page') }}">
+							RaceCalendar</a></li>
+					<li><a href="{{ url_for('topics_page') }}"> Topic List</a></li>
+					<li><a href="{{ url_for('trails_page') }}"> Trails</a></li>
+
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Score Table <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ url_for('scores_page') }}">Members</a></li>
+							<li><a href="#">Teams</a></li>
+
+						</ul>
+					</li>
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					      <li><a href="{{ url_for('signup_page') }}"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+					      <ul class="nav navbar-nav navbar-right">
+					</ul>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+The existing bikes are given below. <br>
+In order to make delete/update operation select the related model<br><br>
+
+   <form action="{{ url_for('bike_delete_update_list_page') }}" method="post">
+
+  <table class="auto" border="2" width="75%">
+
+  <tr>
+    <th></th>
+    <th>#</th>
+    <th>Model </th>
+    <th>Brand</th>
+    <th>Type</th>
+    <th>Jant Size</th>
+    <th>Year</th>
+    <th>Price</th>
+  </tr>
+
+   <tr>
+    <td><div class="slideTwo"> <input type="checkbox" value="None" id="slideTwo" name="check" />  </td>
+    <td>	1 </td>
+    <td>Bianchi Montana</td>
+    <td>Bianchi</td>
+    <td>Mountain</td>
+    <td>26</td>
+    <td>2014</td>
+    <td>498$</td>
+  </tr>
+    </table>
+
+    </form><br><br><br>
+
+<btn1>
+    <div class="round-button"><a href="{{ url_for('bike_add_page') }}" class="round-button">Add a new model</a></div></div>
+	<div class="round-button"><a href="#" class="round-button">Delete a model</a></div></div>
+	<div class="round-button"><a href="{{ url_for('bike_update_page') }}" class="round-button">Update the model</a></div></div>
+</btn1>
+
+
+</body>

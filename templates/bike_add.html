@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    </head>
+
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='loginstyle.css') }}" />
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Byclicing</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+					<li><a href="{{ url_for('teams_page') }}"> List teams</a></li>
+					<li><a href="{{ url_for('topics_page') }}"> Topic List</a></li>
+					<li><a href="{{ url_for('races_page') }}"> Race List</a></li>
+					<li><a href="{{ url_for('activity_page') }}">
+							SocialActivity List</a></li>
+					<li><a href="{{ url_for('racecalendar_page') }}">
+							RaceCalendar</a></li>
+					<li><a href="{{ url_for('topics_page') }}"> Topic List</a></li>
+					<li><a href="{{ url_for('trails_page') }}"> Trails</a></li>
+
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Score Table <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ url_for('scores_page') }}">Members</a></li>
+							<li><a href="#">Teams</a></li>
+
+						</ul>
+					</li>
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					      <li><a href="{{ url_for('signup_page') }}"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+					      <ul class="nav navbar-nav navbar-right">
+					</ul>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+
+     <form >
+      <table>
+
+         <tr>
+          <th>Model:</th>
+          <td>
+          	 <input type="text" name="model" required autofocus /><br><br>
+          </td>
+        </tr>
+        <tr>
+          <th>Brand:</th>
+          <td>
+           <input type="text" name="brand" /><br><br>
+          </td>
+        <tr>
+        <tr>
+          <th>Select Type:</th>
+          <td>
+           Mountain bicycles<input type="checkbox" name="cbmountain" /><br>
+            Military bicycles <input type="checkbox" name="cbmilitary" /><br>
+              Road bicycles <input type="checkbox" name="cbroad" /><br>
+                 Racing bicycles<input type="checkbox" name="cbracing" /><br>
+                 Cycle rickshaws<input type="checkbox" name="cbcycle" /><br>
+                 Motorized bicycle <input type="checkbox" name="cbmotorized" /><br><br>
+          </td>
+        </tr>
+        <tr>
+          <th>Select jant size:</th>
+          <td>
+          12<input type="checkbox" name="cb12" />           16<input type="checkbox" name="cb16" />
+          20 <input type="checkbox" name="cb20" />          24<input type="checkbox" name="cb24" />
+          26 <input type="checkbox" name="cb26" />	        28<input type="checkbox" name="cb28" /><br><br>
+          </td>
+        </tr>
+        <tr>
+          <th>Select year:</th>
+          <td>
+         2015<input type="checkbox" name="cb15" /><br>
+         2014<input type="checkbox" name="cb14" /><br>
+         2013<input type="checkbox"name="cb13" /><br>
+         2012<input type="checkbox" name="cb12" /><br>
+         2011<input type="checkbox" name="cb11" /><br>
+         2010<input type="checkbox" name="cb10" /><br>
+         2009<input type="checkbox" name="cb09" /><br>
+         2008<input type="checkbox" name="cb08" /><br>
+         2007<input type="checkbox" name="cb07" /><br>
+         2006<input type="checkbox" name="cb06" /><br>
+         2005<input type="checkbox" name="cb05" /><br><br><br>
+
+          </td>
+        </tr>
+        <tr>
+          <th>Price</th>
+          <td>
+           <input type="text" name="price" size="6" />
+          </td>
+        </tr>
+      </table>
+            <br><br>
+
+      <input value="Save" name="save" type="submit" />
+    </form>
+
+
+    </body>
