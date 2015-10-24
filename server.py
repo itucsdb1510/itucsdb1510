@@ -32,10 +32,6 @@ def racecalendar_page():
     now = datetime.datetime.now();
     return render_template('racecalendar.html', current_time=now.ctime())
 
-@app.route('/topics')
-def topics_page():
-    now = datetime.datetime.now();
-    return render_template('topics.html', current_time=now.ctime())
 
 @app.route('/trails')
 def trails_page():
