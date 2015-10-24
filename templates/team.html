@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}Team{% endblock %}
+{% block content %}
+    <h2>{{ team.title }}</h2>
+    <table>
+      <tr>
+        <th>Year: </th>
+        <td>{{ team.year }}</td>
+      </tr>
+    </table>
+
+    <p><a href="{{ request.path + '/edit' }}">Edit</a></p>
+{% endblock %}
