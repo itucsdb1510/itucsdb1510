@@ -4,42 +4,41 @@
 <meta charset="UTF-8">
  
 <title>Score Table</title>
-<ul>
- <li><a href="/">Home</a></li>
- </ul>
+
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='score.css') }}" />
-	<header>
+	
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+	<link rel="stylesheet"
+	href="{{ url_for('static', filename='score.css') }}" />
+
+	
+</head>
+<body>
+<header>
 <h1>Score Table</h1>
 </header>
 
 
-
-
-
-
-
-<table  style="width:100%">
+<table style="width:100%">
   <tr>
     <th>Position</th>
     <th>Name</th>		
     <th>Length</th>
     <th>Time</th>
-    <th>Velocity</th>		
+    <th>Velocity(km/h)</th>		
     <th>Points</th>
    
-  </tr>
-   <tr>
-    <td>1</td>
-    <td>Griffin</td>
-    <td>10 km</td>
-    <td>1 sa</td>
-    <td>10 km/sa</td>
-    <td>0</td>
-  </tr>
+  
  
 </table>
 
-
+</body>
 </html>
 
