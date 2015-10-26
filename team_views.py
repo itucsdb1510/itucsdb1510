@@ -27,7 +27,7 @@ def teams_page():
         year = request.form['year']
         team = Team(title, score, founder, year)
         app.store.add_team(team)
-        return redirect(url_for('team_page', key=app.store.last_key))
+        return redirect(url_for('team_page', key=app.store.team_last_key))
 
 
 
@@ -40,7 +40,7 @@ def team_page(key):
                                current_time=now.ctime())
     else:
         app.store.addMember(key)
-        return redirect(url_for('team_page', key=app.store.last_key))
+        return redirect(url_for('team_page', key=app.store.team_last_key))
 
 @app.route('/teams/add')
 def team_edit_page():

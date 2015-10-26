@@ -11,16 +11,14 @@ from config import app
 from store import Store
 from team import Team
 import team_views
+from race import Race
+import race_views
 
 @app.route('/')
 def home():
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
 
-@app.route('/races')
-def races_page():
-    now = datetime.datetime.now();
-    return render_template('race.html', current_time=now.ctime())
 
 @app.route('/activity')
 def activity_page():
