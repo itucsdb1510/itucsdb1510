@@ -1,10 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
 {% extends "layout.html" %}
-{% block title %}Race List{% endblock %}
+{% block title %}Race{% endblock %}
 {% block content %}
-<h2>Race Home Page</h2>
-<h3>Race List</h3>
+    <h2>{{ race.title }}</h2>
+    <table>
+     <tr>
+        <th>Race Type: </th>
+        <td>{{ race.race_type }}</td>
+      </tr>
+      <tr>
+        <th>Founder: </th>
+        <td>{{ race.founder }}</td>
+      </tr>
+      <tr>
+        <th>Participants: </th>
+        <td>{{ race.participants }}</td>
+      </tr>
+      <tr>
+        <th>Total Number of Participants: </th>
+        <td>{{ race.participant_count}}</td>
+      </tr>
+      <tr>
+        <th>Time: </th>
+        <td>{{ race.time }}</td>
+      </tr>
+       <tr>
+        <th>Place: </th>
+        <td>{{ race.place }}</td>
+      </tr>
+    </table>
+    <form action="{{ url_for('login_page') }}">
+    	<input type="submit" value="Join this race">
+    </form>
 {% endblock %}

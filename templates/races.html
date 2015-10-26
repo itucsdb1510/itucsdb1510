@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+{% extends "layout.html" %}
+{% block title %}Race List{% endblock %}
+{% block content %}
+<h2>Race Home Page</h2>
+   <form action="{{ url_for('races_page') }}" method="post">
+      <table>
+        {% for key, race in races %}
+        <tr>
+          <td><input type="checkbox" name="races_to_delete"
+                     value="{{ key }}" /></td>
+          <td>
+            <a href="{{ url_for('race_page', key=key) }}">
+              {{ race.title }} ({{ race.score }})
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <input type="submit" value="Delete" name="delete" />
+    </form>
+{% endblock %}

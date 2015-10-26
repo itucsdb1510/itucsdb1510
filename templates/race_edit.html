@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %}Race Edit Form{% endblock %}
+{% block content %}
+   <form action="{{ url_for('races_page') }}" method="post">
+      <table>
+        <tr>
+          <th>Title:</th>
+          <td>
+          	 <input type="text" name="title" required autofocus />
+          </td>
+        </tr>
+        <tr>
+          <th>Race Type:</th>
+          <td>
+           <input type="text" name="race_type" />
+          </td>
+        <tr>
+        <tr>
+          <th>Founder:</th>
+          <td>
+           <input type="text" name="founder" />
+          </td>
+        </tr>
+        <tr>
+          <th>Time:</th>
+          <td>
+           <input type="text" name="time" />
+          </td>
+        </tr>
+         <tr>
+          <th>Place:</th>
+          <td>
+           <input type="text" name="place" />
+          </td>
+        </tr>
+      </table>
+      <input value="Save" name="save" type="submit" />
+    </form>
+{% endblock %}
