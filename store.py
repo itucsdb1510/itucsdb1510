@@ -1,9 +1,13 @@
+from sre_constants import CATEGORY_DIGIT
 class Store:
     def __init__(self):
         self.teams = {}
         self.team_last_key = 0
         self.races = {}
         self.race_last_key = 0
+        self.categories={}
+        self.category_last_key=0
+
 
     def add_team(self, team):
         self.team_last_key += 1
@@ -35,3 +39,20 @@ class Store:
 
     def get_races(self):
         return sorted(self.races.items())
+
+    def count_category(self,category):
+        self.category_count+=1
+
+    def add_category(self, category):
+        self.category_last_key +=1
+        self.categories[self.category_last_key]= category
+
+    def delete_category(self, key):
+        del self.categories[key]
+        self.category_last_key-=1
+
+    def get_category(self,key):
+        return self.categories[key]
+
+    def get_categories(self):
+        return sorted(self.categories.items())

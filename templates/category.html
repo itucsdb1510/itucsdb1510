@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Category{% endblock %}
+{% block content %}
+    <h2><strong>Category</strong></h2>
+    <table>
+     <tr>
+        <th>Category Name: </th>
+        <td>{{ category.title}}</td>
+      </tr>
+    </table>
+    <br><br>
+    <form action="{{ url_for('login_page') }}">
+    	<input type="submit" value=" Add new category">
+    </form>
+{% endblock %}
+

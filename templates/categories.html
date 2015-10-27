@@ -3,21 +3,22 @@
 <head>
 <meta charset="UTF-8">
 {% extends "layout.html" %}
-{% block title %}Race List{% endblock %}
+{% block title %}Category List{% endblock %}
 {% block content %}
-<h2>Race Home Page</h2>
-   <form action="{{ url_for('races_page') }}" method="post">
+<h2>Category Home Page</h2>
+   <form action="{{ url_for('categories_page') }}" method="post">
       <table>
-        {% for key, race in races %}
+        {% for key, category in categories %}
         <tr>
-          <td><input type="checkbox" name="races_to_delete"
+          <td><input type="checkbox" name="categories_to_delete"
                      value="{{ key }}" /></td>
           <td>
-            <a href="{{ url_for('race_page', key=key) }}">
-              {{ race.title }} ({{ race.race_type }})
+            <a href="{{ url_for('category_page', key=key) }}">
+              {{ category.title }}
             </a>
           </td>
         </tr>
+
         {% endfor %}
       </table>
       <input type="submit" value="Delete" name="delete" />

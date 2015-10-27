@@ -13,6 +13,8 @@ from team import Team
 import team_views
 from race import Race
 import race_views
+from category import Category
+import category_views
 
 @app.route('/')
 def home():
