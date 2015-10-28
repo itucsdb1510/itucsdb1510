@@ -15,9 +15,25 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
 
+<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Byclicing</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+					
 
-The existing bikes are given below. <br>
-In order to make delete/update operation select the related model<br><br>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					      <li><a href="{{ url_for('signup_page') }}"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+					      <ul class="nav navbar-nav navbar-right">
+					</ul>
+				</ul>
+			</div>
+		</div>
+	</nav>
 
    <form action="{{ url_for('bike_delete_update_list_page') }}" method="post">
 
