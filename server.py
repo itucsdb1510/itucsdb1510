@@ -6,11 +6,13 @@ from flask import render_template
 from pip._vendor.requests.packages.urllib3.util.timeout import current_time
 
 
-app = Flask(__name__)
 from config import app
 from store import Store
 from team import Team
 import team_views
+from experience import Experience
+import experience_view
+
 
 @app.route('/')
 def home():
@@ -65,10 +67,7 @@ def signup_page():
     now = datetime.datetime.now();
     return render_template('signup.html', current_time=now.ctime())
 
-@app.route('/experiences')
-def experiences_page():
-    now = datetime.datetime.now();
-    return render_template('experiences.html', current_time=now.ctime())
+
 
 @app.route('/forum')
 def forum_page():
