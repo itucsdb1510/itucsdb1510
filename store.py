@@ -18,6 +18,8 @@ class Store:
         self.categories={}
         self.category_last_key=0
 
+        self.admins = {}
+        self.admin_last_key = 0
 
 
     def add_team(self, team):
@@ -37,29 +39,29 @@ class Store:
     def addMember(self, key):
         self.teams[key].member_count = 5
 
-        
-        
-        
-     ########################EXPERINCES###########################   
-        
-        
-        
-        
-    def add_experience(self, team):
+
+
+
+     ########################EXPERINCES###########################
+
+
+
+
+    def add_experience(self, admin):
         self.exp_key += 1
         self.experiences[self.exp_key] = experience
-        
+
     def delete_experience(self, key):
         del self.experiences[key]
         self.exp_key -= 1
-        
+
     def get_experience(self, key):
         return self.experiences[key]
-    
+
     def get_experiences(self):
         return sorted(self.experiences.items())
-    
-    
+
+
     def update_experience(self, key, title, username, start, finish, period):
        self.experiences[key].title = title
        self.experiences[key].username=username
@@ -71,9 +73,9 @@ class Store:
 
 
 
-    
-    
-    
+
+
+
 
     def add_race(self, race):
         self.race_last_key += 1
@@ -105,4 +107,23 @@ class Store:
 
     def get_categories(self):
         return sorted(self.categories.items())
+
+
+########Admin
+    def add_admin(self, admin):
+        self.admin_last_key += 1
+        self.admins[self.admin_last_key] =admin
+
+    def delete_admin(self, key):
+        del self.admins[key]
+        self.admin_last_key -= 1
+
+    def get_admin(self, key):
+        return self.admins[key]
+
+    def get_admins(self):
+        return sorted(self.admins.items())
+
+    def addMember(self, key):
+        self.admins[key].member_count = 5
 

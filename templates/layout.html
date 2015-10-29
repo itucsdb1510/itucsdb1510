@@ -79,7 +79,7 @@
 						</ul>
 					</li>
 
-                     
+
 
 <li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Bike<span
@@ -93,8 +93,29 @@
 					</li>
 
 
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Admin Manager <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ url_for('admin_edit_page') }}">Add a new Admin</a></li>
+							<li><a href="{{ url_for('admins_page') }}"> List Existing Admins</a></li>
 
-				</ul>
+						</ul>
+					</li>
+
+					<!-- <li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Member Manager <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+						<li><a href="{{ url_for('basicmember_edit_page') }}"> Add e member</a></li>
+							<li><a href="{{ url_for('basicmembers_page') }}"> List Existing Members</a></li>
+
+
+						</ul>
+					</li> -->
+
+
+					</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="{{ url_for('login_page') }}"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
 				</ul>

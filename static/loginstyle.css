@@ -163,8 +163,8 @@ font-size:16p;
 
 headerdown{
 	position: absolute;
-	top:550px;
-	left: calc(50% - 100px);
+	top:600px;
+	left: calc(50% - 80px);
 	font-weigh:bold;
 	z-index: 2;
 }
@@ -174,7 +174,7 @@ headerdown{
 
 headerup2{
 	position: absolute;
-	top: calc(50% - 110px);
+	top: calc(50% - 130px);
 	left: calc(50% + 30px);
 	font-weigh:bold;
 	z-index: 2;
@@ -204,7 +204,7 @@ ortamenu{
 	top: calc(50% - 75px);
 	left: calc(50% - 50px);
 	height: 150px;
-	width: 350px;
+	width: 500px;
 	padding: 10px;
 	z-index: 2;
 }
