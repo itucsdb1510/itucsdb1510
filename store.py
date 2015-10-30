@@ -45,7 +45,7 @@ class Store:
         
         
         
-    def add_experience(self, team):
+    def add_experience(self, experience):
         self.exp_key += 1
         self.experiences[self.exp_key] = experience
         
