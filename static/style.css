@@ -6,6 +6,29 @@ body {
   margin: 2ex 2em;
 }
 
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    margin-left:2cm;
+
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+}
+
+#t01 {
+    width: 50%;
+     padding: 15px;
+    background-color: #f5614e;
+}
+#t02 {
+    width: 80%;
+     padding: 15px;
+    background-color: #F7D358;
+}
+
 h1, h2, h3, h4 {
   color: #E9601A;
 }

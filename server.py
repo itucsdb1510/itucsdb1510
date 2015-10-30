@@ -1,7 +1,7 @@
 import datetime
 import os
 
-from flask import Flask
+
 from flask import render_template
 from pip._vendor.requests.packages.urllib3.util.timeout import current_time
 
@@ -19,6 +19,9 @@ from race import Race
 import race_views
 from category import Category
 import category_views
+
+from admin import Admin
+import admin_views
 
 
 @app.route('/')
@@ -70,8 +73,6 @@ def signup_page():
     now = datetime.datetime.now();
     return render_template('signup.html', current_time=now.ctime())
 
-
-
 @app.route('/forum')
 def forum_page():
     now = datetime.datetime.now();
@@ -91,7 +92,6 @@ def bike_delete_update_list_page():
 def bike_update_page():
     now = datetime.datetime.now();
     return render_template('bike_update.html', current_time=now.ctime())
-
 
 if __name__ == '__main__':
     app.store = Store()

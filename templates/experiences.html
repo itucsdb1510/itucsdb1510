@@ -1,16 +1,44 @@
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="{{ url_for('experience_edit_page') }}">Add experience</a>
-			</div>
-			<div>
-
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}Experience List{% endblock %}
+{% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='experiences.css') }}" />
+<h2>Experiences</h2>
+   <form action="{{ url_for('experiences_page') }}" method="post">
+      <table>
+        {% for key, experience in experiences %}
+        <tr>
+          <td><input type="checkbox" name="experiences_to_delete"
+                     value="{{ key }}" /></td>
+          <td>
+            <a href="{{ url_for('experience_page', key=key) }}">
+              {{ experience.title }} 
+              <div class="exp">
+              <div class="exp_prop">Username: {{ experience.username }}</div>
+              <div class="exp_prop">Start: {{ experience.start }}</div>
+              <div class="exp_prop">Finish: {{ experience.finish }}</div>
+              <div class="exp_prop">Period: {{ experience.period }}</div>
+              <div class="exp_prop">Length: {{ experience.length }}</div>
+              
+              
+              </div>
+            </a>
+            
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <input type="submit" value="Delete" name="delete" />
+    </form>
+{% endblock %}
+              
+              
+              
+              
+              
+        

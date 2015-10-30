@@ -1,9 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='style.css') }}" />
 <meta charset="UTF-8">
 {% extends "layout.html" %}
 {% block title %}Forum {% endblock %}
 {% block content %}
-<h2>Forum Home Page</h2>
+<body style="background-color:#A9E2F3" >
+<p><img src="../static/image/road.png" width="1020" height="300" style="margin-left:2cm"></p>
+<br><br><br>
+
+<table style="width:1020px">
+  <tr id="t01">
+    <th>Forum Duyuruları</th>
+  </tr>
+   <tr id="t02">
+    <th>1 Kasım seçimleri</th>
+  </tr>
+  <tr>
+    <td>bu sene ki seçimleri hangi partinin kazanacağı merakla bekleniyor....</td>
+  </tr>
+
+<tr id="t02">
+    <th>Yeni eğitim Dönemi</th>
+  </tr>
+  <tr>
+    <td>bu sene ki okul heyecanı da başladı..</td>
+  </tr>
+</table>
+<br><br><br>
+
+</body>
 {% endblock %}

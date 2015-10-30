@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
 
-</body>
-</html>
+{% extends "layout.html" %}
+{% block title %}EXPERIENCE{% endblock %}
+{% block content %}
+    <h2>{{ experience.title }}</h2>
+    <table>
+     <tr>
+        <th>Username: </th>
+        <td>{{ experience.username }}</td>
+      </tr>
+      <tr>
+        <th>Start: </th>
+        <td>{{ experience.start }}</td>
+      </tr>
+      <tr>
+        <th>Finish: </th>
+        <td>{{ experience.finish }}</td>
+      </tr>
+      <tr>
+        <th>Period: </th>
+        <td>{{ experience.period}}</td>
+      </tr>
+      
+      <tr>
+        <th>Length: </th>
+        <td>{{ experience.length}}</td>
+      </tr>
+      
+    </table>
+   
+{% endblock %}
