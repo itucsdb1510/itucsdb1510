@@ -1,36 +1,83 @@
 <!DOCTYPE html>
 <html>
 <head>
+<style type="text/css">
+.container {
+	width: 100%;
+	border: 1px solid #d3d3d3;
+}
 
+.container div {
+	width: 100%;
+}
+
+.container .header {
+	background-color: #d3d3d3;
+	padding: 2px;
+	cursor: pointer;
+	font-weight: bold;
+}
+
+.container .content {
+	display: none;
+	padding: 5px;
+}
+</style>
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='style.css') }}" />
 <meta charset="UTF-8">
-{% extends "layout.html" %}
-{% block title %}Forum {% endblock %}
-{% block content %}
-<body style="background-color:#A9E2F3" >
-<p><img src="../static/image/road.png" width="1020" height="300" style="margin-left:2cm"></p>
-<br><br><br>
+{% extends "layout.html" %} {% block title %}Forum {% endblock %} {%
+block content %}
+<body style="background-color: #A9E2F3">
+	<p>
+		<img src="../static/image/road.png" width="1020" height="200"
+			style="margin-left: 2cm">
+	</p>
+	<br>
+	<br>
+	<br>
 
-<table style="width:1020px">
-  <tr id="t01">
-    <th>Forum Duyuruları</th>
-  </tr>
-   <tr id="t02">
-    <th>1 Kasım seçimleri</th>
-  </tr>
-  <tr>
-    <td>bu sene ki seçimleri hangi partinin kazanacağı merakla bekleniyor....</td>
-  </tr>
+	<table style="width: 1020px">
+	<tr id="t01">
+			<th>Forum Duyuruları</th>
+		</tr>
+		<tr id="t02">
+			<td onclick="expandCollapse('showHide');" id="expand">[+]
+				1 Kasım seçimleri</td>
+		</tr>
 
-<tr id="t02">
-    <th>Yeni eğitim Dönemi</th>
-  </tr>
-  <tr>
-    <td>bu sene ki okul heyecanı da başladı..</td>
-  </tr>
-</table>
-<br><br><br>
+		<tr id="showHide" style="display: none;">
+			<td>bu sene ki seçimleri hangi partinin kazanacağı merakla
+				bekleniyor....</td>
+		</tr>
+
+		<tr id="t02">
+			<td onclick="expandCollapse('showHide');" id="expand"> [+]Yeni eğitim Dönemi</td>
+		</tr>
+		<tr  id="showHide" style="display: none;">
+			<td>bu sene ki okul heyecanı da başladı..</td>
+		</tr>
+	</table>
+	<br>
+	<br>
+	<br>
 
 </body>
+<script>
+	function expandCollapse(showHide) {
+
+		var hideShowDiv = document.getElementById(showHide);
+		var label = document.getElementById("expand");
+
+		if (hideShowDiv.style.display == 'none') {
+			label.innerHTML = label.innerHTML.replace("[+]", "[-]");
+			hideShowDiv.style.display = 'block';
+		} else {
+			label.innerHTML = label.innerHTML.replace("[-]", "[+]");
+			hideShowDiv.style.display = 'none';
+
+		}
+	}
+</script>
+
 {% endblock %}

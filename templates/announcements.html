@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form action="{{ url_for('announcements_page') }}" method="post">
+      <table>
+        {% for key, announcement in announcements %}
+        <tr>
+          <td><input type="checkbox" name="announcements_to_delete"
+                     value="{{ key }}" /></td>
+          <td>
+            <a href="{{ url_for('announcement_page', key=key) }}">
+              {{ announcement.title }}
+              <br>
+              {{ announcement.text }}
+            </a>
+          </td>
+        </tr>
+
+        {% endfor %}
+      </table>
+      <input type="submit" value="Delete" name="delete" />
+    </form>
+
+
+<div class="navbar-header">
+				<a class="navbar-brand" href="{{ url_for('announcement_edit_page') }}">Add announcement</a>
+</div>
+
+</nav>
+</body>
+</html>

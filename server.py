@@ -14,6 +14,8 @@ import team_views
 from experience import Experience
 import experience_view
 
+from announcement import Announcement
+import announcement_views
 
 from race import Race
 import race_views

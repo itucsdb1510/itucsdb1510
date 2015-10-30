@@ -21,6 +21,8 @@ class Store:
         self.admins = {}
         self.admin_last_key = 0
 
+        self.announcements={}
+        self.announcement_last_key=0
 
     def add_team(self, team):
         self.team_last_key += 1
@@ -39,13 +41,26 @@ class Store:
     def addMember(self, key):
         self.teams[key].member_count = 5
 
+    def add_announcement(self, announcement):
+        self.announcement_last_key += 1
+        self.announcements[self.announcement_last_key] = announcement
 
-        
-        
-         
-        
-        
-  
+    def delete_announcement(self, key):
+        del self.announcements[key]
+        self.announcement_last_key -= 1
+
+    def get_announcement(self, key):
+        return self.announcements[key]
+
+    def get_announcements(self):
+        return sorted(self.announcements.items())
+
+
+
+
+
+
+
 
 
 
