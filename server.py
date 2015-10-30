@@ -24,7 +24,6 @@ from admin import Admin
 import admin_views
 
 
-
 @app.route('/')
 def home():
     now = datetime.datetime.now()
@@ -68,6 +67,11 @@ def news_page():
 def login_page():
     now = datetime.datetime.now();
     return render_template('login.html', current_time=now.ctime())
+
+@app.route('/signup')
+def signup_page():
+    now = datetime.datetime.now();
+    return render_template('signup.html', current_time=now.ctime())
 
 @app.route('/forum')
 def forum_page():

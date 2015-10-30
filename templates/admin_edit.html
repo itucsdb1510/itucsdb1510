@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block title %}Admin Edit Form{% endblock %}
+{% block content %}
+   <form action="{{ url_for('admins_page') }}" method="post">
+      <table>
+        <tr>
+          <th>Title:</th>
+          <td>
+          	 <input type="text" name="title" required autofocus />
+          </td>
+        </tr>
+        <tr>
+          <th>Score:</th>
+          <td>
+           <input type="text" name="score" />
+          </td>
+        <tr>
+        <tr>
+          <th>Founder:</th>
+          <td>
+           <input type="text" name="founder" />
+          </td>
+        </tr>
+        <tr>
+          <th>Year:</th>
+          <td>
+           <input type="text" name="year" size="4" />
+          </td>
+        </tr>
+      </table>
+      <input value="Save" name="save" type="submit" />
+    </form>
+{% endblock %}

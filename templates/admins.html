@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+{% extends "layout.html" %}
+{% block title %}Admin List{% endblock %}
+{% block content %}
+<h2>Admin Home Page</h2>
+   <form action="{{ url_for('admins_page') }}" method="post">
+      <table>
+        {% for key, admin in admins %}
+        <tr>
+          <td><input type="checkbox" name="admins_to_delete"
+                     value="{{ key }}" /></td>
+          <td>
+            <a href="{{ url_for('admin_page', key=key) }}">
+              {{ admin.title }} ({{ admin.score }})
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <input type="submit" value="Delete" name="delete" />
+    </form>
+{% endblock %}
