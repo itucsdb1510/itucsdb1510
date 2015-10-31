@@ -1,0 +1,28 @@
+
+{% extends "layout.html" %}
+{% block title %}route{% endblock %}
+{% block content %}
+    <h2>{{ cycroute.title }}</h2>
+    <table>
+     <tr>
+        <th>Username: </th>
+        <td>{{ cycroute.username }}</td>
+      </tr>
+      <tr>
+        <th>Start: </th>
+        <td>{{ cycroute.start }}</td>
+      </tr>
+      <tr>
+        <th>Finish: </th>
+        <td>{{ cycroute.finish }}</td>
+      </tr>
+      
+      
+      <tr>
+        <th>Length: </th>
+        <td>{{ cycroute.length}}</td>
+      </tr>
+      
+    </table>
+   
+{% endblock %}

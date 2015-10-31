@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Bike Edit Form{% endblock %}
+{% block content %}
+
+     <form action="{{ url_for('bikes_page') }}" method="post">
+      <table>
+
+         <tr>
+          <th>Model:</th>
+          <td>
+          	 <input type="text" name="model" value="{{model}}" required autofocus /><br><br>
+          </td>
+        </tr>
+        <tr>
+          <th>Brand:</th>
+          <td>
+           <input type="text" name="brand" value="{{brand}}"/><br><br>
+          </td>
+        <tr>
+        <tr>
+          <th>Type:</th>
+          <td>
+            <input type="text" name="bike_type" value="{{bike_type}}"/><br><br>
+          </td>
+        </tr>
+        <tr>
+          <th>jant size:</th>
+          <td>
+          <input type="text" name="size" value="{{size}}" />     
+          
+          </td>
+        </tr>
+        <tr>
+          <th>Year:</th>
+          <td>
+         <input type="text" name="year" value="{{year}}" /><br>
+        
+
+          </td>
+        </tr>
+        <tr>
+          <th>Price</th>
+          <td>
+           <input type="text" name="price" size="6" value="{{price}}"/>
+          </td>
+        </tr>
+      </table>
+            <br><br>
+
+      <input value="Save" name="save" type="submit" />
+    </form>
+
+
+  {% endblock %}

@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+{% extends "layout.html" %}
+{% block title %}Route List{% endblock %}
+{% block content %}
+
+<h2>Routes</h2>
+   <form action="{{ url_for('cycroutes_page') }}" method="post">
+      <table>
+        {% for key, cycroute in cycroutes %}
+        <tr>
+          <td><input type="checkbox" name="cycroutes_to_delete"
+                     value="{{ key }}" /></td>
+          <td>
+            <a href="{{ url_for('cycroute_page', key=key) }}">
+              {{ cycroute.title }} 
+              <div class="cyc">
+              <div >Username: {{ cycroute.username }}</div>
+              <div >Start: {{ cycroute.start }}</div>
+              <div >Finish: {{ cycroute.finish }}</div>
+              <div >Length: {{ cycroute.length }}</div>
+              
+              
+              </div>
+            </a>
+            
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <input type="submit" value="Delete" name="delete" />
+    </form>
+{% endblock %}
+              
+              
+              
+              
+              
+        

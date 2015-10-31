@@ -71,29 +71,34 @@
 
 
 
-
-<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Bike<span
+              <li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Experiences <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="{{ url_for('bike_add_page') }}">Add new models</a></li>
-							<li><a href="{{ url_for('bike_delete_update_list_page') }}">Other Operations</a></li>
-
-
-						</ul>
-					</li>
-
- <li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Routes&Exp <span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="{{ url_for('experiences_page') }}">Experiences</a></li>
-							
+							<li><a href="{{ url_for('experiences_page') }}">List Experiences</a></li>
 							<li><a href="{{ url_for('experience_edit_page') }}">Add experience</a></li>
-
+                            
+                            
 
 						</ul>
 					</li>
+					
+					
+				 <li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Routes <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+			<li><a href="{{ url_for('cycroutes_page') }}">List Routes</a></li>
+			<li><a href="{{ url_for('cycroute_edit_page') }}">Add Routes</a></li>
+			
+									 
+                            
+
+						</ul>
+					</li>	
+					
+					
+			
 
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Admin Manager <span
@@ -105,6 +110,17 @@
 						</ul>
 					</li>
 
+
+    <li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Bike<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+				
+			<li><a href="{{ url_for('bikes_page') }}">List Bike</a></li>
+			  
+			<li><a href="{{ url_for('bike_edit_page') }}">Add Bikes</a></li>
+						</ul>
+					</li>
 
 
 					</ul>

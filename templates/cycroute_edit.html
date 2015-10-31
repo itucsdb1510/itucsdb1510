@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
-{% block title %}Experience Edit Form{% endblock %}
+{% block title %}Route Edit Form{% endblock %}
 {% block content %}
 
-<form action="{{ url_for('experiences_page') }}" method="post">
+<form action="{{ url_for('cycroutes_page') }}" method="post">
  <table>
         <tr>
           <th>Title:</th>
@@ -11,7 +11,7 @@
           </td>
         </tr>
         <tr>
-          <th>User name:</th>
+          <th>Username:</th>
           <td>
            <input type="text" name="username" value="{{ username }}"/>
           </td>
@@ -29,12 +29,7 @@
           </td>
           </tr>
           
-          <tr>
-          <th>Period(h):</th>
-          <td>
-           <input type="number" name="period" value="{{ period }}" />
-          </td>
-          </tr>
+         
           
           <tr>
           <th>Length(km):</th>

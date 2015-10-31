@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    
+    {% extends "layout.html" %}
+{% block title %}Bike List-Type/Price{% endblock %}
+{% block content %}
+
+    
+	
+<h2>Bikes</h2>	
+<form action="{{ url_for('bikes_page') }}" method="post">
+
+<style>
+table, th, td {
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+</style>
+
+  <table  >
+    {% for key, bike in bikes %}
+ 
+ 
+   <tr>
+   
+    <td><input type="checkbox" name="bikes_to_delete"
+                     value="{{ key }}" /></td>
+    
+    <td>
+    <a href="{{ url_for('bike_page', key=key) }}">
+    
+    
+    
+    {{bike.bike_type}}
+    
+    {{bike.price}}
+    
+    </a>
+    </td>
+  </tr>
+  
+ {% endfor %}
+      </table>
+      <input type="submit" value="Delete" name="delete" />
+    </form>
+{% endblock %}

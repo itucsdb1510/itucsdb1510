@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block title %}BIKE{% endblock %}
+{% block content %}
+
+
+
+
+
+
+ <table class="auto" border="2" width="75%">
+
+  <tr>
+
+
+    <th>Model </th>
+    <th>Brand</th>
+    <th>Type</th>
+    <th>Jant Size</th>
+    <th>Year</th>
+    <th>Price</th>
+  </tr>
+
+  
+  
+  
+  <tr>
+
+    <td>{{bike.model}}</td>
+    <td>{{bike.brand}}</td>
+    <td>{{bike.bike_type}}</td>
+    <td>{{bike.size}}</td>
+    <td>{{bike.year}}</td>
+    <td>{{bike.price}}</td>
+  </tr>
+  
+    </table>
+
+   {% endblock %}
+     
+
+
+
