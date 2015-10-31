@@ -3,6 +3,7 @@
 
 
 from sre_constants import CATEGORY_DIGIT
+from _operator import length_hint
 
 class Store:
     def __init__(self):
@@ -20,6 +21,12 @@ class Store:
 
         self.admins = {}
         self.admin_last_key = 0
+        
+        self.cycroutes={}
+        self.cycroute_last_key=0
+        
+        self.bikes={}
+        self.bike_last_key=0
 
 
     def add_team(self, team):
@@ -70,12 +77,13 @@ class Store:
         return sorted(self.experiences.items())
 
 
-    def update_experience(self, key, title, username, start, finish, period):
+    def update_experience(self, key, title, username, start, finish, period,length):
        self.experiences[key].title = title
        self.experiences[key].username=username
        self.experiences[key].start=start
        self.experiences[key].finish=finish
        self.experiences[key].period=period
+       self.experiences[key].length=length
 
 
 
@@ -135,3 +143,54 @@ class Store:
     def addMember(self, key):
         self.admins[key].member_count = 5
 
+
+
+
+    def add_cycroute(self, cycroute):
+
+        self.cycroute_last_key += 1
+        self.cycroutes[self.cycroute_last_key] = cycroute
+
+    def delete_cycroute(self, key):
+        del self.cycroutes[key]
+        self.cycroute_last_key -= 1
+
+    def get_cycroute(self, key):
+        return self.cycroutes[key]
+
+    def get_cycroutes(self):
+        return sorted(self.cycroutes.items())
+
+
+    def update_cycroute(self, key, title, username, start, finish,length):
+       self.cycroutes[key].title = title
+       self.cycroutes[key].username=username
+       self.cycroutes[key].start=start
+       self.cycroutes[key].finish=finish
+       self.cycroutes[key].length=length
+       
+       
+       
+       
+    def add_bike(self, bike):
+        self.bike_last_key += 1
+        self.bikes[self.bike_last_key] = bike
+
+    def delete_bike(self, key):
+        del self.bikes[key]
+        self.bike_last_key -= 1
+
+    def get_bike(self, key):
+        return self.bikes[key]
+
+    def get_bikes(self):
+        return sorted(self.bikes.items())
+    
+    def update_bike(self,key,price):
+        self.bikes[key].price=price
+       
+
+
+
+
+   
