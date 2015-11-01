@@ -31,6 +31,9 @@ class Store:
         self.announcements={}
         self.announcement_last_key=0
 
+        self.basicmembers = {}
+        self.basicmember_last_key = 0
+
     def add_team(self, team):
         self.team_last_key += 1
         self.teams[self.team_last_key] = team
@@ -203,6 +206,23 @@ class Store:
     def update_bike(self,key,price):
         self.bikes[key].price=price
 
+
+#BASIC MEMBER FUNCTIONS
+    def add_basicmember(self, basicmember):
+        self.basicmember_last_key += 1
+        self.basicmembers[self.basicmember_last_key] =basicmember
+        #basicmember_count +=1
+
+    def delete_basicmember(self, key):
+        del self.basicmembers[key]
+        self.basicmember_last_key -= 1
+        #basicmember_count -= 1
+
+    def get_basicmember(self, key):
+        return self.basicmembers[key]
+
+    def get_basicmembers(self):
+        return sorted(self.basicmembers.items())
 
 
 

@@ -79,31 +79,30 @@
 
 							<li><a href="{{ url_for('experiences_page') }}">List Experiences</a></li>
 							<li><a href="{{ url_for('experience_edit_page') }}">Add experience</a></li>
-							
+
 						</ul>
 					</li>
 
 
-                            
-                            
 
-					
-					
+
+
+
+
 				 <li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Routes <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 			<li><a href="{{ url_for('cycroutes_page') }}">List Routes</a></li>
 			<li><a href="{{ url_for('cycroute_edit_page') }}">Add Routes</a></li>
-			
-									 
+
+
                        </ul>
 					</li>
-                            
 
-					
-					
-			
+
+
+
 
 					<li class="dropdown"><a class="dropdown-toggle"
 						data-toggle="dropdown" href="#">Admin Manager <span
@@ -120,14 +119,25 @@
 						data-toggle="dropdown" href="#">Bike<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
-				
+
 			<li><a href="{{ url_for('bikes_page') }}">List Bike</a></li>
-			  
+
 			<li><a href="{{ url_for('bike_edit_page') }}">Add Bikes</a></li>
-						
+	</ul>
 
 
-					</ul>
+
+				 <li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Members Panel <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+			<li><a href="{{ url_for('basicmembers_page') }}">List Basic Members</a></li>
+			<li><a href="{{ url_for('basicmember_edit_page') }}">Add Basic Member</a></li>
+
+
+                       </ul>
+					</li>
+
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="{{ url_for('login_page') }}"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
 				</ul>

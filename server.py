@@ -31,7 +31,8 @@ import cycroute_views
 from bike import Bike
 import bike_views
 
-
+from basicmember import Basicmember
+import basicmember_views
 
 
 @app.route('/')
@@ -78,19 +79,11 @@ def login_page():
     now = datetime.datetime.now();
     return render_template('login.html', current_time=now.ctime())
 
-@app.route('/signup')
-def signup_page():
-    now = datetime.datetime.now();
-    return render_template('signup.html', current_time=now.ctime())
 
 @app.route('/forum')
 def forum_page():
     now = datetime.datetime.now();
     return render_template('forum.html', current_time=now.ctime())
-
-
-
-
 
 
 if __name__ == '__main__':

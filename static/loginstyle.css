@@ -215,6 +215,7 @@ txt{
 	background: transparent;
 	color: #fff;
 	font-family: 'Exo', sans-serif;
+	font-color: black;
 	font-size: 16px;
 	font-weight: 400;
 	padding: 4px;
@@ -286,5 +287,3 @@ pstn{
 	top: 100px;
 
 }
-
-

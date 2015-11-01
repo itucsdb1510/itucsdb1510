@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Sign-Up </title>
+<link rel="stylesheet"
+	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script
+	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+ <script src="js/prefixfree.min.js"></script>
+<script src="js/prefixfree.min.js"></script>
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='loginstyle.css') }}" />
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet" />
+
+
+
+
+
+<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Byclicing</a>
+			</div>
+			<div>
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="{{ url_for('home') }}">Home</a></li>
+
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					      <li><a href="{{ url_for('login_page') }}"><span class="glyphicon glyphicon-log-in"></span>Login</a></li>
+					      <ul class="nav navbar-nav navbar-right">
+					</ul>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
+
+  <body>
+
+  		<headerup2><span class="  glyphicon glyphicon-user  gi-4x"></span>
+  		<label class="filebutton">
+		Upload a profile picture
+		<span><input type="file" id="myfile" name="myfile"></span>
+		</label>
+  		</headerup2>
+
+
+		<div class="header">
+			<div>Unlock<span>Yourself</span></div>
+		</div>
+		<br>
+		<ortamenu>
+	<br>
+
+	   <form action="{{ url_for('basicmembers_page') }}" method="post">
+	   <table>
+		 <tr>
+          <th>Name:</th>
+          <td>
+          	 <input type="text"   name="name" required autofocus />
+          </td>
+        </tr>
+        <tr>
+          <th>Surname:</th>
+          <td>
+           <input type="text"  name="surname" />
+          </td>
+        </tr>
+        <tr>
+          <th>Nickname:</th>
+          <td>
+           <input type="text"   name="nickname" />
+          </td>
+        </tr>
+        <tr>
+          <th>Email:</th>
+          <td>
+          	 <input type="text"  name="email" required autofocus />
+          </td>
+        </tr>
+        <tr>
+          <th>Password:</th>
+          <td>
+          	 <input type="text"  name="password" size="6" />
+          </td>
+        </tr>
+        <tr>
+          <th>Year of Birth:</th>
+          <td>
+           <input type="text" name="byear" size="4" />
+          </td>
+        </tr>
+         <tr>
+          <th>City:</th>
+          <td>
+           <input type="text" name="city" />
+          </td>
+        </tr>
+         <tr>
+          <th>Interests:</th>
+          <td>
+           <input type="text" name="interests" />
+          </td>
+        </tr>
+
+		</table>
+		<input type="submit" value="Signup" name="signup">
+         </form>
+
+		</ortamenu>
+
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+
+
+		<div class="grad"></div>
+		<headerdown><span class=" glyphicon glyphicon-pencil"></span>Please fill in all of the required fields</a></headerdown>
+</body>
+

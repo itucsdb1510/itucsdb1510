@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block title %}Basic Member{% endblock %}
+{% block content %}
+    <h2>{{ basicmember.nickname }}</h2>
+    <table>
+     <tr>
+        <th>Name: </th>
+        <td>{{ basicmember.name }}</td>
+      </tr>
+       <tr>
+        <th>Surname: </th>
+        <td>{{ basicmember.surname }}</td>
+      </tr>
+        <tr>
+        <th>Year of Birth: </th>
+        <td>{{ basicmember.byear }}</td>
+      </tr>
+       <tr>
+        <th>City: </th>
+        <td>{{ basicmember.city }}</td>
+      </tr>
+       <tr>
+        <th>Interest: </th>
+        <td>{{ basicmember.interests }}</td>
+      </tr>
+
+       <tr>
+        <th>Score: </th>
+        <td>{{ basicmember.score }}</td>
+      </tr>
+       <tr>
+        <th>Number of Gold Awards: </th>
+        <td>{{ basicmember.award_G }}</td>
+      </tr>
+           <tr>
+        <th>Number of Silver Awards: </th>
+        <td>{{ basicmember.award_S }}</td>
+      </tr>
+           <tr>
+        <th>Number of Bronze Awards: </th>
+        <td>{{ basicmember.award_B }}</td>
+      </tr>
+
+    </table>
+    <form action="{{ url_for('login_page') }}">
+    	<input type="submit" value="Go to Login Page">
+    </form>
+{% endblock %}
