@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}Topic{% endblock %}
+{% block content %}
+    <h2><strong>Topic</strong></h2>
+    <table>
+     <tr>
+        <th>Topic Name: </th>
+        <td>{{ topic.title}}</td>
+      </tr>
+      <tr>
+        <th>Topic Text: </th>
+        <td>{{ topic.text}}</td>
+      </tr>
+       <tr>
+        <th>Time: </th>
+        <td>{{ topic.time }}</td>
+      </tr>
+       <tr>
+        <th>Last post: </th>
+        <td>{{ topic.post}}</td>
+      </tr>
+       <tr>
+        <th>Last poster: </th>
+        <td>{{ topic.poster}}</td>
+      </tr>
+
+    </table>
+    <br><br>
+    <form action="{{ url_for('login_page') }}">
+    	<input type="submit" value=" Add new topic">
+    </form>
+{% endblock %}

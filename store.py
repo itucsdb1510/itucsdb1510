@@ -10,26 +10,29 @@ class Store:
         self.teams = {}
 
         self.last_key = 0
-        self.experiences= {}
+        self.experiences = {}
         self.exp_key = 0
 
         self.team_last_key = 0
         self.races = {}
         self.race_last_key = 0
-        self.categories={}
-        self.category_last_key=0
+        self.categories = {}
+        self.category_last_key = 0
 
         self.admins = {}
         self.admin_last_key = 0
 
-        self.cycroutes={}
-        self.cycroute_last_key=0
+        self.cycroutes = {}
+        self.cycroute_last_key = 0
 
-        self.bikes={}
-        self.bike_last_key=0
+        self.bikes = {}
+        self.bike_last_key = 0
 
-        self.announcements={}
-        self.announcement_last_key=0
+        self.announcements = {}
+        self.announcement_last_key = 0
+
+        self.topics = {}
+        self.topic_last_key = 0
 
         self.basicmembers = {}
         self.basicmember_last_key = 0
@@ -67,6 +70,20 @@ class Store:
 
 
 
+    def add_topic(self, topic):
+        self.topic_last_key += 1
+        self.topics[self.topic_last_key] = topic
+
+    def delete_topic(self, key):
+        del self.topics[key]
+        self.topic_last_key -= 1
+
+    def get_topic(self, key):
+        return self.topics[key]
+
+    def get_topics(self):
+        return sorted(self.topics.items())
+
 
 
 
@@ -95,13 +112,13 @@ class Store:
         return sorted(self.experiences.items())
 
 
-    def update_experience(self, key, title, username, start, finish, period,length):
+    def update_experience(self, key, title, username, start, finish, period, length):
        self.experiences[key].title = title
-       self.experiences[key].username=username
-       self.experiences[key].start=start
-       self.experiences[key].finish=finish
-       self.experiences[key].period=period
-       self.experiences[key].length=length
+       self.experiences[key].username = username
+       self.experiences[key].start = start
+       self.experiences[key].finish = finish
+       self.experiences[key].period = period
+       self.experiences[key].length = length
 
 
 
@@ -125,18 +142,18 @@ class Store:
     def get_races(self):
         return sorted(self.races.items())
 
-    def count_category(self,category):
-        self.category_count+=1
+    def count_category(self, category):
+        self.category_count += 1
 
     def add_category(self, category):
-        self.category_last_key +=1
-        self.categories[self.category_last_key]= category
+        self.category_last_key += 1
+        self.categories[self.category_last_key] = category
 
     def delete_category(self, key):
         del self.categories[key]
-        self.category_last_key-=1
+        self.category_last_key -= 1
 
-    def get_category(self,key):
+    def get_category(self, key):
         return self.categories[key]
 
     def get_categories(self):
@@ -146,13 +163,13 @@ class Store:
 
     def add_admin(self, admin):
         self.admin_last_key += 1
-        self.admins[self.admin_last_key] =admin
-        #admin_count +=1
+        self.admins[self.admin_last_key] = admin
+        # admin_count +=1
 
     def delete_admin(self, key):
         del self.admins[key]
         self.admin_last_key -= 1
-        #admin_count -= 1
+        # admin_count -= 1
 
     def get_admin(self, key):
         return self.admins[key]
@@ -179,12 +196,12 @@ class Store:
         return sorted(self.cycroutes.items())
 
 
-    def update_cycroute(self, key, title, username, start, finish,length):
+    def update_cycroute(self, key, title, username, start, finish, length):
        self.cycroutes[key].title = title
-       self.cycroutes[key].username=username
-       self.cycroutes[key].start=start
-       self.cycroutes[key].finish=finish
-       self.cycroutes[key].length=length
+       self.cycroutes[key].username = username
+       self.cycroutes[key].start = start
+       self.cycroutes[key].finish = finish
+       self.cycroutes[key].length = length
 
 
 
@@ -203,20 +220,20 @@ class Store:
     def get_bikes(self):
         return sorted(self.bikes.items())
 
-    def update_bike(self,key,price):
-        self.bikes[key].price=price
+    def update_bike(self, key, price):
+        self.bikes[key].price = price
 
 
-#BASIC MEMBER FUNCTIONS
+# BASIC MEMBER FUNCTIONS
     def add_basicmember(self, basicmember):
         self.basicmember_last_key += 1
-        self.basicmembers[self.basicmember_last_key] =basicmember
-        #basicmember_count +=1
+        self.basicmembers[self.basicmember_last_key] = basicmember
+        # basicmember_count +=1
 
     def delete_basicmember(self, key):
         del self.basicmembers[key]
         self.basicmember_last_key -= 1
-        #basicmember_count -= 1
+        # basicmember_count -= 1
 
     def get_basicmember(self, key):
         return self.basicmembers[key]

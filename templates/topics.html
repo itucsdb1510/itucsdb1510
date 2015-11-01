@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-{% extends "layout.html" %}
-{% block title %}Topic List{% endblock %}
-{% block content %}
-<h2>Forum Home Page</h2>
-<h3>Topic List</h3>
-{% endblock %}
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form action="{{ url_for('topics_page') }}" method="post">
+      <table>
+        {% for key, topic in topics %}
+        <tr>
+          <td><input type="checkbox" name="topics_to_delete"
+                     value="{{ key }}" /></td>
+          <td>
+            <a href="{{ url_for('topic_page', key=key) }}">
+              {{ topic.title }}
+            </a>
+           <br> {{ topic.text }}  {{ topic.time}}   {{ topic.post}}  {{ topic.poster}}<br>
+          </td>
+        </tr>
+
+        {% endfor %}
+      </table>
+      <input type="submit" value="Delete" name="delete" />
+    </form>
+
+
+<div class="navbar-header">
+				<a class="navbar-brand" href="{{ url_for('topic_edit_page') }}">Add topic</a>
+</div>
+
+</nav>
+</body>
+</html>

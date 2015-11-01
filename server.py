@@ -17,6 +17,9 @@ import experience_view
 from announcement import Announcement
 import announcement_views
 
+from topic import Topic
+import topic_views
+
 from race import Race
 import race_views
 from category import Category
