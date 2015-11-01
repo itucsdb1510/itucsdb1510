@@ -21,11 +21,13 @@ def admins_page():
             app.store.delete_admin(int(key))
         return redirect(url_for('admins_page'))
     else:
-        title = request.form['title']
-        score = request.form['score']
-        founder = request.form['founder']
+        name = request.form['name']
+        surname = request.form['surname']
+        nickname = request.form['nickname']
+        email = request.form['email']
+        password = request.form['password']
         year = request.form['year']
-        admin = Admin(title, score, founder, year)
+        admin = Admin(name, surname, nickname, email,password, year)
         app.store.add_admin(admin)
         return redirect(url_for('admin_page', key=app.store.admin_last_key))
 
@@ -39,10 +41,10 @@ def admin_page(key):
         return render_template('admin.html', admin=admin,
                                current_time=now.ctime())
     else:
-        app.store.addMember(key)
         return redirect(url_for('admin_page', key=app.store.admin_last_key))
 
 @app.route('/admins/add')
 def admin_edit_page():
     now = datetime.datetime.now()
     return render_template('admin_edit.html', current_time=now.ctime())
+

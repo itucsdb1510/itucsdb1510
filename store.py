@@ -21,10 +21,10 @@ class Store:
 
         self.admins = {}
         self.admin_last_key = 0
-        
+
         self.cycroutes={}
         self.cycroute_last_key=0
-        
+
         self.bikes={}
         self.bike_last_key=0
 
@@ -46,7 +46,7 @@ class Store:
         return sorted(self.teams.items())
 
     def addMember(self, key):
-        self.teams[key].member_count = 5
+        self.teams[key].team_count = 5
 
     def add_announcement(self, announcement):
         self.announcement_last_key += 1
@@ -144,19 +144,18 @@ class Store:
     def add_admin(self, admin):
         self.admin_last_key += 1
         self.admins[self.admin_last_key] =admin
+        #admin_count +=1
 
     def delete_admin(self, key):
         del self.admins[key]
         self.admin_last_key -= 1
+        #admin_count -= 1
 
     def get_admin(self, key):
         return self.admins[key]
 
     def get_admins(self):
         return sorted(self.admins.items())
-
-    def addMember(self, key):
-        self.admins[key].member_count = 5
 
 
 
@@ -183,10 +182,10 @@ class Store:
        self.cycroutes[key].start=start
        self.cycroutes[key].finish=finish
        self.cycroutes[key].length=length
-       
-       
-       
-       
+
+
+
+
     def add_bike(self, bike):
         self.bike_last_key += 1
         self.bikes[self.bike_last_key] = bike
@@ -200,12 +199,12 @@ class Store:
 
     def get_bikes(self):
         return sorted(self.bikes.items())
-    
+
     def update_bike(self,key,price):
         self.bikes[key].price=price
-       
 
 
 
 
-   
+
+
