@@ -17,12 +17,12 @@
            <input type="text" name="brand" value="{{brand}}"/><br><br>
           </td>
         <tr>
-        <tr>
-          <th>Type:</th>
-          <td>
-            <input type="text" name="bike_type" value="{{bike_type}}" required autofocus/><br><br>
-          </td>
-        </tr>
+<!--         <tr> -->
+<!--           <th>Type:</th> -->
+<!--           <td> -->
+<!--             <input type="text" name="bike_type" value="{{bike_type}}" required autofocus/><br><br> -->
+<!--           </td> -->
+<!--         </tr> -->
         <tr>
           <th>jant size:</th>
           <td>
@@ -44,8 +44,34 @@
            <input type="text" name="price" size="6" value="{{price}}"/>
           </td>
         </tr>
+        
+        
+         <tr>
+          <th>Type:</th>
+          <td>
+            <select name="bike_type">
+    			<option value="road">Road Bike</option>
+    			<option value="mountain">Mountain Bike</option>
+    			<option value="hybrid">Hybrid Bike</option>
+    		    <option value="cruiser">Cruiser Bike</option>
+    		    <option value="city">City Bike</option>
+    		    <option value="bmx">BMX Bike</option>
+    		    <option value="folding">Folding Bike</option>
+    		    
+    		    
+    		    
+ 			 </select>
+ 			 	</td>
+        </tr>
+        
+        
+        
+        
       </table>
             <br><br>
+            
+           
+        
 
       <input value="Save" name="save" type="submit" />
     </form>

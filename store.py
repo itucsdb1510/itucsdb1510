@@ -1,21 +1,17 @@
-
-
-
-
 from sre_constants import CATEGORY_DIGIT
 from _operator import length_hint
 
 class Store:
     def __init__(self):
         self.teams = {}
+        self.team_last_key = 0
 
-        self.last_key = 0
         self.experiences = {}
         self.exp_key = 0
 
-        self.team_last_key = 0
         self.races = {}
         self.race_last_key = 0
+
         self.categories = {}
         self.category_last_key = 0
 
@@ -40,6 +36,7 @@ class Store:
         self.professionalmembers = {}
         self.professionalmember_last_key = 0
 
+#TEAM
     def add_team(self, team):
         self.team_last_key += 1
         self.teams[self.team_last_key] = team
@@ -57,6 +54,7 @@ class Store:
     def addMember(self, key):
         self.teams[key].team_count = 5
 
+#ANNOUNCEMENT
     def add_announcement(self, announcement):
         self.announcement_last_key += 1
         self.announcements[self.announcement_last_key] = announcement
@@ -71,8 +69,7 @@ class Store:
     def get_announcements(self):
         return sorted(self.announcements.items())
 
-
-
+#TOPIC
     def add_topic(self, topic):
         self.topic_last_key += 1
         self.topics[self.topic_last_key] = topic
@@ -87,18 +84,7 @@ class Store:
     def get_topics(self):
         return sorted(self.topics.items())
 
-
-
-
-
-
-
-
-
-
-
-
-
+#EXPERIENCE
     def add_experience(self, experience):
 
         self.exp_key += 1
@@ -123,14 +109,7 @@ class Store:
        self.experiences[key].period = period
        self.experiences[key].length = length
 
-
-
-
-
-
-
-
-
+#RACE
     def add_race(self, race):
         self.race_last_key += 1
         self.races[self.race_last_key] = race
@@ -145,6 +124,7 @@ class Store:
     def get_races(self):
         return sorted(self.races.items())
 
+#CATEGORY
     def count_category(self, category):
         self.category_count += 1
 
@@ -163,7 +143,7 @@ class Store:
         return sorted(self.categories.items())
 
 
-
+#ADMIN
     def add_admin(self, admin):
         self.admin_last_key += 1
         self.admins[self.admin_last_key] = admin
@@ -181,8 +161,7 @@ class Store:
         return sorted(self.admins.items())
 
 
-
-
+#CYCROUTE
     def add_cycroute(self, cycroute):
 
         self.cycroute_last_key += 1
@@ -206,9 +185,7 @@ class Store:
        self.cycroutes[key].finish = finish
        self.cycroutes[key].length = length
 
-
-
-
+#BIKE
     def add_bike(self, bike):
         self.bike_last_key += 1
         self.bikes[self.bike_last_key] = bike

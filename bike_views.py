@@ -24,7 +24,7 @@ def bikes_page():
     else:
         model = request.form['model']
         brand = request.form['brand']
-        bike_type = request.form['bike_type']
+        bike_type = request.form.get('bike_type')
         size = request.form['size']
         year = request.form['year']
         price = request.form['price']
