@@ -29,8 +29,10 @@ def basicmembers_page():
         byear = request.form['byear']
         city = request.form['city']
         interests = request.form['interests']
+        gender = request.form.get('gender')
 
-        basicmember = Basicmember(name, surname, nickname, email,password, byear, city, interests)
+
+        basicmember = Basicmember(name, surname, nickname, gender, email,password, byear, city, interests)
         app.store.add_basicmember(basicmember)
         return redirect(url_for('basicmember_page', key=app.store.basicmember_last_key))
 

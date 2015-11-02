@@ -62,7 +62,7 @@
 		<ortamenu>
 	<br>
 
-	   <form action="{{ url_for('basicmembers_page') }}" method="post">
+	   <form action="{{ url_for('professionalmembers_page') }}" method="post">
 	   <table>
 		 <tr>
           <th>Name:</th>
@@ -82,7 +82,7 @@
            <input type="text"   name="nickname" />
           </td>
         </tr>
-            <tr>
+         <tr>
           <th>Gender:</th>
           <td>
           <select name="gender">
@@ -94,7 +94,7 @@
         <tr>
           <th>Email:</th>
           <td>
-          	 <input type="text"  name="email" required autofocus />
+          	 <input type="text"  name="email"  />
           </td>
         </tr>
         <tr>
@@ -115,11 +115,63 @@
            <input type="text" name="city" />
           </td>
         </tr>
-         <tr>
-          <th>Interests:</th>
+          <tr>
+          <th>Main interest:</th>
+          <td> <input type="text"  name="interests"  /></td>
+        </tr>
+          <tr>
+          <th>Number of Gold Awards:</th>
           <td>
-           <input type="text" name="interests" />
-          </td>
+          <select name="award_G">
+        <option value="0">0</option>
+  		<option value="1">1</option>
+  		<option value="2">2</option>
+ 		<option value="3">3</option>
+  		<option value="4">4</option>
+  		<option value="5">5</option>
+  		<option value="6">6</option>
+  		<option value="7">7</option>
+  		<option value="8">8</option>
+  		<option value="9">9</option>
+  		<option value="10">10</option>
+		</select>
+		   </td>
+        </tr>
+        <tr>
+          <th>Number of Silver Awards:</th>
+          <td>
+          <select name="award_S">
+        <option value="0">0</option>
+  		<option value="1">1</option>
+  		<option value="2">2</option>
+ 		<option value="3">3</option>
+  		<option value="4">4</option>
+  		<option value="5">5</option>
+  		<option value="6">6</option>
+  		<option value="7">7</option>
+  		<option value="8">8</option>
+  		<option value="9">9</option>
+  		<option value="10">10</option>
+		</select>
+		   </td>
+        </tr>
+        <tr>
+          <th>Number of Bronze Awards:</th>
+          <td>
+          <select name="award_B">
+        <option value="0">0</option>
+  		<option value="1">1</option>
+  		<option value="2">2</option>
+ 		<option value="3">3</option>
+  		<option value="4">4</option>
+  		<option value="5">5</option>
+  		<option value="6">6</option>
+  		<option value="7">7</option>
+  		<option value="8">8</option>
+  		<option value="9">9</option>
+  		<option value="10">10</option>
+		</select>
+		   </td>
         </tr>
 
 		</table>

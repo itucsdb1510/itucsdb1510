@@ -37,6 +37,9 @@ class Store:
         self.basicmembers = {}
         self.basicmember_last_key = 0
 
+        self.professionalmembers = {}
+        self.professionalmember_last_key = 0
+
     def add_team(self, team):
         self.team_last_key += 1
         self.teams[self.team_last_key] = team
@@ -241,7 +244,22 @@ class Store:
     def get_basicmembers(self):
         return sorted(self.basicmembers.items())
 
+# PROFESSIONAL MEMBER FUNCTIONS
+    def add_professionalmember(self, professionalmember):
+        self.professionalmember_last_key += 1
+        self.professionalmembers[self.professionalmember_last_key] = professionalmember
+        # professionalmember_count +=1
 
+    def delete_professionalmember(self, key):
+        del self.professionalmembers[key]
+        self.professionalmember_last_key -= 1
+        # professionalmember_count -= 1
+
+    def get_professionalmember(self, key):
+        return self.professionalmembers[key]
+
+    def get_professionalmembers(self):
+        return sorted(self.professionalmembers.items())
 
 
 

@@ -1,13 +1,12 @@
 import datetime
 import os
 
-
 from flask import render_template
 from pip._vendor.requests.packages.urllib3.util.timeout import current_time
 
-
 from config import app
 from store import Store
+
 from team import Team
 import team_views
 
@@ -36,6 +35,9 @@ import bike_views
 
 from basicmember import Basicmember
 import basicmember_views
+
+from professionalmember import Professionalmember
+import professionalmember_views
 
 
 @app.route('/')
