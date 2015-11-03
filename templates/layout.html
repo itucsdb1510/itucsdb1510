@@ -47,24 +47,19 @@
 
 						</ul>
 					</li>
+
+
+
 					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Team Page <span
+						data-toggle="dropdown" href="#">Team & Activity <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="{{ url_for('team_edit_page') }}">Add Team</a></li>
 							<li><a href="{{ url_for('teams_page') }}"> List Teams</a></li>
-
-						</ul>
-					</li>
-
-
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Activity <span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="{{ url_for('activity_page') }}">SocialActivity List</a></li>
+							<li><a href="{{ url_for('activity_edit_page') }}">Add Activity</a></li>
+							<li><a href="{{ url_for('activities_page') }}">List Activities</a></li>
 							<li><a href="{{ url_for('race_edit_page') }}">Add Race</a></li>
-							<li><a href="{{ url_for('races_page') }}"> Race List</a></li>
+							<li><a href="{{ url_for('races_page') }}">List Races</a></li>
 							<li><a href="{{ url_for('racecalendar_page') }}">RaceCalendar</a></li>
 
 						</ul>

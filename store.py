@@ -36,6 +36,9 @@ class Store:
         self.professionalmembers = {}
         self.professionalmember_last_key = 0
 
+        self.activities = {}
+        self.activity_last_key = 0
+
 #TEAM
     def add_team(self, team):
         self.team_last_key += 1
@@ -238,5 +241,18 @@ class Store:
     def get_professionalmembers(self):
         return sorted(self.professionalmembers.items())
 
+#ACTIVITY
+    def add_activity(self, activity):
+        self.activity_last_key += 1
+        self.activities[self.activity_last_key] = activity
 
+    def delete_activity(self, key):
+        del self.activities[key]
+        self.activity_last_key -= 1
+
+    def get_activity(self, key):
+        return self.activities[key]
+
+    def get_activities(self):
+        return sorted(self.activities.items())
 

@@ -39,6 +39,8 @@ import basicmember_views
 from professionalmember import Professionalmember
 import professionalmember_views
 
+from activity import Activity
+import activity_views
 
 @app.route('/')
 def home():
@@ -46,10 +48,6 @@ def home():
     return render_template('home.html', current_time=now.ctime())
 
 
-@app.route('/activity')
-def activity_page():
-    now = datetime.datetime.now();
-    return render_template('activity.html', current_time=now.ctime())
 
 @app.route('/racecalendar')
 def racecalendar_page():
