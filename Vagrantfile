@@ -5,13 +5,14 @@ Vagrant.configure("2") do |config|
     config.vm.box = "trusty32"
     config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-i386-vagrant-disk1.box"
 
-    config.vm.network :forwarded_port, guest: 5432, host:54321
+    config.vm.network :forwarded_port, guest: 5432, host: 54321
     config.vm.network :forwarded_port, guest: 5000, host: 50001
 
     config.vm.provider "virtualbox" do |vb|
         #vb.customize ["modifyvm", :id, "--memory", "1024"]
         vb.customize ["modifyvm", :id, "--name", "itucsdb" ]
     end
+
 
     # fix locale
     config.vm.provision :shell do |shell|
@@ -36,3 +37,5 @@ Vagrant.configure("2") do |config|
         shell.path = "vagrant-manifests/initpg.sh"
     end
 end
+
+
