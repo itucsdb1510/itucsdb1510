@@ -13,7 +13,6 @@ Vagrant.configure("2") do |config|
         vb.customize ["modifyvm", :id, "--name", "itucsdb" ]
     end
 
-
     # fix locale
     config.vm.provision :shell do |shell|
         shell.path = "vagrant-manifests/fixlocale.sh"
@@ -37,5 +36,3 @@ Vagrant.configure("2") do |config|
         shell.path = "vagrant-manifests/initpg.sh"
     end
 end
-
-
