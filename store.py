@@ -1,8 +1,10 @@
 from sre_constants import CATEGORY_DIGIT
 from _operator import length_hint
 
+
 class Store:
     def __init__(self):
+
         self.teams = {}
         self.team_last_key = 0
 
@@ -41,8 +43,12 @@ class Store:
 
 #TEAM
     def add_team(self, team):
-        self.team_last_key += 1
-        self.teams[self.team_last_key] = team
+       with dbapi2.connect(self.dbfile) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO TEAM (TITLE, FOUNDER) VALUES (?, ?)"
+            cursor.execute(query, (team.title, team.year))
+            connection.commit()
+            self.team_last_key = cursor.lastrowid
 
     def delete_team(self, key):
         del self.teams[key]
