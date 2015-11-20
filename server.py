@@ -2,14 +2,13 @@ import datetime
 import json
 import os
 import re
-
-from flask import render_template
-from config import app
-
 import psycopg2 as dbapi2
-from flask import redirect
-from flask.helpers import url_for
 
+from flask import Flask
+from flask import redirect
+from flask import render_template
+from flask.helpers import url_for
+from config import app
 
 
 from store import Store
@@ -75,6 +74,14 @@ def initialize_database():
         cursor.execute(query)
 
         query = "INSERT INTO COUNTER (N) VALUES (0)"
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS TEAM (
+                NAME VARCHAR(80),
+                SCORE INTEGER,
+                FOUNDER VARCHAR(80),
+                YEAR DATE
+                )"""
         cursor.execute(query)
 
 

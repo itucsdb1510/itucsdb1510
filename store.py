@@ -1,10 +1,11 @@
 from sre_constants import CATEGORY_DIGIT
 from _operator import length_hint
+import psycopg2 as dbapi2
+from team import Team
 
 
 class Store:
     def __init__(self):
-
         self.teams = {}
         self.team_last_key = 0
 
@@ -43,12 +44,8 @@ class Store:
 
 #TEAM
     def add_team(self, team):
-       with dbapi2.connect(self.dbfile) as connection:
-            cursor = connection.cursor()
-            query = "INSERT INTO TEAM (TITLE, FOUNDER) VALUES (?, ?)"
-            cursor.execute(query, (team.title, team.year))
-            connection.commit()
-            self.team_last_key = cursor.lastrowid
+        self.team_last_key += 1
+        self.teams[self.team_last_key] = team
 
     def delete_team(self, key):
         del self.teams[key]
