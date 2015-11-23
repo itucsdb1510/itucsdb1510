@@ -24,11 +24,11 @@ def bikes_page():
     else:
         model = request.form['model']
         brand = request.form['brand']
-        bike_type = request.form.get('bike_type')
+        type = request.form.get('type')
         size = request.form['size']
         year = request.form['year']
         price = request.form['price']
-        bike = Bike(model,brand,bike_type,size,year,price)
+        bike = Bike(model,brand,type,size,year,price)
         app.store.add_bike(bike)
         return redirect(url_for('bike_page', key=app.store.bike_last_key))
 

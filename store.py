@@ -2,6 +2,9 @@ from sre_constants import CATEGORY_DIGIT
 from _operator import length_hint
 import psycopg2 as dbapi2
 from team import Team
+from bike import Bike
+from cycroute import Cycroute
+from experience import Experience
 
 
 class Store:
@@ -113,18 +116,39 @@ class Store:
 #EXPERIENCE
     def add_experience(self, experience):
 
-        self.exp_key += 1
-        self.experiences[self.exp_key] = experience
+       with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO EXPERIENCE (TITLE, USERNAME, START,FINISH,PERIOD,LENGTH) VALUES (%s, %s, %s, %s, %s, %s) RETURNING EXPERIENCE.ID"
+            cursor.execute(query, (experience.title, experience.username, experience.start, experience.finish,float(experience.period), float(experience.length)))
+            connection.commit()
+            self.exp_key = cursor.fetchone()[0]
+
 
     def delete_experience(self, key):
-        del self.experiences[key]
-        self.exp_key -= 1
+       with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM EXPERIENCE WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
+
 
     def get_experience(self, key):
-        return self.experiences[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT TITLE, USERNAME, START,FINISH,PERIOD,LENGTH FROM EXPERIENCE WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            title, username, start, finish, period,length = cursor.fetchone()
+        return Experience(title, username, start, finish, period,length)
+
 
     def get_experiences(self):
-        return sorted(self.experiences.items())
+          with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM EXPERIENCE ORDER BY ID"
+            cursor.execute(query)
+            experiences = [(key, Experience(title, username, start, finish, period, length))
+                      for key, title, username, start, finish, period, length in cursor]
+            return experiences
 
 
     def update_experience(self, key, title, username, start, finish, period, length):
@@ -190,18 +214,36 @@ class Store:
 #CYCROUTE
     def add_cycroute(self, cycroute):
 
-        self.cycroute_last_key += 1
-        self.cycroutes[self.cycroute_last_key] = cycroute
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO CYCROUTE (TITLE, USERNAME, START,FINISH,LENGTH) VALUES (%s, %s, %s, %s, %s) RETURNING CYCROUTE.ID"
+            cursor.execute(query, (cycroute.title, cycroute.username, cycroute.start, cycroute.finish, float(cycroute.length)))
+            connection.commit()
+            self.cycroute_last_key = cursor.fetchone()[0]
 
     def delete_cycroute(self, key):
-        del self.cycroutes[key]
-        self.cycroute_last_key -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM CYCROUTE WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_cycroute(self, key):
-        return self.cycroutes[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT TITLE, USERNAME, START, FINISH, LENGTH FROM CYCROUTE WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            title, username, start, finish,length = cursor.fetchone()
+        return Cycroute(title, username, start, finish, length)
 
     def get_cycroutes(self):
-        return sorted(self.cycroutes.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM CYCROUTE ORDER BY ID"
+            cursor.execute(query)
+            cycroutes = [(key, Cycroute(title, username, start, finish, length))
+                      for key, title, username, start, finish, length in cursor]
+            return cycroutes
 
 
     def update_cycroute(self, key, title, username, start, finish, length):
@@ -213,18 +255,36 @@ class Store:
 
 #BIKE
     def add_bike(self, bike):
-        self.bike_last_key += 1
-        self.bikes[self.bike_last_key] = bike
+         with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO BIKE (MODEL, BRAND, TYPE, SIZE, YEAR, PRICE) VALUES (%s, %s, %s, %s, %s, %s) RETURNING BIKE.ID"
+            cursor.execute(query, (bike.model, bike.brand ,bike.type ,bike.size ,bike.year ,int(bike.price)))
+            connection.commit()
+            self.bike_last_key = cursor.fetchone()[0]
 
     def delete_bike(self, key):
-        del self.bikes[key]
-        self.bike_last_key -= 1
+       with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM BIKE WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_bike(self, key):
-        return self.bikes[key]
+          with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT MODEL, BRAND, TYPE, SIZE, YEAR, PRICE FROM BIKE WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            model,brand, type, size, year, price = cursor.fetchone()
+            return Bike(model, brand, type, size, year, price)
 
     def get_bikes(self):
-        return sorted(self.bikes.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM BIKE ORDER BY ID"
+            cursor.execute(query)
+            bikes = [(key, Bike(model,brand, type, size, year, price))
+                      for key, model,brand, type, size, year, price in cursor]
+        return bikes
 
     def update_bike(self, key, price):
         self.bikes[key].price = price

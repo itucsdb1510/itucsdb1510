@@ -85,6 +85,41 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
+        query = """CREATE TABLE IF NOT EXISTS BIKE (
+                ID SERIAL PRIMARY KEY,
+                MODEL VARCHAR(40),
+                BRAND VARCHAR(40),
+                TYPE VARCHAR(40),
+                SIZE VARCHAR(10),
+                YEAR VARCHAR(10),
+                PRICE FLOAT
+                )"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS EXPERIENCE (
+                ID SERIAL PRIMARY KEY,
+                TITLE VARCHAR(40),
+                USERNAME VARCHAR(40),
+                START VARCHAR(40),
+                FINISH VARCHAR(10),
+                PERIOD FLOAT,
+                LENGTH FLOAT
+                )"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS CYCROUTE (
+                ID SERIAL PRIMARY KEY,
+                TITLE VARCHAR(40),
+                USERNAME VARCHAR(40),
+                START VARCHAR(40),
+                FINISH VARCHAR(10),
+                LENGTH FLOAT
+                )"""
+        cursor.execute(query)
+
+
+
+
 
 
     return redirect(url_for('home'))
