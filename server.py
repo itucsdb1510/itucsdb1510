@@ -77,10 +77,11 @@ def initialize_database():
         cursor.execute(query)
 
         query = """CREATE TABLE IF NOT EXISTS TEAM (
+                ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(80),
                 SCORE INTEGER,
                 FOUNDER VARCHAR(80),
-                YEAR DATE
+                YEAR INTEGER
                 )"""
         cursor.execute(query)
 
@@ -142,7 +143,7 @@ def counter_page():
     return "This page was accessed %d times" % count
 
 if __name__ == '__main__':
-    app.store = Store()
+    app.store = Store(app)
     VCAP_APP_PORT = os.getenv('VCAP_APP_PORT')
     if VCAP_APP_PORT is not None:
         port, debug = int(VCAP_APP_PORT), False

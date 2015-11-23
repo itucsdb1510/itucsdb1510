@@ -5,9 +5,10 @@ from team import Team
 
 
 class Store:
-    def __init__(self):
+    def __init__(self, app):
+        self.app = app
         self.teams = {}
-        self.team_last_key = 0
+        self.team_last_key = None
 
         self.experiences = {}
         self.exp_key = 0
@@ -44,18 +45,37 @@ class Store:
 
 #TEAM
     def add_team(self, team):
-        self.team_last_key += 1
-        self.teams[self.team_last_key] = team
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO TEAM (NAME, SCORE, FOUNDER, YEAR) VALUES (%s, %s, %s, %s) RETURNING TEAM.ID"
+            cursor.execute(query, (team.title, int(team.score), team.founder, int(team.year)))
+            connection.commit()
+            self.team_last_key = cursor.fetchone()[0]
+
 
     def delete_team(self, key):
-        del self.teams[key]
-        self.team_last_key -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM TEAM WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_team(self, key):
-        return self.teams[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT NAME, SCORE, FOUNDER, YEAR FROM TEAM WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            name, score, founder, year = cursor.fetchone()
+        return Team(name, score, founder, year)
 
     def get_teams(self):
-        return sorted(self.teams.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM TEAM ORDER BY ID"
+            cursor.execute(query)
+            teams = [(key, Team(name, score, founder, year))
+                      for key, name, score, founder, year in cursor]
+        return teams
 
     def addMember(self, key):
         self.teams[key].team_count = 5
