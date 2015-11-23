@@ -5,6 +5,9 @@ from team import Team
 from bike import Bike
 from cycroute import Cycroute
 from experience import Experience
+from activity import Activity
+from race import Race
+from _datetime import date
 
 
 class Store:
@@ -44,7 +47,7 @@ class Store:
         self.professionalmember_last_key = 0
 
         self.activities = {}
-        self.activity_last_key = 0
+        self.activity_last_key = None
 
 #TEAM
     def add_team(self, team):
@@ -161,18 +164,36 @@ class Store:
 
 #RACE
     def add_race(self, race):
-        self.race_last_key += 1
-        self.races[self.race_last_key] = race
+       with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO RACE (TITLE, RACE_TYPE, FOUNDERID, TIME, PLACE) VALUES (%s, %s, %s, %s, %s) RETURNING RACE.ID"
+            cursor.execute(query, (race.title, race.race_type, int(race.founder), int(race.time), race.place))
+            connection.commit()
+            self.race_last_key = cursor.fetchone()[0]
 
     def delete_race(self, key):
-        del self.races[key]
-        self.race_last_key -= 1
+         with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM RACE WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_race(self, key):
-        return self.races[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT TITLE, RACE_TYPE, FOUNDERID, TIME, PLACE FROM RACE WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            title, race_type, founder, time, place  = cursor.fetchone()
+        return Race(title, race_type, founder, time, place)
 
     def get_races(self):
-        return sorted(self.races.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM RACE ORDER BY ID"
+            cursor.execute(query)
+            races = [(key, Race(title, race_type, founder, time, place))
+                      for key, title, race_type, founder, time, place in cursor]
+        return races
 
 #CATEGORY
     def count_category(self, category):
@@ -326,16 +347,35 @@ class Store:
 
 #ACTIVITY
     def add_activity(self, activity):
-        self.activity_last_key += 1
-        self.activities[self.activity_last_key] = activity
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO ACTIVITY (TITLE, ACTIVITY_TYPE, FOUNDERID, TIME, PLACE, ACTIVITY_INFO) VALUES (%s, %s, %s, %s, %s, %s) RETURNING ACTIVITY.ID"
+            cursor.execute(query, (activity.title, activity.activity_type, int(activity.founder), int(activity.time), activity.place, activity.activity_info))
+            connection.commit()
+            self.activity_last_key = cursor.fetchone()[0]
+
 
     def delete_activity(self, key):
-        del self.activities[key]
-        self.activity_last_key -= 1
+       with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM ACTIVITY WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_activity(self, key):
-        return self.activities[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT TITLE, ACTIVITY_TYPE, FOUNDERID, TIME, PLACE, ACTIVITY_INFO FROM ACTIVITY WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            title, activity_type, founder, time, place, activity_info = cursor.fetchone()
+        return Activity(title, activity_type, founder, time, place, activity_info)
 
     def get_activities(self):
-        return sorted(self.activities.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM ACTIVITY ORDER BY ID"
+            cursor.execute(query)
+            activities = [(key, Activity(title, activity_type, founder, time, place, activity_info))
+                      for key, title, activity_type, founder, time, place, activity_info in cursor]
+        return activities
 

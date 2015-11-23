@@ -26,7 +26,8 @@ def activities_page():
         founder = request.form['founder']
         time = request.form['time']
         place = request.form['place']
-        activity = Activity(title, activity_type, founder, time, place)
+        activity_info = request.form['activity_info']
+        activity = Activity(title, activity_type, founder, time, place, activity_info)
         app.store.add_activity(activity)
         return redirect(url_for('activity_page', key=app.store.activity_last_key))
 

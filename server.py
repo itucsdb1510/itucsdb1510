@@ -117,7 +117,26 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
+        query = """CREATE TABLE IF NOT EXISTS ACTIVITY (
+                ID SERIAL PRIMARY KEY,
+                TITLE VARCHAR(40),
+                ACTIVITY_TYPE VARCHAR(40),
+                FOUNDERID INTEGER,
+                TIME INTEGER,
+                PLACE VARCHAR(40),
+                ACTIVITY_INFO VARCHAR(150)
+                )"""
+        cursor.execute(query)
 
+        query = """CREATE TABLE IF NOT EXISTS RACE (
+                ID SERIAL PRIMARY KEY,
+                TITLE VARCHAR(40),
+                RACE_TYPE VARCHAR(40),
+                FOUNDERID INTEGER,
+                TIME INTEGER,
+                PLACE VARCHAR(40)
+                )"""
+        cursor.execute(query)
 
 
 
