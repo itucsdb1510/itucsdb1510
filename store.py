@@ -8,7 +8,7 @@ from experience import Experience
 from activity import Activity
 from race import Race
 from _datetime import date
-
+from announcement import Announcement
 
 class Store:
     def __init__(self, app):
@@ -86,20 +86,39 @@ class Store:
     def addMember(self, key):
         self.teams[key].team_count = 5
 
+
 #ANNOUNCEMENT
     def add_announcement(self, announcement):
-        self.announcement_last_key += 1
-        self.announcements[self.announcement_last_key] = announcement
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO ANNOUNCEMENT (TITLE, TEXT) VALUES (%s, %s) RETURNING ANNOUNCEMENT.ID"
+            cursor.execute(query, (announcement.title, announcement.text))
+            connection.commit()
+            self.announcement_last_key = cursor.fetchone()[0]
 
     def delete_announcement(self, key):
-        del self.announcements[key]
-        self.announcement_last_key -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM ANNOUNCEMENT WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_announcement(self, key):
-        return self.announcements[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT TITLE, TEXT FROM ANNOUNCEMENT WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            title, text = cursor.fetchone()
+        return Announcement(title, text)
 
     def get_announcements(self):
-        return sorted(self.announcements.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM ANNOUNCEMENT ORDER BY ID"
+            cursor.execute(query)
+            announcements = [(key, Announcement(title, text))
+                      for key, title, text in cursor]
+        return announcements
 
 #TOPIC
     def add_topic(self, topic):

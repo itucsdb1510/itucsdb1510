@@ -138,6 +138,12 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
+        query = """CREATE TABLE IF NOT EXISTS ANNOUNCEMENT (
+                ID SERIAL PRIMARY KEY,
+                TITLE VARCHAR(40),
+                TEXT VARCHAR(80)
+                )"""
+        cursor.execute(query)
 
 
 
