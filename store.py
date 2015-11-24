@@ -191,7 +191,7 @@ class Store:
     def search_experience(self,keyword):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query="SELECT * FROM EXPERIENCE WHERE (TITLE LIKE %s OR START LIKE%s OR FINISH LIKE %s ) ORDER BY ID"
+            query="SELECT * FROM EXPERIENCE WHERE (TITLE ILIKE %s OR START ILIKE%s OR FINISH ILIKE %s ) ORDER BY ID"
             keyword='%'+keyword+'%'
             cursor.execute(query, (keyword,keyword,keyword))
             experiences = [(key, Experience(title, username, start, finish, period, length))
@@ -336,7 +336,7 @@ class Store:
     def search_cycroute(self,keyword):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query="SELECT * FROM CYCROUTE WHERE (TITLE LIKE %s OR START LIKE%s OR FINISH LIKE %s ) ORDER BY ID"
+            query="SELECT * FROM CYCROUTE WHERE (TITLE ILIKE %s OR START ILIKE%s OR FINISH ILIKE %s ) ORDER BY ID"
             keyword='%'+keyword+'%'
             cursor.execute(query, (keyword,keyword,keyword))
             cycroutes = [(key, Cycroute(title, username, start, finish,length))
@@ -387,7 +387,7 @@ class Store:
     def search_bike(self,keyword):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query="SELECT * FROM BIKE WHERE (MODEL LIKE %s OR BRAND LIKE%s OR TYPE LIKE %s ) ORDER BY ID"
+            query="SELECT * FROM BIKE WHERE (MODEL ILIKE %s OR BRAND ILIKE%s OR TYPE ILIKE %s ) ORDER BY ID"
             keyword='%'+keyword+'%'
             cursor.execute(query, (keyword,keyword,keyword))
             bikes = [(key, Bike(model,brand, type, size, year, price))
