@@ -10,6 +10,9 @@
 	href="{{ url_for('static', filename='experiences.css') }}" />
 <h2>Experiences</h2>
    <form action="{{ url_for('experiences_page') }}" method="post">
+
+   <input type="search" name="search" value="{{search}}">
+  <input type="submit" value="search" name="submit">
       <table>
         {% for key, experience in experiences %}
         <tr>
@@ -17,28 +20,27 @@
                      value="{{ key }}" /></td>
           <td>
             <a href="{{ url_for('experience_page', key=key) }}">
-              {{ experience.title }} 
+              {{ experience.title }}
               <div class="exp">
               <div class="exp_prop">Username: {{ experience.username }}</div>
               <div class="exp_prop">Start: {{ experience.start }}</div>
               <div class="exp_prop">Finish: {{ experience.finish }}</div>
               <div class="exp_prop">Period: {{ experience.period }}</div>
               <div class="exp_prop">Length: {{ experience.length }}</div>
-              
-              
+
+
               </div>
             </a>
-            
+
           </td>
         </tr>
         {% endfor %}
       </table>
-      <input type="submit" value="Delete" name="delete" />
+      <input type="submit" value="Delete" name="submit" />
     </form>
 {% endblock %}
-              
-              
-              
-              
-              
-        
+
+
+
+
+

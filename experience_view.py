@@ -15,11 +15,18 @@ def experiences_page():
         now = datetime.datetime.now()
         return render_template('experiences.html', experiences=experiences,
                                current_time=now.ctime())
-    elif 'experiences_to_delete' in request.form:
-        keys = request.form.getlist('experiences_to_delete')
-        for key in keys:
-            app.store.delete_experience(int(key))
-        return redirect(url_for('experiences_page'))
+    elif 'experiences_to_delete' in request.form or 'search' in request.form:
+        if request.form['submit'] == 'Delete':
+            keys = request.form.getlist('experiences_to_delete')
+            for key in keys:
+                app.store.delete_experience(int(key))
+            return redirect(url_for('experiences_page'))
+        elif  request.form['submit'] == 'search' :
+            keyword=request.form['search']
+            experiences = app.store.search_experience(keyword)
+            now = datetime.datetime.now()
+            return render_template('experiences.html', experiences=experiences,
+                               current_time=now.ctime())
     else:
         title = request.form['title']
         username = request.form['username']

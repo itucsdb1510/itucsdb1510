@@ -15,11 +15,18 @@ def cycroutes_page():
         now = datetime.datetime.now()
         return render_template('cycroutes.html', cycroutes=cycroutes,
                                current_time=now.ctime())
-    elif 'cycroutes_to_delete' in request.form:
-        keys = request.form.getlist('cycroutes_to_delete')
-        for key in keys:
-            app.store.delete_cycroute(int(key))
-        return redirect(url_for('cycroutes_page'))
+    elif 'cycroutes_to_delete' in request.form or 'search' in request.form:
+        if request.form['submit'] == 'Delete':
+            keys = request.form.getlist('cycroutes_to_delete')
+            for key in keys:
+                app.store.delete_cycroute(int(key))
+            return redirect(url_for('cycroutes_page'))
+        elif  request.form['submit'] == 'search' :
+            keyword=request.form['search']
+            cycroutes = app.store.search_cycroute(keyword)
+            now = datetime.datetime.now()
+            return render_template('cycroutes.html', cycroutes=cycroutes,
+                               current_time=now.ctime())
     else:
         title = request.form['title']
         username = request.form['username']

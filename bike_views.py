@@ -8,7 +8,7 @@ from flask import url_for
 from config import app
 from bike import Bike
 
-
+#request.form.get('delete',None)
 @app.route('/bikes', methods=['GET', 'POST'])
 def bikes_page():
     if request.method == 'GET':
@@ -16,21 +16,31 @@ def bikes_page():
         now = datetime.datetime.now()
         return render_template('bikes.html', bikes=bikes,
                                current_time=now.ctime())
-    elif 'bikes_to_delete' in request.form:
-        keys = request.form.getlist('bikes_to_delete')
-        for key in keys:
-            app.store.delete_bike(int(key))
-        return redirect(url_for('bikes_page'))
+
+    elif  'bike_to_delete' in request.form or 'search' in request.form:
+        if request.form['submit'] == 'Delete':
+            keys = request.form.getlist('bikes_to_delete')
+            for key in keys:
+                app.store.delete_bike(int(key))
+            return redirect(url_for('bikes_page'))
+
+        elif  request.form['submit'] == 'search' :
+            keyword=request.form['search']
+            bikes = app.store.search_bike(keyword)
+            now = datetime.datetime.now()
+            return render_template('bikes.html', bikes=bikes,
+                               current_time=now.ctime())
     else:
-        model = request.form['model']
-        brand = request.form['brand']
-        type = request.form.get('type')
-        size = request.form['size']
-        year = request.form['year']
-        price = request.form['price']
-        bike = Bike(model,brand,type,size,year,price)
-        app.store.add_bike(bike)
-        return redirect(url_for('bike_page', key=app.store.bike_last_key))
+            model = request.form['model']
+            brand = request.form['brand']
+            type = request.form.get('type')
+            size = request.form['size']
+            year = request.form['year']
+            price = request.form['price']
+            bike = Bike(model,brand,type,size,year,price)
+            app.store.add_bike(bike)
+            return redirect(url_for('bike_page', key=app.store.bike_last_key))
+
 
 
 @app.route('/bike/<int:key>', methods=['GET', 'POST'])
