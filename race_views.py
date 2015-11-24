@@ -15,11 +15,18 @@ def races_page():
         now = datetime.datetime.now()
         return render_template('races.html', races=races,
                                current_time=now.ctime())
-    elif 'races_to_delete' in request.form:
-        keys = request.form.getlist('races_to_delete')
-        for key in keys:
-            app.store.delete_race(int(key))
-        return redirect(url_for('races_page'))
+    elif  'races_to_delete' in request.form or 'search' in request.form:
+        if request.form['submit'] == 'Delete':
+            keys = request.form.getlist('races_to_delete')
+            for key in keys:
+                app.store.delete_race(int(key))
+            return redirect(url_for('races_page'))
+        elif  request.form['submit'] == 'search' :
+            keyword=request.form['search']
+            races = app.store.search_race(keyword)
+            now = datetime.datetime.now()
+            return render_template('races.html', races=races,
+                               current_time=now.ctime())
     else:
         title = request.form['title']
         race_type = request.form['race_type']

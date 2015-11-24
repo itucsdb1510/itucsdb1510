@@ -7,6 +7,8 @@
 {% block content %}
 <h2>Activity Home Page</h2>
    <form action="{{ url_for('activities_page') }}" method="post">
+   	  <input type="search" name="search" value="{{search}}">
+	  <input type="submit" value="search" name="submit">
       <table>
         {% for key, activity in activities %}
         <tr>
@@ -20,6 +22,6 @@
         </tr>
         {% endfor %}
       </table>
-      <input type="submit" value="Delete" name="delete" />
+      <input type="submit" value="Delete" name="submit" />
     </form>
 {% endblock %}

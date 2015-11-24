@@ -6,9 +6,13 @@
 {% block title %}Team List{% endblock %}
 {% block content %}
 <h2>Team Home Page</h2>
+
+
    <form action="{{ url_for('teams_page') }}" method="post">
-      <table>
-        {% for key, team in teams %}
+	  <input type="search" name="search" value="{{search}}">
+	  <input type="submit" value="search" name="submit">
+	      <table>
+	        {% for key, team in teams %}
         <tr>
           <td><input type="checkbox" name="teams_to_delete"
                      value="{{ key }}" /></td>
@@ -20,6 +24,6 @@
         </tr>
         {% endfor %}
       </table>
-      <input type="submit" value="Delete" name="delete" />
+      <input type="submit" value="Delete" name="submit" />
     </form>
 {% endblock %}
