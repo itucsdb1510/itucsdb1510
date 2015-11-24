@@ -9,6 +9,7 @@ from activity import Activity
 from race import Race
 from _datetime import date
 from announcement import Announcement
+from admin import Admin
 
 class Store:
     def __init__(self, app):
@@ -82,6 +83,13 @@ class Store:
             teams = [(key, Team(name, score, founder, year))
                       for key, name, score, founder, year in cursor]
         return teams
+
+    def update_team(self, key, title, score, founder, year):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE TEAM SET NAME = %s, SCORE = %s, FOUNDER = %s, YEAR = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, score, founder, year, key))
+            connection.commit()
 
     def addMember(self, key):
         self.teams[key].team_count = 5
@@ -194,8 +202,8 @@ class Store:
     def add_race(self, race):
        with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO RACE (TITLE, RACE_TYPE, FOUNDERID, TIME, PLACE) VALUES (%s, %s, %s, %s, %s) RETURNING RACE.ID"
-            cursor.execute(query, (race.title, race.race_type, int(race.founder), int(race.time), race.place))
+            query = "INSERT INTO RACE (TITLE, RACE_TYPE, FOUNDERID, TIME, CYCROUTEID) VALUES (%s, %s, %s, %s, %s) RETURNING RACE.ID"
+            cursor.execute(query, (race.title, race.race_type, int(race.founder), race.time, race.place))
             connection.commit()
             self.race_last_key = cursor.fetchone()[0]
 
@@ -209,7 +217,7 @@ class Store:
     def get_race(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT TITLE, RACE_TYPE, FOUNDERID, TIME, PLACE FROM RACE WHERE (ID = %s)"
+            query = "SELECT TITLE, RACE_TYPE, FOUNDERID, TIME, CYCROUTEID FROM RACE WHERE (ID = %s)"
             cursor.execute(query, (key,))
             title, race_type, founder, time, place  = cursor.fetchone()
         return Race(title, race_type, founder, time, place)
@@ -223,6 +231,12 @@ class Store:
                       for key, title, race_type, founder, time, place in cursor]
         return races
 
+    def update_race(self, key, title, race_type, founder, time, place):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE RACE SET TITLE = %s, RACE_TYPE = %s, FOUNDERID = %s, TIME = %s, CYCROUTEID = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, race_type, founder, time, place, key))
+            connection.commit()
 #CATEGORY
     def count_category(self, category):
         self.category_count += 1
@@ -244,20 +258,38 @@ class Store:
 
 #ADMIN
     def add_admin(self, admin):
-        self.admin_last_key += 1
-        self.admins[self.admin_last_key] = admin
-        # admin_count +=1
+         with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO ADMIN (NAME, SURNAME, NICKNAME, EMAIL, PASSWORD, YEAR) VALUES (%s, %s, %s, %s, %s, %s) RETURNING ADMIN.ID"
+            cursor.execute(query, (admin.name, admin.surname, admin.nickname, admin.email, admin.password, int(admin.year)))
+            connection.commit()
+            self.admin_last_key = cursor.fetchone()[0]
 
     def delete_admin(self, key):
-        del self.admins[key]
-        self.admin_last_key -= 1
-        # admin_count -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM ADMIN WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_admin(self, key):
-        return self.admins[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT NAME, SURNAME, NICKNAME, EMAIL, PASSWORD, YEAR FROM ADMIN WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            name, surname, nickname, email, password, year = cursor.fetchone()
+        return Admin(name, surname, nickname, email, password, year)
+
 
     def get_admins(self):
-        return sorted(self.admins.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM ADMIN ORDER BY ID"
+            cursor.execute(query)
+            admins = [(key, Admin(name, surname, nickname, email, password, year))
+                      for key, name, surname, nickname, email, password, year in cursor]
+        return admins
+
 
 
 #CYCROUTE
@@ -403,7 +435,7 @@ class Store:
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO ACTIVITY (TITLE, ACTIVITY_TYPE, FOUNDERID, TIME, PLACE, ACTIVITY_INFO) VALUES (%s, %s, %s, %s, %s, %s) RETURNING ACTIVITY.ID"
-            cursor.execute(query, (activity.title, activity.activity_type, int(activity.founder), int(activity.time), activity.place, activity.activity_info))
+            cursor.execute(query, (activity.title, activity.activity_type, int(activity.founder), activity.time, activity.place, activity.activity_info))
             connection.commit()
             self.activity_last_key = cursor.fetchone()[0]
 
@@ -431,4 +463,11 @@ class Store:
             activities = [(key, Activity(title, activity_type, founder, time, place, activity_info))
                       for key, title, activity_type, founder, time, place, activity_info in cursor]
         return activities
+
+    def update_activity(self, key, title, activity_type, founder, time, place, activity_info):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE ACTIVITY SET TITLE = %s, ACTIVITY_TYPE = %s, FOUNDERID = %s, TIME = %s, PLACE = %s, ACTIVITY_INFO = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, activity_type, founder, time, place, activity_info, key))
+            connection.commit()
 

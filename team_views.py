@@ -39,10 +39,17 @@ def team_page(key):
         return render_template('team.html', team=team,
                                current_time=now.ctime())
     else:
-        app.store.addMember(key)
-        return redirect(url_for('team_page', key=app.store.team_last_key))
+        title = request.form['title']
+        score = request.form['score']
+        founder = request.form['founder']
+        year = request.form['year']
+        app.store.update_team(key, title, score, founder, year)
+        return redirect(url_for('team_page', key=key))
 
 @app.route('/teams/add')
-def team_edit_page():
+@app.route('/team/<int:key>/edit')
+def team_edit_page(key=None):
+    team = app.store.get_team(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('team_edit.html', current_time=now.ctime())
+    return render_template('team_edit.html', team=team,
+                           current_time=now.ctime())

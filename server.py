@@ -122,7 +122,7 @@ def initialize_database():
                 TITLE VARCHAR(40),
                 ACTIVITY_TYPE VARCHAR(40),
                 FOUNDERID INTEGER,
-                TIME INTEGER,
+                TIME VARCHAR(40),
                 PLACE VARCHAR(40),
                 ACTIVITY_INFO VARCHAR(150)
                 )"""
@@ -133,8 +133,8 @@ def initialize_database():
                 TITLE VARCHAR(40),
                 RACE_TYPE VARCHAR(40),
                 FOUNDERID INTEGER,
-                TIME INTEGER,
-                PLACE VARCHAR(40)
+                TIME VARCHAR(40),
+                CYCROUTEID INTEGER
                 )"""
         cursor.execute(query)
 
@@ -142,6 +142,17 @@ def initialize_database():
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
                 TEXT VARCHAR(80)
+                )"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS ADMIN (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(30) NOT NULL,
+                SURNAME VARCHAR(30),
+                NICKNAME VARCHAR(30) ,
+                EMAIL VARCHAR(30) NOT NULL,
+                PASSWORD VARCHAR(6) NOT NULL,
+                YEAR NUMERIC(4)
                 )"""
         cursor.execute(query)
 

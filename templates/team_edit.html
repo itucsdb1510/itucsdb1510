@@ -1,33 +1,40 @@
 {% extends "layout.html" %}
 {% block title %}Team Edit Form{% endblock %}
 {% block content %}
-   <form action="{{ url_for('teams_page') }}" method="post">
+    {% set key = request.path.split('/')[-2] %}
+    {% set action = url_for('team_page', key=key) if team else url_for('teams_page') %}
+    {% set name = team.name if team else '' %}
+    {% set score = team.score if team else '' %}
+    {% set founder = team.founder if team else '' %}
+    {% set year = team.year if team else '' %}
+
+    <form action="{{ action }}" method="post">
       <table>
         <tr>
           <th>Title:</th>
           <td>
-          	 <input type="text" name="title"  required autofocus />
+          	 <input type="text" name="title" value="{{ title }}" required autofocus />
           </td>
         </tr>
         <tr>
           <th>Score:</th>
           <td>
-           <input type="text" name="score" />
+           <input type="text" name="score" value="{{ score }}" />
           </td>
         <tr>
         <tr>
           <th>Founder:</th>
           <td>
-           <input type="text" name="founder" />
+           <input type="text" name="founder" value="{{ founder }}"/>
           </td>
         </tr>
         <tr>
           <th>Year:</th>
           <td>
-           <input type="text" name="year" size="4" />
+           <input type="text" name="year" size="4" value="{{ year }}" />
           </td>
         </tr>
       </table>
       <input value="Save" name="save" type="submit" />
-    </form>
+	</form>
 {% endblock %}

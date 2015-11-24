@@ -41,10 +41,21 @@ def activity_page(key):
         return render_template('activity.html', activity=activity,
                                current_time=now.ctime())
     else:
-        app.store.addMember(key)
-        return redirect(url_for('activity_page', key=app.store.activity_last_key))
+        title = request.form['title']
+        activity_type = request.form['activity_type']
+        founder = request.form['founder']
+        time = request.form['time']
+        place = request.form['place']
+        activity_info = request.form['activity_info']
+        app.store.update_activity(key, title, activity_type, founder, time, place, activity_info)
+        return redirect(url_for('activity_page', key=key))
 
 @app.route('/activities/add')
-def activity_edit_page():
+@app.route('/activity/<int:key>/edit')
+def activity_edit_page(key=None):
+    activity = app.store.get_activity(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('activity_edit.html', current_time=now.ctime())
+    return render_template('activity_edit.html', activity=activity,
+                           current_time=now.ctime())
+
+
