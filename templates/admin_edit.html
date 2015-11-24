@@ -1,42 +1,51 @@
 {% extends "layout.html" %}
 {% block title %}Admin Edit Form{% endblock %}
 {% block content %}
-   <form action="{{ url_for('admins_page') }}" method="post">
+    {% set key = request.path.split('/')[-2] %}
+    {% set action = url_for('admin_page', key=key) if admin else url_for('admins_page') %}
+    {% set name = admin.name if admin else '' %}
+    {% set surname = admin.surname if admin else '' %}
+    {% set nickname = admin.nickname if admin else '' %}
+    {% set email = admin.email if admin else '' %}
+	{% set passsword = admin.password if admin else '' %}
+    {% set year = admin.year if admin else '' %}
+
+   <form action="{{ action }}" method="post">
       <table>
         <tr>
           <th>Name:</th>
           <td>
-          	 <input type="text" name="name" required autofocus />
+          	 <input type="text" name="name" value="{{ name }}" required autofocus />
           </td>
         </tr>
         <tr>
           <th>Surname:</th>
           <td>
-           <input type="text" name="surname" />
+           <input type="text" name="surname" value="{{ surname }}" />
           </td>
         </tr>
         <tr>
           <th>Nickname:</th>
           <td>
-           <input type="text" name="nickname" />
+           <input type="text" name="nickname" value="{{ nickname }}"/>
           </td>
         </tr>
         <tr>
           <th>Email:</th>
           <td>
-          	 <input type="text" name="email" required autofocus />
+          	 <input type="text" name="email" value="{{ email }}" required autofocus />
           </td>
         </tr>
         <tr>
           <th>Password:</th>
           <td>
-          	 <input type="text" name="password" size="6" />
+          	 <input type="text" name="password" size="6" value="{{ password }}" />
           </td>
         </tr>
         <tr>
           <th>Year of Birth:</th>
           <td>
-           <input type="text" name="year" size="4" />
+           <input type="text" name="year" size="4" value="{{ year }}" />
           </td>
         </tr>
       </table>

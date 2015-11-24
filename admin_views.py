@@ -15,11 +15,18 @@ def admins_page():
         now = datetime.datetime.now()
         return render_template('admins.html', admins=admins,
                                current_time=now.ctime())
-    elif 'admins_to_delete' in request.form:
-        keys = request.form.getlist('admins_to_delete')
-        for key in keys:
-            app.store.delete_admin(int(key))
-        return redirect(url_for('admins_page'))
+    elif  'admins_to_delete' in request.form or 'search' in request.form:
+        if request.form['submit'] == 'Delete':
+            keys = request.form.getlist('admins_to_delete')
+            for key in keys:
+                app.store.delete_admin(int(key))
+            return redirect(url_for('admins_page'))
+        elif  request.form['submit'] == 'search' :
+            keyword=request.form['search']
+            admins = app.store.search_admin(keyword)
+            now = datetime.datetime.now()
+            return render_template('admins.html', admins=admins,
+                               current_time=now.ctime())
     else:
         name = request.form['name']
         surname = request.form['surname']
@@ -41,10 +48,19 @@ def admin_page(key):
         return render_template('admin.html', admin=admin,
                                current_time=now.ctime())
     else:
-        return redirect(url_for('admin_page', key=app.store.admin_last_key))
+        name = request.form['name']
+        surname = request.form['surname']
+        nickname = request.form['nickname']
+        email = request.form['email']
+        password = request.form['password']
+        year = request.form['year']
+        app.store.update_admin(key,name, surname, nickname, email,password, year)
+        return redirect(url_for('admin_page', key=key))
 
 @app.route('/admins/add')
-def admin_edit_page():
+@app.route('/admin/<int:key>/edit')
+def admin_edit_page(key=None):
+    admin = app.store.get_admin(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('admin_edit.html', current_time=now.ctime())
+    return render_template('admin_edit.html', admin=admin, current_time=now.ctime())
 

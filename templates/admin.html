@@ -25,4 +25,8 @@
     <form action="{{ url_for('home') }}">
     	<input type="submit" value="Go back to Home Page">
     </form>
+
+      <p><a href="{{ request.path + '/edit' }}">Edit</a></p>
+
 {% endblock %}
+
