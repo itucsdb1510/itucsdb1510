@@ -27,7 +27,7 @@ def experiences_page():
         finish = request.form['finish']
         period = request.form['period']
         length=request.form['length']
-        
+
         experience = Experience(title, username, start, finish,period,length)
         app.store.add_experience(experience)
         return redirect(url_for('experience_page', key=app.store.exp_key))
@@ -48,11 +48,13 @@ def experience_page(key):
         finish = request.form['finish']
         period = request.form['period']
         length=request.form['length']
-        app.store.update_experience(key, title,username, start, finish,period,length)        
-        return redirect(url_for('experience_page', key=app.store.exp_key))
+        app.store.update_experience(key, title,username, start, finish,period,length)
+        return redirect(url_for('experience_page', key=key))
 
 @app.route('/experiences/add')
-def experience_edit_page():
+@app.route('/experience/<int:key>/edit')
+def experience_edit_page(key=None):
+    experience = app.store.get_experience(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('experience_edit.html', current_time=now.ctime())
+    return render_template('experience_edit.html', experience=experience,current_time=now.ctime())
 

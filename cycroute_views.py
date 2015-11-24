@@ -26,7 +26,7 @@ def cycroutes_page():
         start = request.form['start']
         finish = request.form['finish']
         length=request.form['length']
-        
+
         cycroute = Cycroute(title, username, start, finish,length)
         app.store.add_cycroute(cycroute)
         return redirect(url_for('cycroute_page', key=app.store.cycroute_last_key))
@@ -46,11 +46,13 @@ def cycroute_page(key):
         start = request.form['start']
         finish = request.form['finish']
         length=request.form['length']
-        app.store.update_cycroute(key, title,username, start, finish,length)        
-        return redirect(url_for('cycroute_page', key=app.store.cycroute_last_key))
+        app.store.update_cycroute(key, title,username, start, finish,length)
+        return redirect(url_for('cycroute_page', key=key))
 
 @app.route('/cycroutes/add')
-def cycroute_edit_page():
+@app.route('/cycroute/<int:key>/edit')
+def cycroute_edit_page(key=None):
+    cycroute = app.store.get_cycroute(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('cycroute_edit.html', current_time=now.ctime())
+    return render_template('cycroute_edit.html',cycroute=cycroute, current_time=now.ctime())
 

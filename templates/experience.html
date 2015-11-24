@@ -20,12 +20,13 @@
         <th>Period: </th>
         <td>{{ experience.period}}</td>
       </tr>
-      
+
       <tr>
         <th>Length: </th>
         <td>{{ experience.length}}</td>
       </tr>
-      
+
     </table>
-   
+    <p><a href="{{ request.path + '/edit' }}">Edit</a></p>
+
 {% endblock %}

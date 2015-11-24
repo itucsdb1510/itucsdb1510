@@ -1,8 +1,16 @@
 {% extends "layout.html" %}
 {% block title %}Experience Edit Form{% endblock %}
 {% block content %}
+{% set key = request.path.split('/')[-2] %}
+    {% set action = url_for('experience_page', key=key) if experience else url_for('experiences_page') %}
+    {% set title = experience.title if experience else '' %}
+    {% set username = experience.username if experience else '' %}
+    {% set start = experience.start if experience else '' %}
+    {% set finish = experience.finish if experience else '' %}
+    {% set period = experience.period if experience else '' %}
+    {% set length = experience.length if experience else '' %}
 
-<form action="{{ url_for('experiences_page') }}" method="post">
+<form action="{{ action }}" method="post">
  <table>
         <tr>
           <th>Title:</th>
@@ -28,22 +36,22 @@
            <input type="text" name="finish" value="{{ finish }}" />
           </td>
           </tr>
-          
+
           <tr>
           <th>Period(h):</th>
           <td>
            <input type="number" name="period" value="{{ period }}" />
           </td>
           </tr>
-          
+
           <tr>
           <th>Length(km):</th>
           <td>
            <input type="number" name="length" value="{{ length }}" />
           </td>
           </tr>
-          
-          
+
+
       </table>
       <input value="Save" name="save" type="submit" />
     </form>

@@ -1,8 +1,15 @@
 {% extends "layout.html" %}
 {% block title %}Route Edit Form{% endblock %}
 {% block content %}
+{% set key = request.path.split('/')[-2] %}
+    {% set action = url_for('cycroute_page', key=key) if cycroute else url_for('cycroutes_page') %}
+    {% set title = cycroute.title if cycroute else '' %}
+    {% set username = cycroute.username if cycroute else '' %}
+    {% set start = cycroute.start if cycroute else '' %}
+    {% set finish = cycroute.finish if cycroute else '' %}
+    {% set length = cycroute.length if cycroute else '' %}
 
-<form action="{{ url_for('cycroutes_page') }}" method="post">
+<form action="{{ action }}" method="post">
  <table>
         <tr>
           <th>Title:</th>
@@ -28,17 +35,17 @@
            <input type="text" name="finish" value="{{ finish }}" />
           </td>
           </tr>
-          
-         
-          
+
+
+
           <tr>
           <th>Length(km):</th>
           <td>
            <input type="number" name="length" value="{{ length }}" />
           </td>
           </tr>
-          
-          
+
+
       </table>
       <input value="Save" name="save" type="submit" />
     </form>

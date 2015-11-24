@@ -36,9 +36,13 @@ def category_page(key):
         return render_template('category.html', category=category,
                                current_time=now.ctime())
     else:
-        return redirect(url_for('category_page', key=app.store.category_last_key))
+       title=request.form["title"]
+       app.store.update_category(key,title)
+       return redirect(url_for('category_page', key=app.store.category_last_key))
 
 @app.route('/categories/add')
 def category_edit_page():
+    #category=app.store.get_category(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('category_edit.html', current_time=now.ctime())
+    return render_template('category_edit.html',
+                           current_time=now.ctime())

@@ -41,14 +41,20 @@ def bike_page(key):
         return render_template('bike.html', bike=bike,
                                current_time=now.ctime())
     else:
-        
+        model = request.form['model']
+        brand = request.form['brand']
+        type = request.form.get('type')
+        size = request.form['size']
+        year = request.form['year']
         price = request.form['price']
-        app.store.update_bike(key,price)
-        return redirect(url_for('bike_page', key=app.store.bike_last_key))
+        app.store.update_bike(key,model,brand,type,size,year,price)
+        return redirect(url_for('bike_page', key=key))
 
 
 @app.route('/bikes/add')
-def bike_edit_page():
+@app.route('/bike/<int:key>/edit')
+def bike_edit_page(key=None):
+    bike = app.store.get_bike(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('bike_edit.html', current_time=now.ctime())
-    
+    return render_template('bike_edit.html', bike=bike,
+                           current_time=now.ctime())
