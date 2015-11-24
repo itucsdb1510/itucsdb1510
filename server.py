@@ -145,6 +145,41 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
+        query = """CREATE TABLE IF NOT EXISTS ADMIN (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(30) NOT NULL,
+                SURNAME VARCHAR(30),
+                NICKNAME VARCHAR(30) ,
+                EMAIL VARCHAR(30) NOT NULL,
+                PASSWORD VARCHAR(6) NOT NULL,
+                YEAR NUMERIC(4)
+                )"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS MEMBERS (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(30) NOT NULL,
+                SURNAME VARCHAR(30),
+                NICKNAME VARCHAR(30) ,
+                GENDER VARCHAR(10) ,
+                MEMBERTYPE NUMERIC(1) DEFAULT 0,
+                EMAIL VARCHAR(30) NOT NULL,
+                PASSWORD VARCHAR(6) NOT NULL,
+                CITY VARCHAR(30),
+                INTERESTS VARCHAR(30),
+                SCORE INTEGER DEFAULT 0,
+                YEAR NUMERIC(4)
+                )"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS AWARDS (
+                ID SERIAL PRIMARY KEY,
+                AWARD_TYPE VARCHAR(10),
+                DATE DATE,
+                MEMBERID INTEGER REFERENCES MEMBERS
+                )"""
+        cursor.execute(query)
+
 
 
     return redirect(url_for('home'))
