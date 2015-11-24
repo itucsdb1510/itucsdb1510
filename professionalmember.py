@@ -14,6 +14,3 @@ class Professionalmember:
         self.award_B=award_B
         self.score=0
         self.membertype=1  #1 means professional user
-        self.messages=0
-        self.events=0
-        self.professionalmember_count = 1
