@@ -1,14 +1,23 @@
 {% extends "layout.html" %}
 {% block title %}Bike Edit Form{% endblock %}
 {% block content %}
+ {% set key = request.path.split('/')[-2] %}
+    {% set action = url_for('bike_page', key=key) if bike else url_for('bikes_page') %}
+    {% set model = bike.model if bike else '' %}
+    {% set brand = bike.brand if bike else '' %}
+    {% set size = bike.size if bike else '' %}
+    {% set year = bike.year if bike else '' %}
+    {% set price = bike.price if bike else '' %}
+    {% set type = bike.type if bike else '' %}
 
-     <form action="{{ url_for('bikes_page') }}" method="post">
+
+     <form action="{{ action }}" method="post">
       <table>
 
          <tr>
           <th>Model:</th>
           <td>
-          	 <input type="text" name="model" value="{{model}}" required autofocus /><br><br>
+          	 <input type="text" name="model" value="{{model}}"  required autofocus /><br><br>
           </td>
         </tr>
         <tr>
@@ -17,12 +26,7 @@
            <input type="text" name="brand" value="{{brand}}"/><br><br>
           </td>
         <tr>
-<!--         <tr> -->
-<!--           <th>Type:</th> -->
-<!--           <td> -->
-<!--             <input type="text" name="type" value="{{type}}" required autofocus/><br><br> -->
-<!--           </td> -->
-<!--         </tr> -->
+
         <tr>
           <th>jant size:</th>
           <td>
@@ -39,9 +43,9 @@
           </td>
         </tr>
         <tr>
-          <th>Price</th>
+          <th>Price(TL)</th>
           <td>
-           <input type="text" name="price"  value="{{price}}"/>
+           <input type="number" name="price"  value="{{price}}" required autofocus/>
           </td>
         </tr>
 
