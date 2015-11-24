@@ -10,6 +10,7 @@ from race import Race
 from _datetime import date
 from announcement import Announcement
 from admin import Admin
+from basicmember import Basicmember
 
 class Store:
     def __init__(self, app):
@@ -398,20 +399,38 @@ class Store:
 
 # BASIC MEMBER FUNCTIONS
     def add_basicmember(self, basicmember):
-        self.basicmember_last_key += 1
-        self.basicmembers[self.basicmember_last_key] = basicmember
+         with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING MEMBERS.ID"
+            cursor.execute(query, (basicmember.name, basicmember.surname,basicmember.nickname, basicmember.gender, basicmember.email,basicmember.password, basicmember.city, int(basicmember.byear), basicmember.interests))
+            connection.commit()
+            self.basicmember_last_key = cursor.fetchone()[0]
         # basicmember_count +=1
 
     def delete_basicmember(self, key):
-        del self.basicmembers[key]
-        self.basicmember_last_key -= 1
-        # basicmember_count -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM MEMBERS WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_basicmember(self, key):
-        return self.basicmembers[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR FROM MEMBERS WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            name, surname, nickname, gender, membertype, email, password, city, interests, score, byear = cursor.fetchone()
+        return Basicmember(name, surname, nickname, gender, email, password, byear, city, interests)
 
     def get_basicmembers(self):
-        return sorted(self.basicmembers.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM MEMBERS ORDER BY ID"
+            cursor.execute(query)
+            basicmembers = [(key, Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
+                      for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear in cursor]
+        return basicmembers
+
 
 # PROFESSIONAL MEMBER FUNCTIONS
     def add_professionalmember(self, professionalmember):
