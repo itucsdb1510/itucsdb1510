@@ -180,6 +180,16 @@ class Store:
             cursor.execute(query, (title, username, start, finish, period, length, key))
             connection.commit()
 
+    def search_experience(self,keyword):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query="SELECT * FROM EXPERIENCE WHERE (TITLE LIKE %s OR START LIKE%s OR FINISH LIKE %s ) ORDER BY ID"
+            keyword='%'+keyword+'%'
+            cursor.execute(query, (keyword,keyword,keyword))
+            experiences = [(key, Experience(title, username, start, finish, period, length))
+                      for key, title, username, start, finish, period, length in cursor]
+        return experiences
+
 #RACE
     def add_race(self, race):
        with dbapi2.connect(self.app.config['dsn']) as connection:
@@ -291,6 +301,15 @@ class Store:
             query = "UPDATE CYCROUTE SET TITLE=%s, USERNAME=%s, START=%s,FINISH=%s,LENGTH=%s WHERE (ID = %s)"
             cursor.execute(query, (title, username, start, finish, length, key))
             connection.commit()
+    def search_cycroute(self,keyword):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query="SELECT * FROM CYCROUTE WHERE (TITLE LIKE %s OR START LIKE%s OR FINISH LIKE %s ) ORDER BY ID"
+            keyword='%'+keyword+'%'
+            cursor.execute(query, (keyword,keyword,keyword))
+            cycroutes = [(key, Cycroute(title, username, start, finish,length))
+                      for key, title, username, start, finish, length in cursor]
+        return cycroutes
 
 #BIKE
     def add_bike(self, bike):
@@ -332,6 +351,17 @@ class Store:
             query = "UPDATE BIKE SET MODEL=%s, BRAND=%s, TYPE=%s, SIZE=%s, YEAR=%s, PRICE=%s WHERE (ID = %s)"
             cursor.execute(query, (model, brand, type, size, year, price, key))
             connection.commit()
+
+    def search_bike(self,keyword):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query="SELECT * FROM BIKE WHERE (MODEL LIKE %s OR BRAND LIKE%s OR TYPE LIKE %s ) ORDER BY ID"
+            keyword='%'+keyword+'%'
+            cursor.execute(query, (keyword,keyword,keyword))
+            bikes = [(key, Bike(model,brand, type, size, year, price))
+                      for key, model,brand, type, size, year, price in cursor]
+        return bikes
+
 
 
 # BASIC MEMBER FUNCTIONS
