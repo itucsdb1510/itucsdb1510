@@ -83,6 +83,16 @@ class Store:
                       for key, name, score, founder, year in cursor]
         return teams
 
+    def search_team(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM TEAM WHERE (NAME ILIKE %s OR FOUNDER ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key))
+            teams = [(key, Team(name, score, founder, year))
+                      for key, name, score, founder, year in cursor]
+        return teams
+
     def update_team(self, key, title, score, founder, year):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
@@ -226,6 +236,16 @@ class Store:
             query = "UPDATE RACE SET TITLE = %s, RACE_TYPE = %s, FOUNDERID = %s, TIME = %s, CYCROUTEID = %s WHERE (ID = %s)"
             cursor.execute(query, (title, race_type, founder, time, place, key))
             connection.commit()
+
+    def search_race(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM RACE WHERE (TITLE ILIKE %s OR RACE_TYPE ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key))
+            races = [(key, Race(title, race_type, founder, time, place))
+                      for key, title, race_type, founder, time, place in cursor]
+        return races
 #CATEGORY
     def count_category(self, category):
         self.category_count += 1
@@ -422,3 +442,12 @@ class Store:
             cursor.execute(query, (title, activity_type, founder, time, place, activity_info, key))
             connection.commit()
 
+    def search_activity(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM ACTIVITY WHERE (TITLE ILIKE %s OR ACTIVITY_TYPE ILIKE %s OR PLACE ILIKE %s OR ACTIVITY_INFO ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key, key, key))
+            activities = [(key, Activity( title, activity_type, founder, time, place, activity_info))
+                      for key,  title, activity_type, founder, time, place, activity_info in cursor]
+        return activities
