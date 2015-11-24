@@ -7,6 +7,8 @@
 {% block content %}
 <h2>Admin Home Page</h2>
    <form action="{{ url_for('admins_page') }}" method="post">
+   	  <input type="search" name="search" value="{{search}}">
+	  <input type="submit" value="search" name="submit">
       <table>
         {% for key, admin in admins %}
         <tr>
@@ -20,6 +22,6 @@
         </tr>
         {% endfor %}
       </table>
-      <input type="submit" value="Delete" name="delete" />
+      <input type="submit" value="Delete" name="submit" />
     </form>
 {% endblock %}

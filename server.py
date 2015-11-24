@@ -169,10 +169,12 @@ def initialize_database():
                 INTERESTS VARCHAR(30),
                 SCORE INTEGER DEFAULT 0,
                 YEAR NUMERIC(4)
-
                 )"""
         cursor.execute(query)
 
+#AWARDID INTEGER REFERENCES AWARDS,
+# TEAMID INTEGER REFERENCES TEAM
+#
         query = """CREATE TABLE IF NOT EXISTS AWARDS (
                 ID SERIAL PRIMARY KEY,
                 AWARD_TYPE VARCHAR(10),

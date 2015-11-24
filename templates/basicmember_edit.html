@@ -62,30 +62,43 @@
 		<ortamenu>
 	<br>
 
-	   <form action="{{ url_for('basicmembers_page') }}" method="post">
+	{% set key = request.path.split('/')[-2] %}
+    {% set action = url_for('basicmember_page', key=key) if basicmember else url_for('basicmembers_page') %}
+    {% set name = basicmember.name if basicmember else '' %}
+    {% set surname = basicmember.surname if basicmember else '' %}
+    {% set nickname = basicmember.nickname if basicmember else '' %}
+    {% set gender = basicmember.gender if basicmember else '' %}
+    {% set email = basicmember.email if basicmember else '' %}
+    {% set password = basicmember.password if basicmember else '' %}
+    {% set city = basicmember.city if basicmember else '' %}
+    {% set interests = basicmember.interests if basicmember else '' %}
+    {% set byear = basicmember.byear if basicmember else '' %}
+
+
+	   <form action="{{ action }}" method="post">
 	   <table>
 		 <tr>
           <th>Name:</th>
           <td>
-          	 <input type="text"   name="name" required autofocus />
+          	 <input type="text"   name="name" value="{{ name }}" required autofocus />
           </td>
         </tr>
         <tr>
           <th>Surname:</th>
           <td>
-           <input type="text"  name="surname" />
+           <input type="text"  name="surname" value="{{ surname }}"/>
           </td>
         </tr>
         <tr>
           <th>Nickname:</th>
           <td>
-           <input type="text"   name="nickname" />
+           <input type="text"   name="nickname" value="{{ nickname }}"/>
           </td>
         </tr>
             <tr>
           <th>Gender:</th>
           <td>
-          <select name="gender">
+          <select name="gender" value="{{ gender }}">
         <option value="Female">Female</option>
   		<option value="Male">Male</option>
   		</select>
@@ -94,25 +107,25 @@
         <tr>
           <th>Email:</th>
           <td>
-          	 <input type="text"  name="email" required autofocus />
+          	 <input type="text"  name="email" value="{{ email }}" required autofocus />
           </td>
         </tr>
         <tr>
           <th>Password:</th>
           <td>
-          	 <input type="text"  name="password" size="6" />
+          	 <input type="text"  name="password" size="6" value="{{ password }}"  />
           </td>
         </tr>
         <tr>
           <th>Year of Birth:</th>
           <td>
-           <input type="text" name="byear" size="4" />
+           <input type="text" name="byear"  size="4" value="{{ byear }}" />
           </td>
         </tr>
          <tr>
           <th>City:</th>
           <td>
-           <input type="text" name="city" />
+           <input type="text" name="city" value="{{ city }}" />
           </td>
         </tr>
          <tr>
