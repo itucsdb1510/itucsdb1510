@@ -40,10 +40,19 @@ def race_page(key):
         return render_template('race.html', race=race,
                                current_time=now.ctime())
     else:
-        app.store.addMember(key)
-        return redirect(url_for('race_page', key=app.store.race_last_key))
+        title = request.form['title']
+        race_type = request.form['race_type']
+        founder = request.form['founder']
+        time = request.form['time']
+        place = request.form['place']
+        app.store.update_race(key, title, race_type, founder, time, place)
+        return redirect(url_for('race_page', key=key))
 
 @app.route('/races/add')
-def race_edit_page():
+@app.route('/race/<int:key>/edit')
+def race_edit_page(key=None):
+    race = app.store.get_race(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('race_edit.html', current_time=now.ctime())
+    return render_template('race_edit.html', race=race,
+                           current_time=now.ctime())
+
