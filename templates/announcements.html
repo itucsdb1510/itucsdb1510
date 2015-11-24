@@ -8,6 +8,8 @@
 <h2>Announcement Home Page</h2>
 
 <form action="{{ url_for('announcements_page') }}" method="post">
+      <input type="search" name="search" value="{{search}}">
+	  <input type="submit" value="search" name="submit">
       <table>
         {% for key, announcement in announcements %}
         <tr>
@@ -15,15 +17,13 @@
                      value="{{ key }}" /></td>
           <td>
             <a href="{{ url_for('announcement_page', key=key) }}">
-              {{ announcement.title }}
+              {{ announcement.title }}  ( {{ announcement.text }})
             </a>
-            {{ announcement.text }}
           </td>
         </tr>
-
         {% endfor %}
       </table>
-      <input type="submit" value="Delete" name="delete" />
+      <input type="submit" value="Delete" name="submit" />
     </form>
 
 
@@ -31,4 +31,3 @@
 				<a class="navbar-brand" href="{{ url_for('announcement_edit_page') }}">Add announcement</a>
 </div>
 {% endblock %}
-</html>

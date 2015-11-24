@@ -144,7 +144,15 @@ class Store:
             query = "UPDATE ANNOUNCEMENT SET TITLE = %s, TEXT = %s WHERE (ID = %s)"
             cursor.execute(query, (title, text,key))
             connection.commit()
-
+    def search_announcement(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM ANNOUNCEMENT WHERE (TITLE ILIKE %s OR TEXT ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key))
+            announcements = [(key, Announcement(title,text))
+                      for key, title, text in cursor]
+        return announcements
 
 #TOPIC
     def add_topic(self, topic):
