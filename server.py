@@ -168,7 +168,9 @@ def initialize_database():
                 CITY VARCHAR(30),
                 INTERESTS VARCHAR(30),
                 SCORE INTEGER DEFAULT 0,
-                YEAR NUMERIC(4)
+                YEAR NUMERIC(4),
+                AWARDID INTEGER REFERENCES AWARDS,
+                TEAMID INTEGER REFERENCES TEAM
                 )"""
         cursor.execute(query)
 

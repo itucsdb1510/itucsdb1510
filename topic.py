@@ -1,7 +1,7 @@
 class Topic:
-    def __init__(self, title, text, time, post, poster):
+    def __init__(self, title, text, time, postid, poster):
         self.title=title
         self.text=text
         self.time=time
-        self.post=post
+        self.postid=postid
         self.poster=poster

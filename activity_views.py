@@ -15,11 +15,18 @@ def activities_page():
         now = datetime.datetime.now()
         return render_template('activities.html', activities=activities,
                                current_time=now.ctime())
-    elif 'activities_to_delete' in request.form:
-        keys = request.form.getlist('activities_to_delete')
-        for key in keys:
-            app.store.delete_activity(int(key))
-        return redirect(url_for('activities_page'))
+    elif  'activities_to_delete' in request.form or 'search' in request.form:
+        if request.form['submit'] == 'Delete':
+            keys = request.form.getlist('activities_to_delete')
+            for key in keys:
+                app.store.delete_activity(int(key))
+            return redirect(url_for('activities_page'))
+        elif  request.form['submit'] == 'search' :
+            keyword=request.form['search']
+            activities = app.store.search_activity(keyword)
+            now = datetime.datetime.now()
+            return render_template('activities.html', activities=activities,
+                               current_time=now.ctime())
     else:
         title = request.form['title']
         activity_type = request.form['activity_type']

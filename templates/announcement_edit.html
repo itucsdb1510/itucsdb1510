@@ -1,18 +1,23 @@
 {% extends "layout.html" %}
 {% block title %}Category Edit Form{% endblock %}
 {% block content %}
-   <form action="{{ url_for('announcements_page') }}" method="post">
+ {% set key = request.path.split('/')[-2] %}
+    {% set action = url_for('announcement_page', key=key) if announcement else url_for('announcements_page') %}
+    {% set title = announcement.title if announcement else '' %}
+    {% set text = announcement.text if announcement else '' %}
+
+   <form action="{{ action }}" method="post">
       <table>
         <tr>
           <th>Title:</th>
           <td>
-          	 <input type="text" name="title" required autofocus />
+          	 <input type="text" name="title" value="{{ title }}" required autofocus />
           </td>
         </tr>
         <tr>
           <th>Text:</th>
           <td>
-          	 <input type="text" name="text" />
+          	 <input type="text" name="text" value="{{ text }}" />
           </td>
         </tr>
       </table>
