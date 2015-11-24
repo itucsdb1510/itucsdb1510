@@ -152,12 +152,11 @@ class Store:
 
 
     def update_experience(self, key, title, username, start, finish, period, length):
-       self.experiences[key].title = title
-       self.experiences[key].username = username
-       self.experiences[key].start = start
-       self.experiences[key].finish = finish
-       self.experiences[key].period = period
-       self.experiences[key].length = length
+       with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE EXPERIENCE SET TITLE=%s, USERNAME=%s, START=%s,FINISH=%s,PERIOD=%s,LENGTH=%s WHERE (ID = %s)"
+            cursor.execute(query, (title, username, start, finish, period, length, key))
+            connection.commit()
 
 #RACE
     def add_race(self, race):
@@ -247,18 +246,18 @@ class Store:
 
 
     def update_cycroute(self, key, title, username, start, finish, length):
-       self.cycroutes[key].title = title
-       self.cycroutes[key].username = username
-       self.cycroutes[key].start = start
-       self.cycroutes[key].finish = finish
-       self.cycroutes[key].length = length
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE CYCROUTE SET TITLE=%s, USERNAME=%s, START=%s,FINISH=%s,LENGTH=%s WHERE (ID = %s)"
+            cursor.execute(query, (title, username, start, finish, length, key))
+            connection.commit()
 
 #BIKE
     def add_bike(self, bike):
          with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "INSERT INTO BIKE (MODEL, BRAND, TYPE, SIZE, YEAR, PRICE) VALUES (%s, %s, %s, %s, %s, %s) RETURNING BIKE.ID"
-            cursor.execute(query, (bike.model, bike.brand ,bike.type ,bike.size ,bike.year ,int(bike.price)))
+            cursor.execute(query, (bike.model, bike.brand ,bike.type ,bike.size ,bike.year ,bike.price))
             connection.commit()
             self.bike_last_key = cursor.fetchone()[0]
 
@@ -286,8 +285,13 @@ class Store:
                       for key, model,brand, type, size, year, price in cursor]
         return bikes
 
-    def update_bike(self, key, price):
-        self.bikes[key].price = price
+
+    def update_bike(self, key, model,brand, type, size, year, price):
+       with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE BIKE SET MODEL=%s, BRAND=%s, TYPE=%s, SIZE=%s, YEAR=%s, PRICE=%s WHERE (ID = %s)"
+            cursor.execute(query, (model, brand, type, size, year, price, key))
+            connection.commit()
 
 
 # BASIC MEMBER FUNCTIONS
