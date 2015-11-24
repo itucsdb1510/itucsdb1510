@@ -9,6 +9,7 @@ from activity import Activity
 from race import Race
 from _datetime import date
 from announcement import Announcement
+from admin import Admin
 
 class Store:
     def __init__(self, app):
@@ -247,20 +248,38 @@ class Store:
 
 #ADMIN
     def add_admin(self, admin):
-        self.admin_last_key += 1
-        self.admins[self.admin_last_key] = admin
-        # admin_count +=1
+         with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO ADMIN (NAME, SURNAME, NICKNAME, EMAIL, PASSWORD, YEAR) VALUES (%s, %s, %s, %s, %s, %s) RETURNING ADMIN.ID"
+            cursor.execute(query, (admin.name, admin.surname, admin.nickname, admin.email, admin.password, int(admin.year)))
+            connection.commit()
+            self.admin_last_key = cursor.fetchone()[0]
 
     def delete_admin(self, key):
-        del self.admins[key]
-        self.admin_last_key -= 1
-        # admin_count -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM ADMIN WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_admin(self, key):
-        return self.admins[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT NAME, SURNAME, NICKNAME, EMAIL, PASSWORD, YEAR FROM ADMIN WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            name, surname, nickname, email, password, year = cursor.fetchone()
+        return Admin(name, surname, nickname, email, password, year)
+
 
     def get_admins(self):
-        return sorted(self.admins.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM ADMIN ORDER BY ID"
+            cursor.execute(query)
+            admins = [(key, Admin(name, surname, nickname, email, password, year))
+                      for key, name, surname, nickname, email, password, year in cursor]
+        return admins
+
 
 
 #CYCROUTE

@@ -145,6 +145,17 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
+        query = """CREATE TABLE IF NOT EXISTS ADMIN (
+                ID SERIAL PRIMARY KEY,
+                NAME VARCHAR(30) NOT NULL,
+                SURNAME VARCHAR(30),
+                NICKNAME VARCHAR(30) ,
+                EMAIL VARCHAR(30) NOT NULL,
+                PASSWORD VARCHAR(6) NOT NULL,
+                YEAR NUMERIC(4)
+                )"""
+        cursor.execute(query)
+
 
 
     return redirect(url_for('home'))
