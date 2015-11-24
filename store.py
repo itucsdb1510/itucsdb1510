@@ -326,7 +326,22 @@ class Store:
                       for key, name, surname, nickname, email, password, year in cursor]
         return admins
 
+    def update_admin(self, key, name, surname, nickname, email, password, year):
+       with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE ADMIN SET NAME=%s, SURNAME=%s, NICKNAME=%s, EMAIL=%s, PASSWORD=%s, YEAR=%s WHERE (ID = %s)"
+            cursor.execute(query, (name, surname, nickname, email, password, year, key))
+            connection.commit()
 
+    def search_admin(self,keyword):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query="SELECT * FROM ADMIN WHERE (NAME ILIKE %s OR NICKNAME ILIKE%s ) ORDER BY ID"
+            keyword='%'+keyword+'%'
+            cursor.execute(query, (keyword,keyword))
+            admins = [(key, Admin(name, surname, nickname, email, password, year))
+                      for key, name, surname, nickname, email, password, year in cursor]
+        return admins
 
 #CYCROUTE
     def add_cycroute(self, cycroute):
@@ -440,7 +455,7 @@ class Store:
             cursor.execute(query, (basicmember.name, basicmember.surname,basicmember.nickname, basicmember.gender, basicmember.email,basicmember.password, basicmember.city, int(basicmember.byear), basicmember.interests))
             connection.commit()
             self.basicmember_last_key = cursor.fetchone()[0]
-        # basicmember_count +=1
+
 
     def delete_basicmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
@@ -465,6 +480,24 @@ class Store:
             basicmembers = [(key, Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
                       for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear in cursor]
         return basicmembers
+
+
+#    def search_basicmember(self, key):
+ #       with dbapi2.connect(self.app.config['dsn']) as connection:
+  #          cursor = connection.cursor()
+   #         query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s)"
+    #        key = '%'+key+'%'
+     #       cursor.execute(query, (key, key))
+      #      basicmembers = [(key,  Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
+       #               for key, name, surname, nickname, gender, email, password, byear, city, interests in cursor]
+        #return basicmembers
+
+   # def update_basicmember(self, key, name, surname, nickname, gender, email, password, byear, city, interests):
+      #  with dbapi2.connect(self.app.config['dsn']) as connection:
+        #    cursor = connection.cursor()
+         #   query = "UPDATE MEMBERS SET NAME = %s,SURNAME= %s, NICKNAME= %s,  GENDER= %s,  MEMBERTYPE= %s, EMAIL= %s, PASSWORD= %s, CITY= %s, INTERESTS= %s, SCORE = %s,YEAR= %s WHERE (ID = %s)"
+         #   cursor.execute(query, (name, surname, nickname, gender, email, password, byear, city, interest, key))
+         #   connection.commit()
 
 
 # PROFESSIONAL MEMBER FUNCTIONS
