@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
-<head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+{% extends "layout.html" %}
+{% block title %}Announcements List{% endblock %}
+{% block content %}
+
+<h2>Announcement Home Page</h2>
 
 <form action="{{ url_for('announcements_page') }}" method="post">
       <table>
@@ -29,7 +30,5 @@
 <div class="navbar-header">
 				<a class="navbar-brand" href="{{ url_for('announcement_edit_page') }}">Add announcement</a>
 </div>
-
-</nav>
-</body>
+{% endblock %}
 </html>

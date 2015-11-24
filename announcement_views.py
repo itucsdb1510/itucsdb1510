@@ -43,6 +43,9 @@ def announcement_page(key):
         return redirect(url_for('announcement_page', key=app.store.announcement_last_key))
 
 @app.route('/announcements/add')
-def announcement_edit_page():
+@app.route('/announcement/<int:key>/edit')
+def announcement_edit_page(key=None):
+    announcement = app.store.get_announcement(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('announcement_edit.html', current_time=now.ctime())
+    return render_template('announcement_edit.html', announcement=announcement,
+                           current_time=now.ctime())
