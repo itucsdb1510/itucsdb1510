@@ -122,7 +122,7 @@ def initialize_database():
                 TITLE VARCHAR(40),
                 ACTIVITY_TYPE VARCHAR(40),
                 FOUNDERID INTEGER,
-                TIME INTEGER,
+                TIME VARCHAR(40),
                 PLACE VARCHAR(40),
                 ACTIVITY_INFO VARCHAR(150)
                 )"""
@@ -133,8 +133,8 @@ def initialize_database():
                 TITLE VARCHAR(40),
                 RACE_TYPE VARCHAR(40),
                 FOUNDERID INTEGER,
-                TIME INTEGER,
-                PLACE VARCHAR(40)
+                TIME VARCHAR(40),
+                CYCROUTEID INTEGER
                 )"""
         cursor.execute(query)
 
