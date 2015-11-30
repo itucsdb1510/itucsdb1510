@@ -62,30 +62,46 @@
 		<ortamenu>
 	<br>
 
-	   <form action="{{ url_for('professionalmembers_page') }}" method="post">
+
+	{% set key = request.path.split('/')[-2] %}
+    {% set action = url_for('professionalmember_page', key=key) if professionalmember else url_for('professionalmembers_page') %}
+    {% set name = professionalmember.name if professionalmember else '' %}
+    {% set surname = professionalmember.surname if professionalmember else '' %}
+    {% set nickname = professionalmember.nickname if professionalmember else '' %}
+    {% set gender = professionalmember.gender if professionalmember else '' %}
+    {% set email = professionalmember.email if professionalmember else '' %}
+    {% set password = professionalmember.password if professionalmember else '' %}
+    {% set city = professionalmember.city if professionalmember else '' %}
+    {% set interests = professionalmember.interests if professionalmember else '' %}
+    {% set byear = professionalmember.byear if professionalmember else '' %}
+    {% set award_G = professionalmember.award_G if professionalmember else '' %}
+    {% set award_B = professionalmember.award_B if professionalmember else '' %}
+    {% set award_S = professionalmember.award_S if professionalmember else '' %}
+
+	   <form action="{{ action }}" method="post">
 	   <table>
 		 <tr>
           <th>Name:</th>
           <td>
-          	 <input type="text"   name="name" required autofocus />
+          	 <input type="text"   name="name" value="{{ name }}" required autofocus />
           </td>
         </tr>
         <tr>
           <th>Surname:</th>
           <td>
-           <input type="text"  name="surname" />
+           <input type="text"  name="surname" value="{{ surname }}" />
           </td>
         </tr>
         <tr>
           <th>Nickname:</th>
           <td>
-           <input type="text"   name="nickname" />
+           <input type="text"   name="nickname"  value="{{ nickname }}"/>
           </td>
         </tr>
          <tr>
           <th>Gender:</th>
           <td>
-          <select name="gender">
+          <select name="gender" value="{{ gender }}">
         <option value="Female">Female</option>
   		<option value="Male">Male</option>
   		</select>
@@ -94,35 +110,35 @@
         <tr>
           <th>Email:</th>
           <td>
-          	 <input type="text"  name="email"  />
+          	 <input type="text"  name="email"  value="{{ email }}" />
           </td>
         </tr>
         <tr>
           <th>Password:</th>
           <td>
-          	 <input type="text"  name="password" size="6" />
+          	 <input type="text"  name="password" value="{{ password }}" size="6" />
           </td>
         </tr>
         <tr>
           <th>Year of Birth:</th>
           <td>
-           <input type="text" name="byear" size="4" />
+           <input type="text" name="byear" value="{{ byear }}" size="4" />
           </td>
         </tr>
          <tr>
           <th>City:</th>
           <td>
-           <input type="text" name="city" />
+           <input type="text" name="city" value="{{ city }}" />
           </td>
         </tr>
           <tr>
           <th>Main interest:</th>
-          <td> <input type="text"  name="interests"  /></td>
+          <td> <input type="text"  name="interests"  value="{{ interests }}" /></td>
         </tr>
           <tr>
           <th>Number of Gold Awards:</th>
           <td>
-          <select name="award_G">
+          <select name="award_G" value="{{ award_G }}">
         <option value="0">0</option>
   		<option value="1">1</option>
   		<option value="2">2</option>
@@ -140,7 +156,7 @@
         <tr>
           <th>Number of Silver Awards:</th>
           <td>
-          <select name="award_S">
+          <select name="award_S" value="{{ award_S }}">
         <option value="0">0</option>
   		<option value="1">1</option>
   		<option value="2">2</option>
@@ -158,7 +174,7 @@
         <tr>
           <th>Number of Bronze Awards:</th>
           <td>
-          <select name="award_B">
+          <select name="award_B" value="{{ award_B }}">
         <option value="0">0</option>
   		<option value="1">1</option>
   		<option value="2">2</option>
@@ -175,7 +191,7 @@
         </tr>
 
 		</table>
-		<input type="submit" value="Signup" name="signup">
+		<input value="Save" name="save" type="submit" />
          </form>
 
 		</ortamenu>

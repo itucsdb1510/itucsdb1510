@@ -10,5 +10,8 @@ class Basicmember:
         self.city=city
         self.interests= interests
         self.score=0
-        self.membertype=0  #1 means professional user
+        self.award_G=0
+        self.award_S=0
+        self.award_B=0
+        self.membertype=0  #0 means basic member
 

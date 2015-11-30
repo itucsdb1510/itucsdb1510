@@ -11,6 +11,8 @@ from _datetime import date
 from announcement import Announcement
 from admin import Admin
 from basicmember import Basicmember
+from professionalmember import Professionalmember
+
 
 class Store:
     def __init__(self, app):
@@ -451,7 +453,7 @@ class Store:
     def add_basicmember(self, basicmember):
          with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING MEMBERS.ID"
+            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING MEMBERS.MEMBERID"
             cursor.execute(query, (basicmember.name, basicmember.surname,basicmember.nickname, basicmember.gender, basicmember.email,basicmember.password, basicmember.city, int(basicmember.byear), basicmember.interests))
             connection.commit()
             self.basicmember_last_key = cursor.fetchone()[0]
@@ -460,14 +462,14 @@ class Store:
     def delete_basicmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "DELETE FROM MEMBERS WHERE (ID = %s)"
+            query = "DELETE FROM MEMBERS WHERE (MEMBERID = %s)"
             cursor.execute(query, (key,))
             connection.commit()
 
     def get_basicmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR FROM MEMBERS WHERE (ID = %s)"
+            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR FROM MEMBERS WHERE (MEMBERID = %s)"
             cursor.execute(query, (key,))
             name, surname, nickname, gender, membertype, email, password, city, interests, score, byear = cursor.fetchone()
         return Basicmember(name, surname, nickname, gender, email, password, byear, city, interests)
@@ -475,47 +477,84 @@ class Store:
     def get_basicmembers(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT * FROM MEMBERS ORDER BY ID"
+            query = "SELECT * FROM MEMBERS WHERE MEMBERTYPE=0 ORDER BY MEMBERID"
             cursor.execute(query)
             basicmembers = [(key, Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
-                      for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear in cursor]
+                      for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear,teamid in cursor]
         return basicmembers
 
 
-#    def search_basicmember(self, key):
- #       with dbapi2.connect(self.app.config['dsn']) as connection:
-  #          cursor = connection.cursor()
-   #         query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s)"
-    #        key = '%'+key+'%'
-     #       cursor.execute(query, (key, key))
-      #      basicmembers = [(key,  Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
-       #               for key, name, surname, nickname, gender, email, password, byear, city, interests in cursor]
-        #return basicmembers
+    def search_basicmember(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key))
+            basicmembers = [(key,  Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
+                      for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear,teamid in cursor]
+        return basicmembers
 
-   # def update_basicmember(self, key, name, surname, nickname, gender, email, password, byear, city, interests):
-      #  with dbapi2.connect(self.app.config['dsn']) as connection:
-        #    cursor = connection.cursor()
-         #   query = "UPDATE MEMBERS SET NAME = %s,SURNAME= %s, NICKNAME= %s,  GENDER= %s,  MEMBERTYPE= %s, EMAIL= %s, PASSWORD= %s, CITY= %s, INTERESTS= %s, SCORE = %s,YEAR= %s WHERE (ID = %s)"
-         #   cursor.execute(query, (name, surname, nickname, gender, email, password, byear, city, interest, key))
-         #   connection.commit()
+    def update_basicmember(self, key, name, surname, nickname, gender, email, password, byear, city, interests):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE MEMBERS SET NAME = %s,SURNAME= %s, NICKNAME= %s,  GENDER= %s, EMAIL= %s, PASSWORD= %s, YEAR= %s, CITY= %s, INTERESTS= %s WHERE (MEMBERID = %s)"
+            cursor.execute(query, (name, surname, nickname, gender, email, password, byear, city, interests, key))
+            connection.commit()
 
 
 # PROFESSIONAL MEMBER FUNCTIONS
     def add_professionalmember(self, professionalmember):
-        self.professionalmember_last_key += 1
-        self.professionalmembers[self.professionalmember_last_key] = professionalmember
-        # professionalmember_count +=1
+         with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s) RETURNING MEMBERS.MEMBERID"
+            cursor.execute(query, (professionalmember.name, professionalmember.surname,professionalmember.nickname, professionalmember.gender, professionalmember.email,professionalmember.password, professionalmember.city, int(professionalmember.byear), professionalmember.interests,1))
+            connection.commit()
+            self.professionalmember_last_key = cursor.fetchone()[0]
+
 
     def delete_professionalmember(self, key):
-        del self.professionalmembers[key]
-        self.professionalmember_last_key -= 1
-        # professionalmember_count -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM MEMBERS WHERE (MEMBERID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_professionalmember(self, key):
-        return self.professionalmembers[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT sum(numofGOLD),sum(numofBRONZE), sum(numofSILVER) FROM MEMBERS, AWARDS WHERE( (members.memberid=awards.memberid) and members.memberid=%s )"
+            cursor.execute(query, (key,))
+            award_G,award_B, award_S= cursor.fetchone()
+            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR FROM MEMBERS WHERE (MEMBERID =%s)"
+            cursor.execute(query, (key,))
+            name, surname, nickname, gender, membertype, email, password, city, interests, score, byear = cursor.fetchone()
+        return Professionalmember(name, surname, nickname, gender, email, password, byear, city, interests,award_G,award_B, award_S)
 
     def get_professionalmembers(self):
-        return sorted(self.professionalmembers.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM MEMBERS WHERE MEMBERTYPE=1 ORDER BY MEMBERID"
+            cursor.execute(query)
+            professionalmembers = [(key, Professionalmember(name, surname, nickname, gender, email, password, byear, city, interests,0,0,0))
+                      for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear,teamid in cursor]
+        return professionalmembers
+
+    def search_professionalmember(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key))
+            professionalmembers = [(key,  Professionalmember(name, surname, nickname, gender, email, password, byear, city, interests,0,0,0))
+                      for key, name, surname, nickname, gender, email, password, byear, city, interests in cursor]
+        return professionalmembers
+
+    def update_professionalmember(self, key, name, surname, nickname, gender, email, password, byear, city, interests,award_G,award_B, award_S):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE MEMBERS SET NAME = %s,SURNAME= %s, NICKNAME= %s,  GENDER= %s, EMAIL= %s, PASSWORD= %s, YEAR= %s, CITY= %s, INTERESTS= %s WHERE (MEMBERID = %s)"
+            cursor.execute(query, (name, surname, nickname, gender, email, password, byear, city, interests, key))
+            connection.commit()
 
 #ACTIVITY
     def add_activity(self, activity):

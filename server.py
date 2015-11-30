@@ -157,7 +157,7 @@ def initialize_database():
         cursor.execute(query)
 
         query = """CREATE TABLE IF NOT EXISTS MEMBERS (
-                ID SERIAL PRIMARY KEY,
+                MEMBERID SERIAL PRIMARY KEY,
                 NAME VARCHAR(30) NOT NULL,
                 SURNAME VARCHAR(30),
                 NICKNAME VARCHAR(30) ,
@@ -168,18 +168,20 @@ def initialize_database():
                 CITY VARCHAR(30),
                 INTERESTS VARCHAR(30),
                 SCORE INTEGER DEFAULT 0,
-                YEAR NUMERIC(4)
+                YEAR NUMERIC(4),
+                TEAMID INTEGER REFERENCES TEAM
+                ON DELETE RESTRICT
                 )"""
         cursor.execute(query)
 
-#AWARDID INTEGER REFERENCES AWARDS,
-# TEAMID INTEGER REFERENCES TEAM
-#
         query = """CREATE TABLE IF NOT EXISTS AWARDS (
-                ID SERIAL PRIMARY KEY,
-                AWARD_TYPE VARCHAR(10),
+                AWARDID SERIAL PRIMARY KEY,
+                numofGOLD INTEGER,
+                numofBRONZE INTEGER,
+                numofSILVER INTEGER,
                 DATE DATE,
                 MEMBERID INTEGER REFERENCES MEMBERS
+                ON DELETE CASCADE
                 )"""
         cursor.execute(query)
 

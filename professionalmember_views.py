@@ -48,10 +48,25 @@ def professionalmember_page(key):
         return render_template('professionalmember.html', professionalmember=professionalmember,
                                current_time=now.ctime())
     else:
-        return redirect(url_for('professionalmember_page', key=app.store.professionalmember_last_key))
+        name = request.form['name']
+        surname = request.form['surname']
+        nickname = request.form['nickname']
+        email = request.form['email']
+        password = request.form['password']
+        byear = request.form['byear']
+        city = request.form['city']
+        interests = request.form['interests']
+        gender = request.form.get('gender')
+        award_G = request.form.get('award_G')
+        award_S = request.form.get('award_S')
+        award_B = request.form.get('award_B')
+        app.store.update_professionalmember(key, name, surname, nickname, gender, email,password, byear, city, interests, award_G,award_B, award_S)
+        return redirect(url_for('professionalmember_page', key=key))
 
 @app.route('/professionalmembers/add')
-def professionalmember_edit_page():
+@app.route('/professionalmember/<int:key>/edit')
+def professionalmember_edit_page(key=None):
+    professionalmember = app.store.get_professionalmember(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('professionalmember_edit.html', current_time=now.ctime())
-
+    return render_template('professionalmember_edit.html', professionalmember=professionalmember,
+                           current_time=now.ctime())
