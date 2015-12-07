@@ -9,7 +9,7 @@
    <form action="{{ url_for('basicmembers_page') }}" method="post">
         <input type="search" name="search" value="{{search}}">
 	  <input type="submit" value="search" name="submit">
-	      <table>
+	   <table>
         {% for key, basicmember in basicmembers %}
         <tr>
           <td><input type="checkbox" name="basicmembers_to_delete"

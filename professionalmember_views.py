@@ -15,11 +15,18 @@ def professionalmembers_page():
         now = datetime.datetime.now()
         return render_template('professionalmembers.html', professionalmembers=professionalmembers,
                                current_time=now.ctime())
-    elif 'professionalmembers_to_delete' in request.form:
-        keys = request.form.getlist('professionalmembers_to_delete')
-        for key in keys:
-            app.store.delete_professionalmember(int(key))
-        return redirect(url_for('professionalmembers_page'))
+    elif 'professionalmembers_to_delete' in request.form or 'search' in request.form:
+        if request.form['submit'] == 'Delete':
+            keys = request.form.getlist('professionalmembers_to_delete')
+            for key in keys:
+                app.store.delete_professionalmember(int(key))
+            return redirect(url_for('professionalmembers_page'))
+        elif  request.form['submit'] == 'search' :
+            keyword=request.form['search']
+            professionalmembers = app.store.search_professionalmember(keyword)
+            now = datetime.datetime.now()
+            return render_template('professionalmembers.html', professionalmembers=professionalmembers,
+                               current_time=now.ctime())
     else:
         name = request.form['name']
         surname = request.form['surname']

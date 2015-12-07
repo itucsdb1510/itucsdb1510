@@ -12,7 +12,7 @@ from announcement import Announcement
 from admin import Admin
 from basicmember import Basicmember
 from professionalmember import Professionalmember
-
+import time
 
 class Store:
     def __init__(self, app):
@@ -487,7 +487,7 @@ class Store:
     def search_basicmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s)"
+            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s) AND (MEMBERTYPE=0)"
             key = '%'+key+'%'
             cursor.execute(query, (key, key))
             basicmembers = [(key,  Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
@@ -508,8 +508,13 @@ class Store:
             cursor = connection.cursor()
             query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s) RETURNING MEMBERS.MEMBERID"
             cursor.execute(query, (professionalmember.name, professionalmember.surname,professionalmember.nickname, professionalmember.gender, professionalmember.email,professionalmember.password, professionalmember.city, int(professionalmember.byear), professionalmember.interests,1))
-            connection.commit()
             self.professionalmember_last_key = cursor.fetchone()[0]
+            connection.commit()
+            if professionalmember.award_G ==0 and professionalmember.award_B ==0 and professionalmember.award_S == 0:
+                currdate=(time.strftime("%Y/%m/%d"))
+                query = "INSERT INTO AWARDS (numofGOLD,numofBRONZE ,numofSILVER, memberid,date ) VALUES (%s, %s, %s, %s,%s)"
+                cursor.execute(query, (professionalmember.award_G,professionalmember.award_B,professionalmember.award_S,self.professionalmember_last_key,currdate))
+                connection.commit()
 
 
     def delete_professionalmember(self, key):
@@ -542,11 +547,11 @@ class Store:
     def search_professionalmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s)"
+            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s) AND (MEMBERTYPE=1)"
             key = '%'+key+'%'
             cursor.execute(query, (key, key))
             professionalmembers = [(key,  Professionalmember(name, surname, nickname, gender, email, password, byear, city, interests,0,0,0))
-                      for key, name, surname, nickname, gender, email, password, byear, city, interests in cursor]
+                      for key, name, surname, nickname, gender, membertype,email, password, city, interests, score, byear,teamid in cursor]
         return professionalmembers
 
     def update_professionalmember(self, key, name, surname, nickname, gender, email, password, byear, city, interests,award_G,award_B, award_S):
