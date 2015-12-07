@@ -13,4 +13,5 @@ class Professionalmember:
         self.award_S=award_S
         self.award_B=award_B
         self.score=0
+        self.teamid=0
         self.membertype=1  #1 means professional user

@@ -13,6 +13,7 @@ from admin import Admin
 from basicmember import Basicmember
 from professionalmember import Professionalmember
 import time
+from random import randint
 
 class Store:
     def __init__(self, app):
@@ -505,9 +506,13 @@ class Store:
 # PROFESSIONAL MEMBER FUNCTIONS
     def add_professionalmember(self, professionalmember):
          with dbapi2.connect(self.app.config['dsn']) as connection:
+             #add member into random team
             cursor = connection.cursor()
-            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s) RETURNING MEMBERS.MEMBERID"
-            cursor.execute(query, (professionalmember.name, professionalmember.surname,professionalmember.nickname, professionalmember.gender, professionalmember.email,professionalmember.password, professionalmember.city, int(professionalmember.byear), professionalmember.interests,1))
+            query = "SELECT id FROM team ORDER BY RANDOM()LIMIT 1"
+            cursor.execute(query)
+            randteamid= cursor.fetchone()
+            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE,TEAMID ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s) RETURNING MEMBERS.MEMBERID"
+            cursor.execute(query, (professionalmember.name, professionalmember.surname,professionalmember.nickname, professionalmember.gender, professionalmember.email,professionalmember.password, professionalmember.city, int(professionalmember.byear), professionalmember.interests,1,randteamid))
             self.professionalmember_last_key = cursor.fetchone()[0]
             connection.commit()
             if professionalmember.award_G ==0 and professionalmember.award_B ==0 and professionalmember.award_S == 0:
@@ -530,9 +535,9 @@ class Store:
             query = "SELECT sum(numofGOLD),sum(numofBRONZE), sum(numofSILVER) FROM MEMBERS, AWARDS WHERE( (members.memberid=awards.memberid) and members.memberid=%s )"
             cursor.execute(query, (key,))
             award_G,award_B, award_S= cursor.fetchone()
-            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR FROM MEMBERS WHERE (MEMBERID =%s)"
+            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, TEAMID FROM MEMBERS WHERE (MEMBERID =%s)"
             cursor.execute(query, (key,))
-            name, surname, nickname, gender, membertype, email, password, city, interests, score, byear = cursor.fetchone()
+            name, surname, nickname, gender, membertype, email, password, city, interests, score, byear, teamid = cursor.fetchone()
         return Professionalmember(name, surname, nickname, gender, email, password, byear, city, interests,award_G,award_B, award_S)
 
     def get_professionalmembers(self):
@@ -611,3 +616,23 @@ class Store:
             activities = [(key, Activity( title, activity_type, founder, time, place, activity_info))
                       for key,  title, activity_type, founder, time, place, activity_info in cursor]
         return activities
+
+    def checkadmins(self):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO ADMINCHECK(EMAIL, PASSWORD)VALUES (%s, %s)"
+            cursor.execute(query, ("ersogan@itu.edu.tr","100301"))
+            cursor.execute(query, ("sertbas@itu.edu.tr","110078"))
+            cursor.execute(query, ("tekpinar@itu.edu.tr","120018"))
+            cursor.execute(query, ("ozer@itu.edu.tr","100042"))
+            cursor.execute(query, ("sasmazel@itu.edu.tr","100232"))
+
+            #admin emails derived by surname and passwords derived by last 6 digits of the student num
+            #150-100301 esin
+            #040-110078 nurefþan
+            #040-120018 miyase
+            #040-100042 zehra
+            #040-100232 sinem
+
+            connection.commit()
+
