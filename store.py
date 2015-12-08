@@ -98,7 +98,7 @@ class Store:
                       for key, name, score, founder, year, team_type, location in cursor]
         return teams
 
-    def update_team(self, key, title, score, founder, year):
+    def update_team(self, key, title, score, founder, year, team_type, location):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "UPDATE TEAM SET NAME = %s, SCORE = %s, FOUNDER = %s, YEAR = %s, TEAMTYPE = %s, LOCATION = %s WHERE (ID = %s)"
