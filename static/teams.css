@@ -1,0 +1,72 @@
+body {
+  background-image: url("../static/image/bcyy.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 115%;
+  background-color: #d0e4fe ;
+}
+h2 {
+	color: #2E2E2E;
+	text-align: left;
+	margin-left: 5%;
+}
+p {
+	font-family: "Times New Roman";
+	font-size: 20px;
+}
+#teamTable {
+    border: 2px solid white;
+    border-spacing: 10px;
+    border-collapse: separate;
+    text-align: left;
+    background-color: #CCCCCC;
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-buttom: 3%;
+}
+tr, td {
+    border: 1px solid white;
+    border-spacing: 15px;
+    border-collapse: separate;
+    text-align: center;
+    background-color: #CCCCCC;
+}
+#teamTable tr th {
+	 border: 2px solid #AAAAAA;
+	 border-spacing: 15px;
+	 text-align: center;
+	 margin-left: %5;
+}
+#teamTable tr, #teamTable td  {
+	 border: 1px solid #AAAAAA;
+	 border-spacing: 15px;
+	 text-align: center;
+	 margin-left: %5;
+}
+#teamTable tr #empty_column, tr #empty_column {
+	border-style: none;
+}
+#button_in_table {
+	border: none;
+    background-color: #CCCCCC;
+}
+#searchTable {
+    border: 2px solid white;
+    border-spacing: 10px;
+    background-color: #d0e4fe;
+    margin-top:3%;
+    margin-left: 5%;
+    margin-buttom: 3%;
+	height: 75px;
+}
+#searchTable tr th{
+	border: none;
+}
+#searchTable tr #keyword{
+	border: 2px solid #AAAAAA;
+}
+#searchTable tr #keyword:checked{
+	border: 1px solid #2E2E2E;
+}
+input[type=search]:checked{
+	border: 1px solid #2E2E2E;
+}

@@ -1,27 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='teams.css') }}" />
 <meta charset="UTF-8">
 {% extends "layout.html" %}
 {% block title %}Race List{% endblock %}
 {% block content %}
+<body>
 <h2>Race Home Page</h2>
    <form action="{{ url_for('races_page') }}" method="post">
-      <input type="search" name="search" value="{{search}}">
-	  <input type="submit" value="search" name="submit">
-      <table>
+     <table id="searchTable" style= "width: 45%">
+	 <tr>
+      <th> <input type="search" name="search" placeholder="Search a Race" value="{{search}}"> </th>
+	  <th> <input type="submit" value="Search" name="submit"> </th>
+	  </tr>
+	  </table>
+      <table id="teamTable" style = "width:45%">
+      	 <tr>
+		    <th id="empty_column"> </th>
+		    <th>Name</th>
+		    <th>Race Type</th>
+		    <th>Founder</th>
+		    <th>Participants</th>
+		    <th>Member Count</th>
+		    <th>Time</th>
+		    <th>Place</th>
+		 </tr>
         {% for key, race in races %}
         <tr>
-          <td><input type="checkbox" name="races_to_delete"
-                     value="{{ key }}" /></td>
-          <td>
-            <a href="{{ url_for('race_page', key=key) }}">
-              {{ race.title }} ({{ race.race_type }})
-            </a>
-          </td>
+          <td> <input type="checkbox" name="races_to_delete" value="{{ key }}" /> </td>
+          <td> <a href="{{ url_for('race_page', key=key) }}"> {{ race.title }} </a> </td>
+          <td> {{ race.race_type }}</td>
+          <td> {{ race.founder }}</td>
+          <td> {{ race.participants }}</td>
+          <td> {{ race.participant_count }}</td>
+          <td> {{ race.time }}</td>
+          <td> {{ race.place }}</td>
         </tr>
         {% endfor %}
+        <tr>
+        <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+         <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+      	<th> <input id="button_in_table" type="submit" value="Delete" name="submit" /> </th>
+      </tr>
       </table>
-      <input type="submit" value="Delete" name="submit" />
     </form>
+ </body>
 {% endblock %}
