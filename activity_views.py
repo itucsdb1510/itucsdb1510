@@ -21,7 +21,7 @@ def activities_page():
             for key in keys:
                 app.store.delete_activity(int(key))
             return redirect(url_for('activities_page'))
-        elif  request.form['submit'] == 'search' :
+        elif  request.form['submit'] == 'Search' :
             keyword=request.form['search']
             activities = app.store.search_activity(keyword)
             now = datetime.datetime.now()

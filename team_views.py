@@ -8,7 +8,7 @@ from flask import url_for
 from config import app
 from team import Team
 
-@app.route('/teams', methods=['GET', 'POST', 'SEARCH'])
+@app.route('/teams', methods=['GET', 'POST'])
 def teams_page():
     if request.method == 'GET':
         teams = app.store.get_teams()
@@ -21,9 +21,9 @@ def teams_page():
             for key in keys:
                 app.store.delete_team(int(key))
             return redirect(url_for('teams_page'))
-        elif  request.form['submit'] == 'search' :
-            keyword=request.form['search']
-            teams = app.store.search_team(keyword)
+        elif  request.form['submit'] == 'Search' :
+            search_name=request.form['search']
+            teams = app.store.search_team(search_name)
             now = datetime.datetime.now()
             return render_template('teams.html', teams=teams,
                                current_time=now.ctime())
