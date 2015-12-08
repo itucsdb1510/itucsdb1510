@@ -29,7 +29,7 @@ def races_page():
                                current_time=now.ctime())
     else:
         title = request.form['title']
-        race_type = request.form['race_type']
+        race_type = request.form.get('race_type')
         founder = request.form['founder']
         time = request.form['time']
         place = request.form['place']

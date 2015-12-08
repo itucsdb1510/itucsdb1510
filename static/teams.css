@@ -1,7 +1,7 @@
 body {
   background-image: url("../static/image/bcyy.jpg");
   background-repeat: no-repeat;
-  background-size: 100% 115%;
+  background-size: 100% 135%;
   background-color: #d0e4fe ;
 }
 h2 {
@@ -53,10 +53,11 @@ tr, td {
     border: 2px solid white;
     border-spacing: 10px;
     background-color: #d0e4fe;
-    margin-top:3%;
-    margin-left: 5%;
-    margin-buttom: 3%;
+    position:absolute;
+    left: 65%;
+	top: 30%;
 	height: 75px;
+	width: 25%;
 }
 #searchTable tr th{
 	border: none;
@@ -64,8 +65,12 @@ tr, td {
 #searchTable tr #keyword{
 	border: 2px solid #AAAAAA;
 }
-#searchTable tr #keyword:checked{
-	border: 1px solid #2E2E2E;
+#searchTable tr #keyword:clicked{
+	border: 1px solid #669999;
+}
+#searchTable tr #search_button:hover{
+	background-color: #669999;
+	height: 25px;
 }
 input[type=search]:checked{
 	border: 1px solid #2E2E2E;

@@ -32,7 +32,9 @@ def teams_page():
         score = request.form['score']
         founder = request.form['founder']
         year = request.form['year']
-        team = Team(title, score, founder, year)
+        team_type = request.form.get('team_type')
+        location = request.form['location']
+        team = Team(title, score, founder, year, team_type, location)
         app.store.add_team(team)
         return redirect(url_for('team_page', key=app.store.team_last_key))
 

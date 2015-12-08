@@ -1,0 +1,74 @@
+body {
+  background-image: url("../static/image/bcyy.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+h2 {
+	color: #2E2E2E;
+	text-align: left;
+	margin-left: 5%;
+}
+table{
+    border: 1px solid white;
+    width: 45%;
+    background-color: #CCCCCC;
+    margin-left: 5%;
+}
+th, td {
+	border: 1px solid #AAAAAA;
+    padding: 10px;
+    text-align: left;
+}
+#edit_button {
+	color: #444444;
+	margin-left: 5%;
+	height: 25px;
+	width: 80px;
+}
+#edit_button:hover {
+	background-color: #669999;
+	height: 28px;
+	font-weight: bold;
+}
+div#invite {
+	color: #444444;
+	position:absolute;
+	left: 70%;
+	top: 30%;
+}
+#join_button, #invite_button {
+	color: #444444;
+	height: 33px;
+	width: 150px;
+}
+#join_button:hover, #invite_button:hover, #save_button:hover {
+	background-color: #669999;
+	height: 35px;
+	font-weight: bold;
+}
+#empty_column {
+	border-style: none;
+}
+div#add_region{
+	margin-left:5%;
+	font-weight: bold;
+}
+#add_label{
+	position: fixed;
+	left: 16%;
+	width: 250px;
+}
+#save_button{
+	width:75px;
+	height:30px;
+}
+div#comment_region{
+	margin-left:5%;
+}
+#comment{
+	background-color: #EEEEEE;
+}
+#comment_button:hover{
+	background-color: #669999;
+	height: 28px;
+}
