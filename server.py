@@ -81,7 +81,9 @@ def initialize_database():
                 NAME VARCHAR(80),
                 SCORE INTEGER,
                 FOUNDER VARCHAR(80),
-                YEAR INTEGER
+                YEAR INTEGER,
+                TEAMTYPE VARCHAR(80),
+                LOCATION VARCHAR(80)
                 )"""
         cursor.execute(query)
 

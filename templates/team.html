@@ -3,30 +3,52 @@
 {% block content %}
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='team.css') }}" />
+   <body>
     <h2>{{ team.title }}</h2>
-    <table style = "width:75%">
+    <div id="invite" >
+	    <h4> Invite Atheletes to This Team </h4>
+	    <form action="{{ url_for('login_page') }}">
+	    	<input id="invite_button" type="submit" value="Invite Athletes">
+	    </form>
+	    <br/>
+	    <h4> Join to This Team </h4>
+	    <form action="{{ url_for('login_page') }}">
+	    	<input id="join_button" type="submit" value="Join Team">
+	    </form>
+    </div>
+    <table>
 	 <tr>
-	    <th>Name</th>
 	    <th>Score</th>
 	    <th>Founder</th>
 	    <th>Members</th>
 	    <th>Total Number of Members</th>
 	    <th>Year</th>
+	    <th>Team Type</th>
+	    <th>Location</th>
 	 </tr>
      <tr>
-     	<td>{{ team.title }}</td>
         <td>{{ team.score }}</td>
         <td>{{ team.founder }}</td>
         <td>{{ team.members }}</td>
         <td>{{ team.member_count }}</td>
         <td>{{ team.year }}</td>
+        <td>{{ team.team_type }}</td>
+        <td>{{ team.location }}</td>
       </tr>
     </table>
-
-
-    <p><a href="{{ request.path + '/edit' }}">Edit</a></p>
-
+	<br/>
+	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div id="comment_region">
+    <h5><b>Leave a comment.</b></h5>
+	<textarea id="comment" name="comment" placeholder="Enter your comment here" cols="50" rows="5" maxlength="250"></textarea>
     <form action="{{ url_for('login_page') }}">
-    	<input type="submit" value="Join this Team">
+    	<input id="comment_button" type="submit" value="Comment">
     </form>
+	</div>
+ </body>
 {% endblock %}

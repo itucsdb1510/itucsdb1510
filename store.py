@@ -58,8 +58,8 @@ class Store:
     def add_team(self, team):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO TEAM (NAME, SCORE, FOUNDER, YEAR) VALUES (%s, %s, %s, %s) RETURNING TEAM.ID"
-            cursor.execute(query, (team.title, int(team.score), team.founder, int(team.year)))
+            query = "INSERT INTO TEAM (NAME, SCORE, FOUNDER, YEAR, TEAMTYPE, LOCATION) VALUES (%s, %s, %s, %s, %s, %s) RETURNING TEAM.ID"
+            cursor.execute(query, (team.title, int(team.score), team.founder, int(team.year), team.team_type, team.location))
             connection.commit()
             self.team_last_key = cursor.fetchone()[0]
 
@@ -74,18 +74,18 @@ class Store:
     def get_team(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT NAME, SCORE, FOUNDER, YEAR FROM TEAM WHERE (ID = %s)"
+            query = "SELECT NAME, SCORE, FOUNDER, YEAR, TEAMTYPE, LOCATION FROM TEAM WHERE (ID = %s)"
             cursor.execute(query, (key,))
-            name, score, founder, year = cursor.fetchone()
-        return Team(name, score, founder, year)
+            name, score, founder, year, team_type, location = cursor.fetchone()
+        return Team(name, score, founder, year, team_type, location)
 
     def get_teams(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "SELECT * FROM TEAM ORDER BY ID"
             cursor.execute(query)
-            teams = [(key, Team(name, score, founder, year))
-                      for key, name, score, founder, year in cursor]
+            teams = [(key, Team(name, score, founder, year, team_type, location))
+                      for key, name, score, founder, year, team_type, location in cursor]
         return teams
 
     def search_team(self, key):
@@ -94,15 +94,15 @@ class Store:
             query = "SELECT * FROM TEAM WHERE (NAME ILIKE %s OR FOUNDER ILIKE %s)"
             key = '%'+key+'%'
             cursor.execute(query, (key, key))
-            teams = [(key, Team(name, score, founder, year))
-                      for key, name, score, founder, year in cursor]
+            teams = [(key, Team(name, score, founder, year, team_type, location))
+                      for key, name, score, founder, year, team_type, location in cursor]
         return teams
 
-    def update_team(self, key, name, score, founder, year):
+    def update_team(self, key, title, score, founder, year, team_type, location):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE TEAM SET NAME = %s, SCORE = %s, FOUNDER = %s, YEAR = %sWHERE (ID = %s)"
-            cursor.execute(query, (name, score, founder, year, key))
+            query = "UPDATE TEAM SET NAME = %s, SCORE = %s, FOUNDER = %s, YEAR = %s, TEAMTYPE = %s, LOCATION = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, score, founder, year, team_type, location, key))
             connection.commit()
 
     def addMember(self, key):
