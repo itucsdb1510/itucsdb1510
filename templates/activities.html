@@ -8,9 +8,9 @@
 {% block title %}Activity List{% endblock %}
 {% block content %}
 <body>
-<h2>Activities</h2>
+<h2>Activity Home Page</h2>
    <form action="{{ url_for('activities_page') }}" method="post">
-     <table id="searchTable" >
+     <table id="searchTable" style= "width: 45%">
 	 <tr>
    	  <th> <input type="search" name="search" placeholder="Search an Activity" value="{{search}}"> </th>
 	  <th> <input type="submit" value="Search" name="submit"> </th>

@@ -1,54 +1,41 @@
 {% extends "layout.html" %}
 {% block title %}Activity{% endblock %}
 {% block content %}
-<link rel="stylesheet"
-	href="{{ url_for('static', filename='team.css') }}" />
-<body>
-    <h2>{{ activity.title }} </h2>
-    <div id="invite" >
-	    <h4> Invite Atheletes to This Activity </h4>
-	    <form action="{{ url_for('login_page') }}">
-	    	<input id="invite_button" type="submit" value="Invite Athletes">
-	    </form>
-	    <br/>
-	    <h4> Join to This Activity </h4>
-	    <form action="{{ url_for('login_page') }}">
-	    	<input id="join_button" type="submit" value="Join Activity">
-	    </form>
-    </div>
+    <h2>{{ activity.title }}</h2>
     <table>
-    <tr>
-	    <th>Activity Type</th>
-	    <th>Founder</th>
-	    <th>Participants</th>
-	    <th>Total Number of Participants</th>
-	    <th>Time</th>
-	    <th>Place</th>
-	    <th>Activity Information</th>
-	 </tr>
-	 <tr>
+     <tr>
+        <th>Activity Type: </th>
         <td>{{ activity.activity_type }}</td>
+      </tr>
+      <tr>
+        <th>Founder: </th>
         <td>{{ activity.founder }}</td>
+      </tr>
+      <tr>
+        <th>Participants: </th>
         <td>{{ activity.participants }}</td>
-        <td>{{ activity.participants_count }}</td>
+      </tr>
+      <tr>
+        <th>Total Number of Participants: </th>
+        <td>{{ activity.participant_count}}</td>
+      </tr>
+      <tr>
+        <th>Time: </th>
         <td>{{ activity.time }}</td>
+      </tr>
+       <tr>
+        <th>Place: </th>
         <td>{{ activity.place }}</td>
-        <td>{{ activity.activity_information }}</td>
+      </tr>
+       <tr>
+        <th>Activity Information: </th>
+        <td>{{ activity.activity_info }}</td>
       </tr>
     </table>
-     <br/>
-	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <div id="comment_region">
-    <h5><b>Leave a comment.</b></h5>
-	<textarea id="comment" name="comment" placeholder="Enter your comment here" cols="50" rows="5" maxlength="250"></textarea>
+
+    <p><a href="{{ request.path + '/edit' }}">Edit</a></p>
+
     <form action="{{ url_for('login_page') }}">
-    	<input id="comment_button" type="submit" value="Comment">
+    	<input type="submit" value="Join this activity">
     </form>
-	</div>
-</body>
 {% endblock %}

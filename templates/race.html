@@ -1,52 +1,37 @@
 {% extends "layout.html" %}
 {% block title %}Race{% endblock %}
 {% block content %}
-<link rel="stylesheet"
-	href="{{ url_for('static', filename='team.css') }}" />
-<body>
-    <h2>{{ race.title }} </h2>
-     <div id="invite" >
-	    <h4> Invite Atheletes to This Race </h4>
-	    <form action="{{ url_for('login_page') }}">
-	    	<input id="invite_button" type="submit" value="Invite Athletes">
-	    </form>
-	    <br/>
-	    <h4> Join to This Race </h4>
-	    <form action="{{ url_for('login_page') }}">
-	    	<input id="join_button" type="submit" value="Join Race">
-	    </form>
-    </div>
+    <h2>{{ race.title }}</h2>
     <table>
      <tr>
-	    <th>Race Type</th>
-	    <th>Founder</th>
-	    <th>Participants</th>
-	    <th>Total Number of Participants</th>
-	    <th>Time</th>
-	    <th>Place</th>
-	 </tr>
-	 <tr>
+        <th>Race Type: </th>
         <td>{{ race.race_type }}</td>
+      </tr>
+      <tr>
+        <th>Founder: </th>
         <td>{{ race.founder }}</td>
+      </tr>
+      <tr>
+        <th>Participants: </th>
         <td>{{ race.participants }}</td>
-        <td>{{ race.participants_count }}</td>
+      </tr>
+      <tr>
+        <th>Total Number of Participants: </th>
+        <td>{{ race.participant_count}}</td>
+      </tr>
+      <tr>
+        <th>Time: </th>
         <td>{{ race.time }}</td>
+      </tr>
+       <tr>
+        <th>Place: </th>
         <td>{{ race.place }}</td>
       </tr>
     </table>
-    <br/>
-	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <div id="comment_region">
-    <h5><b>Leave a comment.</b></h5>
-	<textarea id="comment" name="comment" placeholder="Enter your comment here" cols="50" rows="5" maxlength="250"></textarea>
+
+     <p><a href="{{ request.path + '/edit' }}">Edit</a></p>
+
     <form action="{{ url_for('login_page') }}">
-    	<input id="comment_button" type="submit" value="Comment">
+    	<input type="submit" value="Join this race">
     </form>
-	</div>
-</body>
 {% endblock %}

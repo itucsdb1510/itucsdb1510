@@ -9,12 +9,12 @@
 {% block title %}Race List{% endblock %}
 {% block content %}
 <body>
-<h2>Races</h2>
+<h2>Race Home Page</h2>
    <form action="{{ url_for('races_page') }}" method="post">
-     <table id="searchTable" >
+     <table id="searchTable" style= "width: 45%">
 	 <tr>
       <th> <input type="search" name="search" placeholder="Search a Race" value="{{search}}"> </th>
-	  <th> <input id="search_button" type="submit" value="Search" name="submit"> </th>
+	  <th> <input type="submit" value="Search" name="submit"> </th>
 	  </tr>
 	  </table>
       <table id="teamTable" style = "width:45%">

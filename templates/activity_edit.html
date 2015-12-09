@@ -1,8 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}Activity Edit Form{% endblock %}
 {% block content %}
-<link rel="stylesheet"
-	href="{{ url_for('static', filename='team.css') }}" />
     {% set key = request.path.split('/')[-2] %}
     {% set action = url_for('activity_page', key=key) if activity else url_for('activities_page') %}
     {% set title = activity.title if activity else '' %}
@@ -11,25 +9,46 @@
     {% set time = activity.time if activity else '' %}
     {% set place = activity.place if activity else '' %}
     {% set activity_info = activity.activity_info if activity else '' %}
-<body>
+
    <form action="{{ action }}" method="post">
-   <div id="add_region">
-         <p> Title:
-          	 <input id="add_label" type="text" name="title" value="{{ title }}" required autofocus /> </p>
-         <p>Activity Type:
-           <input id="add_label" type="text" name="activity_type" value="{{ activity_type }}" /></p>
-         <p>Founder:
-           <input id="add_label" type="text" name="founder" value="{{ founder }}" required autofocus/></p>
-          <p>Time:
-           <input id="add_label" type="text" name="time" value="{{ time }}" /></p>
-          <p>Place:
-           <input id="add_label" type="text" name="place" value="{{ place }}" /></p>
-
-         <p> Activity Information:
-           <input id="add_label" type="text" name="activity_info" value="{{ activity_info }}" /></p>
-
-      <input id="save_button" value="Save" name="save" type="submit" />
-      </div>
+      <table>
+        <tr>
+          <th>Title:</th>
+          <td>
+          	 <input type="text" name="title" value="{{ title }}" required autofocus />
+          </td>
+        </tr>
+        <tr>
+          <th>Activity Type:</th>
+          <td>
+           <input type="text" name="activity_type" value="{{ activity_type }}" />
+          </td>
+        <tr>
+        <tr>
+          <th>Founder:</th>
+          <td>
+           <input type="text" name="founder" value="{{ founder }}" required autofocus/>
+          </td>
+        </tr>
+        <tr>
+          <th>Time:</th>
+          <td>
+           <input type="text" name="time" value="{{ time }}" />
+          </td>
+        </tr>
+         <tr>
+          <th>Place:</th>
+          <td>
+           <input type="text" name="place" value="{{ place }}" />
+          </td>
+        </tr>
+         <tr>
+          <th>Activity Information:</th>
+          <td>
+           <input type="text" name="activity_info" value="{{ activity_info }}" />
+          </td>
+        </tr>
+      </table>
+      <input value="Save" name="save" type="submit" />
     </form>
-  </body>
 {% endblock %}
