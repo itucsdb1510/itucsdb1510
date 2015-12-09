@@ -1,4 +1,3 @@
-from tkinter import Place
 class Team:
     def __init__(self, title=None, score=None, founder=None, year=None):
         self.title = title
