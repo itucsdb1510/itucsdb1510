@@ -21,7 +21,7 @@ def races_page():
             for key in keys:
                 app.store.delete_race(int(key))
             return redirect(url_for('races_page'))
-        elif  request.form['submit'] == 'search' :
+        elif  request.form['submit'] == 'Search' :
             keyword=request.form['search']
             races = app.store.search_race(keyword)
             now = datetime.datetime.now()

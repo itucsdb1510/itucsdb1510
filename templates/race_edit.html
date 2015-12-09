@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Race Edit Form{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='team.css') }}" />
  {% set key = request.path.split('/')[-2] %}
     {% set action = url_for('race_page', key=key) if race else url_for('races_page') %}
     {% set title = race.title if race else '' %}
@@ -8,40 +10,21 @@
     {% set founder = race.founder if race else '' %}
     {% set time = race.time if race else '' %}
     {% set place = race.place if race else '' %}
-
+<body>
    <form action="{{ action }}" method="post">
-      <table>
-        <tr>
-          <th>Title:</th>
-          <td>
-          	 <input type="text" name="title" value="{{ title }}" required autofocus />
-          </td>
-        </tr>
-        <tr>
-          <th>Race Type:</th>
-          <td>
-           <input type="text" name="race_type" value="{{ race_type }}"/>
-          </td>
-        <tr>
-        <tr>
-          <th>Founder:</th>
-          <td>
-           <input type="text" name="founder" value="{{ founder }}" required autofocus/>
-          </td>
-        </tr>
-        <tr>
-          <th>Time:</th>
-          <td>
-           <input type="text" name="time" value="{{ time }}" />
-          </td>
-        </tr>
-         <tr>
-          <th>Place:</th>
-          <td>
-           <input type="text" name="place" value="{{ place }}" required autofocus/>
-          </td>
-        </tr>
-      </table>
-      <input value="Save" name="save" type="submit" />
+    <div id="add_region">
+         <p>Title:
+          	 <input id="add_label" type="text" name="title" value="{{ title }}" required autofocus /></p>
+        <p>Race Type:
+          <input id="add_label" type="text" name="race_type" value="{{ race_type }}" /> </p>
+         <p>Founder:
+           <input id="add_label" type="text" name="founder" value="{{ founder }}" required autofocus/></p>
+         <p>Time:
+           <input id="add_label" type="text" name="time" value="{{ time }}" /></p>
+         <p>Place:
+           <input id="add_label" type="text" name="place" value="{{ place }}" required autofocus/></p>
+      <input id= "save_button" value="Save" name="save" type="submit" />
+      </div>
     </form>
+   </body>
 {% endblock %}
