@@ -1,35 +1,40 @@
 {% extends "layout.html" %}
 {% block title %}Team Edit Form{% endblock %}
 {% block content %}
-<link rel="stylesheet"
-	href="{{ url_for('static', filename='team.css') }}" />
     {% set key = request.path.split('/')[-2] %}
     {% set action = url_for('team_page', key=key) if team else url_for('teams_page') %}
-    {% set title = team.title if team else '' %}
+    {% set name = team.name if team else '' %}
     {% set score = team.score if team else '' %}
     {% set founder = team.founder if team else '' %}
     {% set year = team.year if team else '' %}
-    {% set team_type = team.team_type if team else '' %}
-    {% set location = team.location if team else '' %}
-<body>
+
     <form action="{{ action }}" method="post">
-    <div id="add_region">
-        <p>Title: <input id="add_label" type="text" name="title" value="{{ title }}" required autofocus /> </p>
-
-        <p>Score:
-           <input id="add_label" type="text" name="score" value="{{ score }}" required autofocus /></p>
-
-        <p>Founder:
-           <input id="add_label" type="text" name="founder" value="{{ founder }}"/></p>
-         <p>Year:
-           <input id="add_label" type="text" name="year" size="4" value="{{ year }}" required autofocus /></p>
-         <p>Team Type:
-            <input id="add_label" type="text" name="team_type" value="{{ team_type }}"/>	</p>
-        <p>Location:
-         	 <input id="add_label" type="text" name="location" value="{{ location }}"/> </p>
-	  <br/>
-      <p><input id="save_button" value="Save" name="save" type="submit" /></p>
-      </div>
+      <table>
+        <tr>
+          <th>Title:</th>
+          <td>
+          	 <input type="text" name="title" value="{{ title }}" required autofocus />
+          </td>
+        </tr>
+        <tr>
+          <th>Score:</th>
+          <td>
+           <input type="text" name="score" value="{{ score }}" required autofocus />
+          </td>
+        <tr>
+        <tr>
+          <th>Founder:</th>
+          <td>
+           <input type="text" name="founder" value="{{ founder }}"/>
+          </td>
+        </tr>
+        <tr>
+          <th>Year:</th>
+          <td>
+           <input type="text" name="year" size="4" value="{{ year }}" required autofocus />
+          </td>
+        </tr>
+      </table>
+      <input value="Save" name="save" type="submit" />
 	</form>
-</body>
 {% endblock %}

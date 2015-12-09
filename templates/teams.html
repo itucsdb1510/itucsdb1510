@@ -12,21 +12,18 @@
 <h2>Teams</h2>
 
    <form action="{{ url_for('teams_page') }}" method="post">
-	 <table id="searchTable" >
+	 <table id="searchTable" style= "width: 35%">
 	 <tr>
 	  <th> <input id="keyword" type="search" name="search" placeholder="Search a Team" value="{{search}}"> </th>
-	  <th> <input id="search_button" type="submit" value="Search" name="submit"> </th>
+	  <th> <input type="submit" value="Search" name="submit"> </th>
 	  </tr>
 	  </table>
-	      <table id="teamTable" style = "width:45%" >
+	      <table id="teamTable" style = "width:35%" >
          <tr>
 		    <th id="empty_column"> </th>
 		    <th>Name</th>
 		    <th>Score</th>
 		    <th>Member Count</th>
-		    <th>Team Type</th>
-		    <th>Year</th>
-		    <th>Location</th>
 		 </tr>
 	        {% for key, team in teams %}
         <tr>
@@ -34,15 +31,9 @@
             <td> <a href="{{ url_for('team_page', key=key) }}"> {{ team.title }} </a> </td>
 	        <td>{{ team.score }}</td>
 	        <td>{{ team.member_count }} {{'members'}}</td>
-	        <td>{{ team.team_type }}</td>
-	        <td>{{ team.year }}</td>
-	        <td>{{ team.location }}</td>
         </tr>
         {% endfor %}
       <tr>
-        <th id="empty_column"> </th>
-        <th id="empty_column"> </th>
-        <th id="empty_column"> </th>
         <th id="empty_column"> </th>
         <th id="empty_column"> </th>
         <th id="empty_column"> </th>
