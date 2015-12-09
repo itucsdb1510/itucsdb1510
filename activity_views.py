@@ -29,7 +29,7 @@ def activities_page():
                                current_time=now.ctime())
     else:
         title = request.form['title']
-        activity_type = request.form.get('activity_type')
+        activity_type = request.form['activity_type']
         founder = request.form['founder']
         time = request.form['time']
         place = request.form['place']
