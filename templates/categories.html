@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
+<meta charset="ISO-8859-1">
 {% extends "layout.html" %}
 {% block title %}Category List{% endblock %}
 {% block content %}
 <h2>Category Home Page</h2>
    <form action="{{ url_for('categories_page') }}" method="post">
+   <input type="search" name="search" value="{{search}}">
+	  <input type="submit" value="search" name="submit">
       <table>
         {% for key, category in categories %}
         <tr>
@@ -14,13 +15,17 @@
                      value="{{ key }}" /></td>
           <td>
             <a href="{{ url_for('category_page', key=key) }}">
-              {{ category.title }}
+              {{ category.title }} ( {{ category.typee }})
             </a>
           </td>
         </tr>
 
         {% endfor %}
       </table>
-      <input type="submit" value="Delete" name="delete" />
+      <input type="submit" value="Delete" name="submit" />
     </form>
+
+    <div class="navbar-header">
+				<a class="navbar-brand" href="{{ url_for('category_edit_page') }}">Add category</a>
+</div>
 {% endblock %}

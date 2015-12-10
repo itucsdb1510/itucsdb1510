@@ -7,8 +7,17 @@
         <th>Category Name: </th>
         <td>{{ category.title}}</td>
       </tr>
+      <tr>
+        <th>Category Type: </th>
+        <td>{{ category.typee}}</td>
+      </tr>
     </table>
     <br><br>
+   <form action="{{ request.path + '/edit' }}">
+    	<input type="submit" value=" Edit">
+    </form>
+
+
     <form action="{{ url_for('login_page') }}">
     	<input type="submit" value=" Add new category">
     </form>

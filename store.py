@@ -9,6 +9,7 @@ from activity import Activity
 from race import Race
 from _datetime import date
 from announcement import Announcement
+from category import Category
 from admin import Admin
 from basicmember import Basicmember
 from professionalmember import Professionalmember
@@ -157,6 +158,57 @@ class Store:
                       for key, title, text in cursor]
         return announcements
 
+#CATEGORY
+
+    def add_category(self, category):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO CATEGORY (TITLE,TYPEE) VALUES (%s,%s) RETURNING CATEGORY.ID"
+            cursor.execute(query, (category.title, category.typee))
+            connection.commit()
+            self.category_last_key = cursor.fetchone()[0]
+
+    def delete_category(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM CATEGORY WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
+
+    def get_category(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT TITLE, TYPEE FROM CATEGORY WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            title,typee = cursor.fetchone()
+        return Category(title,typee)
+
+    def get_categories(self):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM CATEGORY ORDER BY ID"
+            cursor.execute(query)
+            categories = [(key, Category(title, typee))
+                      for key, title,typee  in cursor]
+        return categories
+    def update_category(self, key, title,typee):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE CATEGORY SET TITLE = %s, TYPEE= %s WHERE (ID = %s)"
+            cursor.execute(query, (title, typee ,key))
+            connection.commit()
+    def search_category(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM CATEGORY WHERE (TITLE ILIKE %s OR TYPEE ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key))
+            categories = [(key, Category(title, typee))
+                      for key, title, typee in cursor]
+        return categories
+
+
+
 #TOPIC
     def add_topic(self, topic):
         self.topic_last_key += 1
@@ -276,23 +328,6 @@ class Store:
             races = [(key, Race(title, race_type, founder, time, place))
                       for key, title, race_type, founder, time, place in cursor]
         return races
-#CATEGORY
-    def count_category(self, category):
-        self.category_count += 1
-
-    def add_category(self, category):
-        self.category_last_key += 1
-        self.categories[self.category_last_key] = category
-
-    def delete_category(self, key):
-        del self.categories[key]
-        self.category_last_key -= 1
-
-    def get_category(self, key):
-        return self.categories[key]
-
-    def get_categories(self):
-        return sorted(self.categories.items())
 
 
 #ADMIN

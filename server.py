@@ -147,6 +147,14 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
+        query = """CREATE TABLE IF NOT EXISTS CATEGORY (
+                ID SERIAL PRIMARY KEY,
+                TITLE VARCHAR(40),
+                TYPEE VARCHAR(30)
+                )"""
+        cursor.execute(query)
+
+
         query = """CREATE TABLE IF NOT EXISTS ADMIN (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(30) NOT NULL,
