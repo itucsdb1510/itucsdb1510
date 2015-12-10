@@ -7,15 +7,15 @@
 {% block title %}Announcements List{% endblock %}
 {% block content %}
 <body>
-<h2 style="height:10px; text-align: center;">Announcements</h2>
+<h2 id="baslikas">Announcements</h2> <!-- style="height:10px; text-align: center;" -->
 
 <form action="{{ url_for('announcements_page') }}" method="post">
-    <div id="arama" style="text-align:right; height:15px; margin-top:-5%">
+    <div id="arama" > <!-- style="text-align:right; height:15px; margin-top:-5%;" -->
       <input type="search" name="search"  placeholder="Search an Announcement"   value="{{search}}">
 	  <input type="submit" value="search" name="submit">
 	  </div>
 	  <br><br>
-      <table id="t01" style="align:center; margin-left:8cm;">
+      <table id="t01">
        <tr>
            <th></th>
     		<th>Title</th>
@@ -27,21 +27,21 @@
           <td><input  type="checkbox" name="announcements_to_delete"
                      value="{{ key }}" /></td>
           <td>
-            <a href="{{ url_for('announcement_page', key=key) }}">
+            <a style="color:black;" href="{{ url_for('announcement_page', key=key) }}">
               {{ announcement.title }}
             </a>
           </td>
           <td>
-          <a href="{{ url_for('announcement_page', key=key) }}">
+          <a style="color:black;" href="{{ url_for('announcement_page', key=key) }}">
                {{ announcement.text }}
             </a>
           </td>
         </tr>
         {% endfor %}
       </table>
-      <input style="position:relative; left: 68%;margin-top:2%; color: blue;" type="submit" value="Delete" name="submit" />
-    <br><a href="{{ url_for('announcement_edit_page') }}"><input style="position:relative; color:blue; background-color:buttonface; left: 68%;margin-top:2%;"  value="Add Announcement"/></a>
-   
+      <input id="silmeas" type="submit" value="Delete" name="submit" /> <!-- style="position:relative; left: 68%;margin-top:2%; color: black;"  -->
+    <br><a href="{{ url_for('announcement_edit_page') }}"><input id="degisimas" value="Add Announcement"/></a> <!-- style="position:relative; color:black; background-color:buttonface; left: 68%;margin-top:2%;" -->
+
     </form>
 
 

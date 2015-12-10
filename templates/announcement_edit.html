@@ -1,26 +1,30 @@
 {% extends "layout.html" %}
 {% block title %}Category Edit Form{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='announcements.css') }}" />
  {% set key = request.path.split('/')[-2] %}
     {% set action = url_for('announcement_page', key=key) if announcement else url_for('announcements_page') %}
     {% set title = announcement.title if announcement else '' %}
     {% set text = announcement.text if announcement else '' %}
-
+<body>
    <form action="{{ action }}" method="post">
       <table>
         <tr>
-          <th>Title:</th>
+          <th><font color="white">Title:</font></th>
           <td>
           	 <input type="text" name="title" value="{{ title }}" required autofocus />
           </td>
         </tr>
         <tr>
-          <th>Text:</th>
+          <th><font color="white">Text:</font></th>
           <td>
           	 <input type="text" name="text" value="{{ text }}" />
           </td>
         </tr>
       </table>
-      <input value="Save" name="save" type="submit" />
+
+      <input id="ekleme" value="Save" name="save" type="submit" /> <!-- style="position:relative; left:19%;margin-top:2%; color: black;" -->
     </form>
+    </body>
 {% endblock %}

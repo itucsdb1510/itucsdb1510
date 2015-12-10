@@ -1,0 +1,38 @@
+body {
+   background-image: url("../static/image/category.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+h2#baslikc{
+	height:10px; text-align: left; color:black; margin-left:2cm;
+}
+input#degisim{
+	position:relative; left:6%;margin-top:2%; color: black;
+}
+input#ekleme{
+	position:relative; left:6%;margin-top:2%; color: black;
+}
+table#t01 {
+    width:20%;
+    align:left;
+    margin-top:1cm;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    color:black;
+    text-align: center;
+}
+table#t01 tr:nth-child(even) {
+    background-color: #81BEF7;
+}
+table#t01 tr:nth-child(odd) {
+   background-color:#CEECF5;
+}
+table#t01 th	{
+    background-color: black;
+    color: white;
+}

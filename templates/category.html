@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 {% block title %}Category{% endblock %}
 {% block content %}
-    <h2><strong>Category</strong></h2>
-    <table>
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='category.css') }}" />
+
+<body>
+    <h2 id="baslikc"><strong>Category</strong></h2><!-- style="height:10px; text-align: left; color:black; margin-left:2cm;" -->
+    <table id="t01" style="align:left; left:5%">
      <tr>
         <th>Category Name: </th>
         <td>{{ category.title}}</td>
@@ -12,14 +16,14 @@
         <td>{{ category.typee}}</td>
       </tr>
     </table>
-    <br><br>
    <form action="{{ request.path + '/edit' }}">
-    	<input type="submit" value=" Edit">
+    	<input id="degisim" type="submit" value=" Edit"><!--  style="position:relative; left:6%;margin-top:2%; color: black;" -->
     </form>
 
 
     <form action="{{ url_for('login_page') }}">
-    	<input type="submit" value=" Add new category">
+    	<input id="ekleme" type="submit" value=" Add new category"><!--  style="position:relative; left:6%;margin-top:2%; color: black;"  -->
     </form>
+</body>
 {% endblock %}
 

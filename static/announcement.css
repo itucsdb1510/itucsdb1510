@@ -4,26 +4,20 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
-h2#baslikas{
-	height:10px; text-align: center;
+h2#baslika{
+	height:10px; text-align: left; color:black; margin-left:2cm;
 }
-div#arama{
-	text-align:right; height:15px; margin-top:-5%;
+input#degisima{
+	position:relative; left:6%;margin-top:2%; color: black;
 }
-input#silmeas{
-	position:relative; left: 68%;margin-top:2%; color: black;
-}
-input#degisimas{
-	position:relative; color:black; background-color:buttonface; left: 68%;margin-top:2%;
-}
-input#ekleme{
-	position:relative; left:19%;margin-top:2%; color: black;
+input#eklemea{
+	position:relative; left:6%;margin-top:2%; color: black;
 }
 table#t01 {
-    width:50%;
-    align:center;
+    width:20%;
+    align:left;
     margin-top:1cm;
-    margin-left:8cm;
+    left:5%;
 }
 table, th, td {
     border: 1px solid black;

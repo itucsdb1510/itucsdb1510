@@ -1,31 +1,48 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='categories.css') }}" />
 <meta charset="ISO-8859-1">
 {% extends "layout.html" %}
 {% block title %}Category List{% endblock %}
 {% block content %}
-<h2>Category Home Page</h2>
+<body>
+<h2 id="baslikcs">Categories</h2> <!-- style="height:15px; text-align: left;margin-left:2cm; margin-bottom:1cm" -->
    <form action="{{ url_for('categories_page') }}" method="post">
-   <input type="search" name="search" value="{{search}}">
+   <div id="arama" > <!-- style="text-align:right; height:15px; margin-top:-5%" -->
+  	  <input type="search" name="search" placeholder="Search an Category" value="{{search}}">
 	  <input type="submit" value="search" name="submit">
-      <table>
+   </div>
+      <table id="t01"><!--  style="align:left; left:5%" -->
+      <tr>
+           <th></th>
+    		<th>Name</th>
+   			<th>Domain</th>
+         </tr>
         {% for key, category in categories %}
         <tr>
           <td><input type="checkbox" name="categories_to_delete"
                      value="{{ key }}" /></td>
           <td>
-            <a href="{{ url_for('category_page', key=key) }}">
-              {{ category.title }} ( {{ category.typee }})
+            <a style="color:black;" href="{{ url_for('category_page', key=key) }}">
+              {{ category.title }}
+            </a>
+          </td>
+          <td>
+            <a style="color:black;" href="{{ url_for('category_page', key=key) }}">
+               {{ category.typee }}
             </a>
           </td>
         </tr>
 
         {% endfor %}
       </table>
-      <input type="submit" value="Delete" name="submit" />
+      <input id="silme" type="submit" value="Delete" name="submit" /><!-- style="position:relative; left:5%;margin-top:2%; color: black;" -->
+      <br><a href="{{ url_for('category_edit_page') }}"><input id="degisim" value="Add Category"/></a> <!-- style="position:relative; left: 5%;margin-top:2%;color:black; background-color:buttonface;"  -->
     </form>
 
-    <div class="navbar-header">
+    <!--<div class="navbar-header">
 				<a class="navbar-brand" href="{{ url_for('category_edit_page') }}">Add category</a>
-</div>
+</div> -->
+</body>
 {% endblock %}

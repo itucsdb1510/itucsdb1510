@@ -1,0 +1,54 @@
+body {
+   background-image: url("../static/image/category.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+h2#baslikcs{
+	height:15px; text-align: left;margin-left:2cm; margin-bottom:1cm
+}
+div#arama{
+	text-align:right;
+	 height:15px;
+	 margin-top:-5%
+}
+input#silme{
+	position:relative;
+	 left:5%;
+	 margin-top:2%;
+	 color: black;
+}
+input#kaydet{
+	position:relative; left:19%; color: black;
+}
+input#degisim{
+	position:relative;
+	left: 5%;
+	margin-top:2%;
+	color:black;
+	background-color:buttonface;
+}
+table#t01 {
+    width:50%;
+    align:left;
+    margin-top:1cm;
+     left:5%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    color:black;
+    text-align: center;
+}
+table#t01 tr:nth-child(even) {
+    background-color: #81BEF7;
+}
+table#t01 tr:nth-child(odd) {
+   background-color:#CEECF5;
+}
+table#t01 th	{
+    background-color: black;
+    color: white;
+}

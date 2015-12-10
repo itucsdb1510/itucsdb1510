@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 {% block title %}Announcement{% endblock %}
 {% block content %}
-    <h2><strong>Announcement</strong></h2>
-    <table>
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='announcement.css') }}" />
+<body>
+    <h2 id="baslika"><strong>Announcement</strong></h2> <!-- style="height:10px; text-align: left; color:black; margin-left:2cm;" -->
+    <table id="t01">
      <tr>
         <th>Announcement Name: </th>
         <td>{{ announcement.title}}</td>
@@ -13,12 +16,14 @@
       </tr>
     </table>
     <br><br>
- <form action="{{ request.path + '/edit' }}">
-    	<input type="submit" value=" Edit">
+  <form action="{{ request.path + '/edit' }}">
+    	<input id="degisima" type="submit" value=" Edit"> <!-- style="position:relative; left:6%;margin-top:2%; color: black;" -->
     </form>
 
 
     <form action="{{ url_for('login_page') }}">
-    	<input type="submit" value=" Add new announcement">
+    	<input id="eklemea" type="submit" value=" Add new announcement"><!-- style="position:relative; left:6%;margin-top:2%; color: black;" -->
     </form>
+
+   </body>
 {% endblock %}
