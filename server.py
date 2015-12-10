@@ -239,10 +239,6 @@ def login_page():
     return render_template('login.html', current_time=now.ctime())
 
 
-@app.route('/forum')
-def forum_page():
-    now = datetime.datetime.now();
-    return render_template('forum.html', current_time=now.ctime())
 
 @app.route('/counter')
 def counter_page():
