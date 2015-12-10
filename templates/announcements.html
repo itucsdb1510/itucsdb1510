@@ -1,33 +1,54 @@
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='announcements.css') }}" />
 <meta charset="ISO-8859-1">
 {% extends "layout.html" %}
 {% block title %}Announcements List{% endblock %}
 {% block content %}
-
-<h2>Announcement Home Page</h2>
+<body>
+<h2 style="height:10px; text-align: center;">Announcements</h2>
 
 <form action="{{ url_for('announcements_page') }}" method="post">
-      <input type="search" name="search" value="{{search}}">
+    <div id="arama" style="text-align:right; height:15px; margin-top:-5%">
+      <input type="search" name="search"  placeholder="Search an Announcement"   value="{{search}}">
 	  <input type="submit" value="search" name="submit">
-      <table>
+	  </div>
+	  <br><br>
+      <table id="t01" style="align:center; margin-left:8cm;">
+       <tr>
+           <th></th>
+    		<th>Title</th>
+   			<th>Content</th>
+         </tr>
         {% for key, announcement in announcements %}
+
         <tr>
-          <td><input type="checkbox" name="announcements_to_delete"
+          <td><input  type="checkbox" name="announcements_to_delete"
                      value="{{ key }}" /></td>
           <td>
             <a href="{{ url_for('announcement_page', key=key) }}">
-              {{ announcement.title }}  ( {{ announcement.text }})
+              {{ announcement.title }}
+            </a>
+          </td>
+          <td>
+          <a href="{{ url_for('announcement_page', key=key) }}">
+               {{ announcement.text }}
             </a>
           </td>
         </tr>
         {% endfor %}
       </table>
-      <input type="submit" value="Delete" name="submit" />
+      <input style="position:relative; left: 68%;margin-top:2%; color: blue;" type="submit" value="Delete" name="submit" />
+    <br><a href="{{ url_for('announcement_edit_page') }}"><input style="position:relative; color:blue; background-color:buttonface; left: 68%;margin-top:2%;"  value="Add Announcement"/></a>
+   
     </form>
 
 
-<div class="navbar-header">
-				<a class="navbar-brand" href="{{ url_for('announcement_edit_page') }}">Add announcement</a>
+<!--  <div>
+	<a  style="position:relative; left: 68%;margin-top:2%; color: black" href="{{ url_for('announcement_edit_page') }}">Add Announcement</a>
 </div>
+-->
+
+</body>
 {% endblock %}
