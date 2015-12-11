@@ -48,6 +48,8 @@ import professionalmember_views
 from activity import Activity
 import activity_views
 
+import login_views
+
 def get_elephantsql_dsn(vcap_services):
     """Returns the data source name for ElephantSQL."""
     parsed = json.loads(vcap_services)
@@ -233,10 +235,10 @@ def news_page():
     return render_template('news.html', current_time=now.ctime())
 
 
-@app.route('/login')
-def login_page():
+@app.route('/guest')
+def guest_page():
     now = datetime.datetime.now();
-    return render_template('login.html', current_time=now.ctime())
+    return render_template('guest.html', current_time=now.ctime())
 
 
 @app.route('/forum')
