@@ -1,4 +1,7 @@
 body {
+  background-image: url("../static/image/bcyy.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   background-color: white;
   color: #6F6F6F;
   font-family: 'Droid Sans', 'Helvetica', 'sans';
@@ -59,3 +62,16 @@ footer {
 	font-size: 100%;
     text-align: right;
 }
+.navbar.navbar-inverse {
+   background-color: transparent;
+   background: transparent;
+   border-color: transparent;
+}
+
+.navbar li { color: #000 }
+  .carousel-inner .item img,
+  .carousel-inner .item a img {
+      width: 70%;
+      max-height: 400px;
+      margin: auto;
+  }

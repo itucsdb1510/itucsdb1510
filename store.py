@@ -530,6 +530,17 @@ class Store:
                       for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear,teamid in cursor]
         return basicmembers
 
+    def find_member(self, key1, key2):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT EMAIL, PASSWORD FROM MEMBERS WHERE (EMAIL = %s) AND (PASSWORD = %s)"
+            cursor.execute(query, (key1, key2))
+            if cursor.fetchone() is None:
+                return 0
+            else:
+                return 1
+
+
     def update_basicmember(self, key, name, surname, nickname, gender, email, password, byear, city, interests):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
