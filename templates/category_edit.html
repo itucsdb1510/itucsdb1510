@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Category Edit Form{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='categories.css') }}" />
 {% set key = request.path.split('/')[-2] %}
     {% set action = url_for('category_page', key=key) if category else url_for('categories_page') %}
     {% set title = category.title if category else '' %}
@@ -17,10 +19,10 @@
          <tr>
           <th>Type:</th>
           <td>
-          	 <input type="text" name="typee" value="{{ typee }}" />
+          	 <input  type="text" name="typee" value="{{ typee }}" />
           </td>
         </tr>
-      </table>
-      <input value="Save" name="save" type="submit" />
+      </table><br>
+      <input id="kaydet" value="Save" name="save" type="submit" /> <!-- style="position:relative; left:19%; color: black;"  -->
     </form>
 {% endblock %}

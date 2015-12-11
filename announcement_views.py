@@ -7,6 +7,16 @@ from flask import url_for
 
 from config import app
 from announcement import Announcement
+from category import Category
+
+@app.route('/forum',methods=['GET', 'POST', 'SEARCH'])
+def forum_page():
+    if request.method == 'GET':
+        announcements = app.store.get_announcements()
+        categories =app.store.get_categories()
+        now = datetime.datetime.now()
+        return render_template('forum.html', announcements=announcements,categories=categories,
+                               current_time=now.ctime())
 
 @app.route('/announcements', methods=['GET', 'POST', 'SEARCH'])
 def announcements_page():
