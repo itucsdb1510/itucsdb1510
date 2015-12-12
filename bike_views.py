@@ -1,5 +1,12 @@
 import datetime
 
+import os
+import json
+import sys
+from werkzeug import secure_filename
+from flask import send_from_directory
+
+
 from flask import redirect
 from flask import render_template
 from flask import request
@@ -7,6 +14,10 @@ from flask import url_for
 
 from config import app
 from bike import Bike
+
+
+UPLOAD_FOLDER = 'static'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 #request.form.get('delete',None)
 @app.route('/bikes', methods=['GET', 'POST'])
@@ -39,6 +50,10 @@ def bikes_page():
             price = request.form['price']
             bike = Bike(model,brand,type,size,year,price)
             app.store.add_bike(bike)
+            image=request.files['file']
+            if image:
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/image/teams/' + str(app.store.bike_last_key) + '.jpg'))
+
             return redirect(url_for('bike_page', key=app.store.bike_last_key))
 
 
@@ -48,7 +63,7 @@ def bike_page(key):
     if request.method == 'GET':
         bike = app.store.get_bike(key)
         now = datetime.datetime.now()
-        return render_template('bike.html', bike=bike,
+        return render_template('bike.html', bike=bike, key = str(key),
                                current_time=now.ctime())
     else:
         model = request.form['model']
@@ -57,6 +72,10 @@ def bike_page(key):
         size = request.form['size']
         year = request.form['year']
         price = request.form['price']
+        image=request.files['file']
+        if image:
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/image/teams/' + str(key) + '.jpg'))
+
         app.store.update_bike(key,model,brand,type,size,year,price)
         return redirect(url_for('bike_page', key=key))
 

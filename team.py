@@ -14,3 +14,11 @@ class Team:
             self.year = 0
         else:
             self.year = year
+
+    def image_path(self, _id=None):
+        if _id==None and self._id==None:
+            return url_for('static',filename='.') + 'image/teams/not_available.png'
+        if _id:
+            return url_for('static',filename='.') + 'image/teams/' + str(_id) + '.png'
+        else:
+            return url_for('static',filename='.') +'image/teams/' + str(self._id) + '.png'

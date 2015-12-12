@@ -15,6 +15,7 @@ def cycroutes_page():
         now = datetime.datetime.now()
         return render_template('cycroutes.html', cycroutes=cycroutes,
                                current_time=now.ctime())
+
     elif 'cycroutes_to_delete' in request.form or 'search' in request.form:
         if request.form['submit'] == 'Delete':
             keys = request.form.getlist('cycroutes_to_delete')

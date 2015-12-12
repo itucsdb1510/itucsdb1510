@@ -13,7 +13,7 @@
     {% set type = bike.type if bike else '' %}
 
 <body>
-     <form action="{{ action }}" method="post">
+     <form action="{{ action }}" method="post"  enctype="multipart/form-data">
      <div id="add_region">
 
       <p>Model: <input id="add_label" type="text" name="model" value="{{model}}"  required autofocus /></p>
@@ -34,7 +34,7 @@
  			 <br/>
 
 
- 		<p>Image: <input type="file" name="pic" accept="image/*" /></p>
+ 		<p>Image: <input type="file" name="file" accept="image/*"  /></p>
 
 	  <br/>
       <p><input id="save_button" value="Save" name="save" type="submit" /></p>

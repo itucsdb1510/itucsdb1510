@@ -28,7 +28,12 @@
          <p>Time:
            <input id="add_label" type="text" name="time" value="{{ time }}" /></p>
          <p>Place:
-           <input id="add_label" type="text" name="place" value="{{ place }}" required autofocus/></p>
+         <select id="add_label" name="place">
+         	{% for key, cycroute in cycroutes %}
+         		<option value="{{cycroute.title}}">{{cycroute.title}}</option>
+        	{% endfor %}
+
+         	</select></p>
       <input id= "save_button" value="Save" name="save" type="submit" />
       </div>
     </form>

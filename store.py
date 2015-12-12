@@ -676,5 +676,4 @@ class Store:
             #040-100042 zehra
             #040-100232 sinem
 
-            connection.commit()
-
+  

@@ -32,7 +32,7 @@ def races_page():
         race_type = request.form.get('race_type')
         founder = request.form['founder']
         time = request.form['time']
-        place = request.form['place']
+        place = request.form.get('place')
         race = Race(title, race_type, founder, time, place)
         app.store.add_race(race)
         return redirect(url_for('race_page', key=app.store.race_last_key))
@@ -60,6 +60,7 @@ def race_page(key):
 def race_edit_page(key=None):
     race = app.store.get_race(key) if key is not None else None
     now = datetime.datetime.now()
-    return render_template('race_edit.html', race=race,
+    cycroutes = app.store.get_cycroutes()
+    return render_template('race_edit.html', race=race, cycroutes=cycroutes,
                            current_time=now.ctime())
 
