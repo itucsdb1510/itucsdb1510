@@ -107,7 +107,7 @@ def initialize_database():
                 START VARCHAR(40),
                 FINISH VARCHAR(10),
                 PERIOD FLOAT,
-                LENGTH FLOAT
+                LENGTH FLOAT,
                 DATE DATE
                 )"""
         cursor.execute(query)
@@ -207,13 +207,7 @@ def initialize_database():
                 PASSWORD VARCHAR(6) NOT NULL
                )"""
         cursor.execute(query)
-        
-        query = """CREATE TABLE IF NOT EXISTS TOPMEMBERS (
-                ID SERIAL PRIMARY KEY,
-                EMAIL VARCHAR(30) NOT NULL,
-                PASSWORD VARCHAR(6) NOT NULL
-               )"""
-        cursor.execute(query)
+
 
 
     return redirect(url_for('home'))
