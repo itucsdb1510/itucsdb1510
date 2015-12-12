@@ -24,7 +24,7 @@ def bikes_page():
                 app.store.delete_bike(int(key))
             return redirect(url_for('bikes_page'))
 
-        elif  request.form['submit'] == 'search' :
+        elif  request.form['submit'] == 'Search' :
             keyword=request.form['search']
             bikes = app.store.search_bike(keyword)
             now = datetime.datetime.now()

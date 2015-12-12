@@ -1,29 +1,38 @@
-
 {% extends "layout.html" %}
 {% block title %}route{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='experience.css') }}" />
+   <body>
     <h2>{{ cycroute.title }}</h2>
-    <table>
+     <table>
      <tr>
         <th>Username: </th>
+         <th>Start: </th>
+         <th>Finish: </th>
+         <th>Length: </th>
+      </tr>
+      <tr>
         <td>{{ cycroute.username }}</td>
-      </tr>
-      <tr>
-        <th>Start: </th>
         <td>{{ cycroute.start }}</td>
-      </tr>
-      <tr>
-        <th>Finish: </th>
         <td>{{ cycroute.finish }}</td>
-      </tr>
-
-
-      <tr>
-        <th>Length: </th>
-        <td>{{ cycroute.length}}</td>
+		<td>{{ cycroute.length}}</td>
       </tr>
 
     </table>
-    <p><a href="{{ request.path + '/edit' }}">Edit</a></p>
-
+ <br/>
+	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div id="comment_region">
+    <h5><b>Leave a comment.</b></h5>
+	<textarea id="comment" name="comment" placeholder="Enter your comment here" cols="50" rows="5" maxlength="250"></textarea>
+    <form action="{{ url_for('login_page') }}">
+    	<input id="comment_button" type="submit" value="Comment">
+    </form>
+	</div>
+ </body>
 {% endblock %}

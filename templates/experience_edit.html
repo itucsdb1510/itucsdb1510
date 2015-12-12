@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Experience Edit Form{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='team.css') }}" />
 {% set key = request.path.split('/')[-2] %}
     {% set action = url_for('experience_page', key=key) if experience else url_for('experiences_page') %}
     {% set title = experience.title if experience else '' %}
@@ -9,50 +11,24 @@
     {% set finish = experience.finish if experience else '' %}
     {% set period = experience.period if experience else '' %}
     {% set length = experience.length if experience else '' %}
-
+<body>
 <form action="{{ action }}" method="post">
- <table>
-        <tr>
-          <th>Title:</th>
-          <td>
-          	 <input type="text" name="title" value="{{ title }}" required autofocus />
-          </td>
-        </tr>
-        <tr>
-          <th>User name:</th>
-          <td>
-           <input type="text" name="username" value="{{ username }}"/>
-          </td>
-        <tr>
-        <tr>
-          <th>Start:</th>
-          <td>
-           <input type="text" name="start" value="{{ start }}"/>
-          </td>
-        </tr>
-        <tr>
-          <th>Finish:</th>
-          <td>
-           <input type="text" name="finish" value="{{ finish }}" />
-          </td>
-          </tr>
-
-          <tr>
-          <th>Period(h):</th>
-          <td>
-           <input type="number" name="period" value="{{ period }}" required autofocus/>
-          </td>
-          </tr>
-
-          <tr>
-          <th>Length(km):</th>
-          <td>
-           <input type="number" name="length" value="{{ length }}" required autofocus/>
-          </td>
-          </tr>
-
-
-      </table>
-      <input value="Save" name="save" type="submit" />
-    </form>
-	{% endblock %}
+<div id="add_region">
+        <p>Title:
+          	 <input id="add_label" type="text" name="title" value="{{ title }}" required autofocus /> </p>
+        <p> User name:
+           <input id="add_label" type="text" name="username" value="{{ username }}"/></p>
+        <p>Start:
+           <input id="add_label" type="text" name="start" value="{{ start }}"/> </p>
+        <p>Finish:
+           <input id="add_label" type="text" name="finish" value="{{ finish }}" /></p>
+        <p>Period(h):
+ 		   <input id="add_label" type="number" name="period" value="{{ period }}" required autofocus/></p>
+          <p>Length(km):
+           <input id="add_label" type="number" name="length" value="{{ length }}" required autofocus/></p>
+    <br/>
+      <p><input id="save_button" value="Save" name="save" type="submit" /></p>
+      </div>
+	</form>
+</body>
+{% endblock %}

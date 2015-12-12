@@ -38,10 +38,16 @@ def basicmembers_page():
         interests = request.form['interests']
         gender = request.form.get('gender')
 
-
-        basicmember = Basicmember(name, surname, nickname, gender, email,password, byear, city, interests)
+        now = str((datetime.datetime.now()));
+        now = now[:-7]
+        if (app.store.check_admin(email)):
+            role = 'admin'
+        else:
+            role = 'user'
+        basicmember = Basicmember(name, surname, nickname, gender, email,password, byear, city, interests, now, now, role)
         app.store.add_basicmember(basicmember)
-        return redirect(url_for('basicmember_page', key=app.store.basicmember_last_key))
+
+        return render_template('login.html')
 
 
 

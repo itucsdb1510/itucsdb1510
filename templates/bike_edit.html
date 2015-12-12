@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Bike Edit Form{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='team.css') }}" />
  {% set key = request.path.split('/')[-2] %}
     {% set action = url_for('bike_page', key=key) if bike else url_for('bikes_page') %}
     {% set model = bike.model if bike else '' %}
@@ -10,50 +12,17 @@
     {% set price = bike.price if bike else '' %}
     {% set type = bike.type if bike else '' %}
 
-
+<body>
      <form action="{{ action }}" method="post">
-      <table>
+     <div id="add_region">
 
-         <tr>
-          <th>Model:</th>
-          <td>
-          	 <input type="text" name="model" value="{{model}}"  required autofocus /><br><br>
-          </td>
-        </tr>
-        <tr>
-          <th>Brand:</th>
-          <td>
-           <input type="text" name="brand" value="{{brand}}"/><br><br>
-          </td>
-        <tr>
-
-        <tr>
-          <th>jant size:</th>
-          <td>
-          <input type="text" name="size" value="{{size}}" />
-
-          </td>
-        </tr>
-        <tr>
-          <th>Year:</th>
-          <td>
-         <input type="text" name="year" value="{{year}}" /><br>
-
-
-          </td>
-        </tr>
-        <tr>
-          <th>Price(TL)</th>
-          <td>
-           <input type="number" name="price"  value="{{price}}" required autofocus/>
-          </td>
-        </tr>
-
-
-         <tr>
-          <th>Type:</th>
-          <td>
-            <select name="type">
+      <p>Model: <input id="add_label" type="text" name="model" value="{{model}}"  required autofocus /></p>
+      <p>Brand: <input id="add_label" type="text" name="brand" value="{{brand}}"/></p>
+      <p>jant size:<input id="add_label" type="text" name="size" value="{{size}}" /></p>
+      <p>Year: <input id="add_label" type="text" name="year" value="{{year}}" /> </p>
+      <p>Price(TL): <input id="add_label" type="number" name="price"  value="{{price}}" required autofocus/> </p>
+		<p>Bike Type:
+            <select id="add_label" name="bike_type">
     			<option value="road">Road Bike</option>
     			<option value="mountain">Mountain Bike</option>
     			<option value="hybrid">Hybrid Bike</option>
@@ -61,24 +30,15 @@
     		    <option value="city">City Bike</option>
     		    <option value="bmx">BMX Bike</option>
     		    <option value="folding">Folding Bike</option>
+ 			 </select></p>
+ 			 <br/>
 
 
+ 		<p>Image: <input type="file" name="pic" accept="image/*" /></p>
 
- 			 </select>
- 			 	</td>
-        </tr>
-
-
-
-
-      </table>
-            <br><br>
-
-
-
-
-      <input value="Save" name="save" type="submit" />
-    </form>
-
-
-  {% endblock %}
+	  <br/>
+      <p><input id="save_button" value="Save" name="save" type="submit" /></p>
+      </div>
+	</form>
+</body>
+{% endblock %}

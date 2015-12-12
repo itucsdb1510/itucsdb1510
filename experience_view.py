@@ -1,5 +1,9 @@
 import datetime
+import psycopg2 as dbapi2
 
+from flask import abort
+from flask import g
+from flask import session
 from flask import redirect
 from flask import render_template
 from flask import request
@@ -21,7 +25,7 @@ def experiences_page():
             for key in keys:
                 app.store.delete_experience(int(key))
             return redirect(url_for('experiences_page'))
-        elif  request.form['submit'] == 'search' :
+        elif  request.form['submit'] == 'Search' :
             keyword=request.form['search']
             experiences = app.store.search_experience(keyword)
             now = datetime.datetime.now()
@@ -29,13 +33,12 @@ def experiences_page():
                                current_time=now.ctime())
     else:
         title = request.form['title']
-        username = request.form['username']
         start = request.form['start']
         finish = request.form['finish']
         period = request.form['period']
         length=request.form['length']
-
-        experience = Experience(title, username, start, finish,period,length)
+        name = session['username']
+        experience = Experience(title, name, start, finish,period,length)
         app.store.add_experience(experience)
         return redirect(url_for('experience_page', key=app.store.exp_key))
 
@@ -50,18 +53,35 @@ def experience_page(key):
                                current_time=now.ctime())
     else:
         title = request.form['title']
-        username = request.form['username']
         start = request.form['start']
         finish = request.form['finish']
         period = request.form['period']
         length=request.form['length']
-        app.store.update_experience(key, title,username, start, finish,period,length)
+        name = session['username']
+        app.store.update_experience(key, title,name, start, finish,period,length)
         return redirect(url_for('experience_page', key=key))
 
 @app.route('/experiences/add')
 @app.route('/experience/<int:key>/edit')
 def experience_edit_page(key=None):
-    experience = app.store.get_experience(key) if key is not None else None
-    now = datetime.datetime.now()
-    return render_template('experience_edit.html', experience=experience,current_time=now.ctime())
+    if 'username' in session:
+        #experience = app.store.get_experience(key) if key is not None else None
+        if key:
+            experience = app.store.get_experience(key)
+            name = session['username']
+            with dbapi2.connect(app.config['dsn']) as connection:
+                    cursor = connection.cursor()
+                    cursor.execute("SELECT username FROM EXPERIENCES WHERE id='%s';"%key)
+                    connection.commit()
+                    uname = cursor.fetchone()
+                    if (name == uname):
+                        now = datetime.datetime.now()
+                        return render_template('experience_edit.html', experience=experience,current_time=now.ctime())
+        else:
+            return render_template('guest.html')
+
+        now = datetime.datetime.now()
+        return render_template('experience_edit.html', experience=experience,current_time=now.ctime())
+    else:
+        return render_template('guest.html')
 

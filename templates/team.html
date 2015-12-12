@@ -12,9 +12,9 @@
 	    </form>
 	    <br/>
 	    <h4> Join to This Team </h4>
-	    <form action="{{ url_for('login_page') }}">
-	    	<input id="join_button" type="submit" value="Join Team">
-	    </form>
+
+	    	<a href="{{ request.path + '/join' }}"> <input id="join_button" type="submit" value="Join Team"> </a>
+
     </div>
     <table>
 	 <tr>

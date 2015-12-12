@@ -6,6 +6,12 @@
 {% block title %}Basic Members List{% endblock %}
 {% block content %}
 <h2>Basic Member Home Page</h2>
+
+
+    {%if 'username' in session%}
+        <h1>Welcome {{session['username']}}</h1>
+        <p>Last login: {{g.lastlogin}}</p>
+
    <form action="{{ url_for('basicmembers_page') }}" method="post">
         <input type="search" name="search" value="{{search}}">
 	  <input type="submit" value="search" name="submit">

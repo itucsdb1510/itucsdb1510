@@ -2,45 +2,53 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='experiences.css') }}" />
 <meta charset="UTF-8">
 {% extends "layout.html" %}
 {% block title %}Experience List{% endblock %}
 {% block content %}
-<link rel="stylesheet"
-	href="{{ url_for('static', filename='experiences.css') }}" />
+<body>
 <h2>Experiences</h2>
    <form action="{{ url_for('experiences_page') }}" method="post">
-
-   <input type="search" name="search" value="{{search}}">
-  <input type="submit" value="search" name="submit">
-      <table>
-        {% for key, experience in experiences %}
-        <tr>
-          <td><input type="checkbox" name="experiences_to_delete"
-                     value="{{ key }}" /></td>
-          <td>
-            <a href="{{ url_for('experience_page', key=key) }}">
-              {{ experience.title }}
-              <div class="exp">
-              <div class="exp_prop">Username: {{ experience.username }}</div>
-              <div class="exp_prop">Start: {{ experience.start }}</div>
-              <div class="exp_prop">Finish: {{ experience.finish }}</div>
-              <div class="exp_prop">Period: {{ experience.period }}</div>
-              <div class="exp_prop">Length: {{ experience.length }}</div>
-
-
-              </div>
-            </a>
-
-          </td>
-        </tr>
+	<table id="searchTable" >
+	 <tr>
+	  <th> <input id="keyword" type="search" name="search" placeholder="Search a experience" value="{{search}}"> </th>
+	  <th> <input id="search_button" type="submit" value="Search" name="submit"> </th>
+	  </tr>
+	  </table>
+      <table id="experienceTable" style = "width:45%">
+      <tr>
+		    <th id="empty_column"> </th>
+		    <th>Title</th>
+		    <th>Username</th>
+		    <th>Star</th>
+		    <th>Finish</th>
+		    <th>Period</th>
+		    <th>Length</th>
+	  </tr>
+      	{% for key, experience in experiences %}
+      <tr>
+          <td><input type="checkbox" name="experiences_to_delete" value="{{ key }}" /></td>
+          <td><a href="{{ url_for('experience_page', key=key) }}">{{ experience.title }}</a> </td>
+          <td>{{ experience.username }}</td>
+	      <td>{{ experience.start }}</td>
+	      <td>{{ experience.finish }}</td>
+	      <td>{{ experience.period }}</td>
+	      <td>{{ experience.length }}</td>
+      </tr>
         {% endfor %}
+
+      <tr>
+        <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+        <th id="empty_column"> </th>
+      	<th> <input id="button_in_table" type="submit" value="Delete" name="submit" /> </th>
+      </tr>
       </table>
-      <input type="submit" value="Delete" name="submit" />
     </form>
+ </body>
 {% endblock %}
-
-
-
-
-

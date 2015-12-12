@@ -1,5 +1,10 @@
 import datetime
 
+import psycopg2 as dbapi2
+
+from flask import abort
+from flask import g
+from flask import session
 from flask import redirect
 from flask import render_template
 from flask import request
@@ -65,3 +70,25 @@ def team_edit_page(key=None):
     now = datetime.datetime.now()
     return render_template('team_edit.html', team=team,
                            current_time=now.ctime())
+
+@app.route('/team/<int:key>')
+@app.route('/team/<int:key>/join')
+def team_join_page(key=None):
+    if 'username' in session:
+        name = session['username']
+        with dbapi2.connect(app.config['dsn']) as connection:
+                    cursor = connection.cursor()
+                    cursor.execute("SELECT memberid FROM MEMBERS WHERE name='%s';"%name)
+                    connection.commit()
+        id = cursor.fetchone()
+        with dbapi2.connect(app.config['dsn']) as connection:
+                    cursor = connection.cursor()
+                    query = ("UPDATE MEMBERS SET teamid=%s  WHERE (memberid=%s)")
+                    cursor.execute(query, (key, id))
+                    connection.commit()
+        now = datetime.datetime.now()
+        return render_template('teamjoin.html')
+    else:
+        team = app.store.get_team(key) if key is not None else None
+        now = datetime.datetime.now()
+        return redirect(url_for('team_page', key=key))

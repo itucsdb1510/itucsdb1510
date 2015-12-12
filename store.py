@@ -489,8 +489,8 @@ class Store:
     def add_basicmember(self, basicmember):
          with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING MEMBERS.MEMBERID"
-            cursor.execute(query, (basicmember.name, basicmember.surname,basicmember.nickname, basicmember.gender, basicmember.email,basicmember.password, basicmember.city, int(basicmember.byear), basicmember.interests))
+            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS, LASTLOGIN, REGTIME, ROLE ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING MEMBERS.MEMBERID"
+            cursor.execute(query, (basicmember.name, basicmember.surname,basicmember.nickname, basicmember.gender, basicmember.email,basicmember.password, basicmember.city, int(basicmember.byear), basicmember.interests, basicmember.lastlogin, basicmember.regtime, basicmember.role))
             connection.commit()
             self.basicmember_last_key = cursor.fetchone()[0]
 
@@ -505,10 +505,10 @@ class Store:
     def get_basicmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR FROM MEMBERS WHERE (MEMBERID = %s)"
+            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, LASTLOGIN, REGTIME, ROLE  FROM MEMBERS WHERE (MEMBERID = %s)"
             cursor.execute(query, (key,))
-            name, surname, nickname, gender, membertype, email, password, city, interests, score, byear = cursor.fetchone()
-        return Basicmember(name, surname, nickname, gender, email, password, byear, city, interests)
+            name, surname, nickname, gender, membertype, email, password, city, interests, score, byear, lastlogin, regtime, role = cursor.fetchone()
+        return Basicmember(name, surname, nickname, gender, email, password, byear, city, interests, lastlogin, regtime, role)
 
     def get_basicmembers(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
@@ -663,15 +663,11 @@ class Store:
                       for key,  title, activity_type, founder, time, place, activity_info in cursor]
         return activities
 
-    def checkadmins(self):
-        with dbapi2.connect(self.app.config['dsn']) as connection:
-            cursor = connection.cursor()
-            query = "INSERT INTO ADMINCHECK(EMAIL, PASSWORD)VALUES (%s, %s)"
-            cursor.execute(query, ("ersogan@itu.edu.tr","100301"))
-            cursor.execute(query, ("sertbas@itu.edu.tr","110078"))
-            cursor.execute(query, ("tekpinar@itu.edu.tr","120018"))
-            cursor.execute(query, ("ozer@itu.edu.tr","100042"))
-            cursor.execute(query, ("sasmazel@itu.edu.tr","100232"))
+    def check_admin(self, email):
+        if email == 'ersogan@itu.edu.tr' or email == 'sertbas@itu.edu.tr'  or email == 'tekpinar@itu.edu.tr'  or email == 'ozer@itu.edu.tr'  or email == 'sasmazel@itu.edu.tr' :
+            return 1
+        else:
+            return 0
 
             #admin emails derived by surname and passwords derived by last 6 digits of the student num
             #150-100301 esin

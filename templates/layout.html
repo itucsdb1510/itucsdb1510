@@ -52,6 +52,7 @@
 							<li><a href="{{ url_for('racecalendar_page') }}">RaceCalendar</a></li>
 							<li><a href="{{ url_for('cycroutes_page') }}">List Routes</a></li>
 							<li><a href="{{ url_for('cycroute_edit_page') }}">Add Routes</a></li>
+
 						</ul>
 					</li>
 
@@ -73,17 +74,13 @@
 	</ul>
 
 
-
-
-
 	<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">My Profile <span
+						data-toggle="dropdown" href="#">Experience <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
-						<li><a href="#">My Profile</a></li>
-							<li><a href="{{ url_for('message_page') }}"> Messages</a></li>
-							<li><a href="#">Settings</a></li>
-							<li><a href="#">Logout</a></li>
+							<li><a href="{{ url_for('experiences_page') }}"> List Experience</a></li>
+							<li><a href="{{ url_for('experience_edit_page') }}"> Add Experience</a></li>
+
 
 						</ul>
 					</li>
@@ -91,6 +88,20 @@
 
 					<li><a href="{{ url_for('guest_page') }}"> Guest</a></li>
 
+ <ul class="nav navbar-nav navbar-right">
+                {%if 'username' in session%}
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{session['username']}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{{url_for('profile', username=session['username'])}}">My Profile</a></li>
+                        <li><a href="{{ url_for('message_page') }}"> Messages</a></li>
+						<li><a href="#">Settings</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{url_for('logout')}}">Log out</a></li>
+                    </ul>
+                </li>
+                {%endif%}
+          </ul>
 
 
 			</div>

@@ -108,6 +108,7 @@ def initialize_database():
                 FINISH VARCHAR(10),
                 PERIOD FLOAT,
                 LENGTH FLOAT
+                DATE DATE
                 )"""
         cursor.execute(query)
 
@@ -181,6 +182,9 @@ def initialize_database():
                 INTERESTS VARCHAR(30),
                 SCORE INTEGER DEFAULT 0,
                 YEAR NUMERIC(4),
+                LASTLOGIN VARCHAR(20),
+                REGTIME VARCHAR(20),
+                ROLE VARCHAR(20),
                 TEAMID INTEGER REFERENCES TEAM
                 ON DELETE RESTRICT
                 )"""
@@ -198,6 +202,13 @@ def initialize_database():
         cursor.execute(query)
 
         query = """CREATE TABLE IF NOT EXISTS ADMINCHECK (
+                ID SERIAL PRIMARY KEY,
+                EMAIL VARCHAR(30) NOT NULL,
+                PASSWORD VARCHAR(6) NOT NULL
+               )"""
+        cursor.execute(query)
+        
+        query = """CREATE TABLE IF NOT EXISTS TOPMEMBERS (
                 ID SERIAL PRIMARY KEY,
                 EMAIL VARCHAR(30) NOT NULL,
                 PASSWORD VARCHAR(6) NOT NULL

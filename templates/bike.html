@@ -1,28 +1,19 @@
 {% extends "layout.html" %}
 {% block title %}BIKE{% endblock %}
 {% block content %}
-
-
-
-
-
-
- <table class="auto" border="2" width="75%">
-
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='bike.css') }}" />
+   <body>
+    <h2>{{ bike.model }}</h2>
+ <table>
   <tr>
-
-
-    <th>Model </th>
+	<th>Model </th>
     <th>Brand</th>
     <th>Type</th>
     <th>Jant Size</th>
     <th>Year</th>
     <th>Price</th>
   </tr>
-
-
-
-
   <tr>
 
     <td>{{bike.model}}</td>
@@ -36,7 +27,27 @@
     </table>
 
     <p><a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
-
+	<br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="item active">
+      <img src="../static/image/bicvector.jpg" alt="bike" style="width:600px;height:350px; margin-left:5%;">
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div id="comment_region">
+    <h5><b>Leave a comment.</b></h5>
+	<textarea id="comment" name="comment" placeholder="Enter your comment here" cols="50" rows="5" maxlength="250"></textarea>
+    <form action="{{ url_for('login_page') }}">
+    	<input id="comment_button" type="submit" value="Comment">
+    </form>
+	</div>
+	 </body>
    {% endblock %}
 
 

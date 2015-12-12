@@ -21,7 +21,7 @@ def categories_page():
             for key in keys:
                 app.store.delete_category(int(key))
             return redirect(url_for('categories_page'))
-        elif  request.form['submit'] == 'search' :
+        elif  request.form['submit'] == 'Search' :
             keyword=request.form['search']
             categories = app.store.search_category(keyword)
             now = datetime.datetime.now()
