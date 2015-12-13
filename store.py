@@ -258,7 +258,7 @@ class Store:
             query = "SELECT * FROM EXPERIENCE ORDER BY ID"
             cursor.execute(query)
             experiences = [(key, Experience(title, username, start, finish, period, length))
-                      for key, title, username, start, finish, period, length in cursor]
+                      for key, title, username, start, finish, period, length, userid,date in cursor]
             return experiences
 
 
@@ -676,4 +676,3 @@ class Store:
             #040-100042 zehra
             #040-100232 sinem
 
-  
