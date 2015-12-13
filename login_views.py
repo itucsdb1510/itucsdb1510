@@ -33,7 +33,10 @@ def login_page():
                     return redirect(url_for('home'))
 
                 else:
-                    return redirect(url_for('adminpanel_page'))
+                   teams=app.store.get_top5team()
+                   #return redirect(url_for('adminpanel_page'))
+                   return render_template('adminpanel.html', teams=teams, professionalmembers=professionalmembers)
+
 
         else:
             return redirect(url_for('login_page'))

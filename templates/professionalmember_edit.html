@@ -2,7 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='team.css') }}" />
 <title>Sign-Up </title>
 <link rel="stylesheet"
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -135,60 +136,7 @@
           <th>Main interest:</th>
           <td> <input type="text"  name="interests"  value="{{ interests }}" /></td>
         </tr>
-          <tr>
-          <th>Number of Gold Awards:</th>
-          <td>
-          <select name="award_G" value="{{ award_G }}">
-        <option value="0">0</option>
-  		<option value="1">1</option>
-  		<option value="2">2</option>
- 		<option value="3">3</option>
-  		<option value="4">4</option>
-  		<option value="5">5</option>
-  		<option value="6">6</option>
-  		<option value="7">7</option>
-  		<option value="8">8</option>
-  		<option value="9">9</option>
-  		<option value="10">10</option>
-		</select>
-		   </td>
-        </tr>
-        <tr>
-          <th>Number of Silver Awards:</th>
-          <td>
-          <select name="award_S" value="{{ award_S }}">
-        <option value="0">0</option>
-  		<option value="1">1</option>
-  		<option value="2">2</option>
- 		<option value="3">3</option>
-  		<option value="4">4</option>
-  		<option value="5">5</option>
-  		<option value="6">6</option>
-  		<option value="7">7</option>
-  		<option value="8">8</option>
-  		<option value="9">9</option>
-  		<option value="10">10</option>
-		</select>
-		   </td>
-        </tr>
-        <tr>
-          <th>Number of Bronze Awards:</th>
-          <td>
-          <select name="award_B" value="{{ award_B }}">
-        <option value="0">0</option>
-  		<option value="1">1</option>
-  		<option value="2">2</option>
- 		<option value="3">3</option>
-  		<option value="4">4</option>
-  		<option value="5">5</option>
-  		<option value="6">6</option>
-  		<option value="7">7</option>
-  		<option value="8">8</option>
-  		<option value="9">9</option>
-  		<option value="10">10</option>
-		</select>
-		   </td>
-        </tr>
+
 
 		</table>
 		<input value="Save" name="save" type="submit" />

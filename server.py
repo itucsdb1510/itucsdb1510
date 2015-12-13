@@ -266,7 +266,10 @@ def guest_page():
 @app.route('/adminpanel')
 def adminpanel_page():
     now = datetime.datetime.now()
-    return render_template('adminpanel.html', current_time=now.ctime())
+    teams=app.store.get_top5team()
+    professionalmembers=app.store.get_top5member()
+    num=app.store.get_numofmembers()
+    return render_template('adminpanel.html',teams=teams,professionalmembers=professionalmembers,num=num, current_time=now.ctime())
 
 
 
