@@ -61,7 +61,7 @@ def get_elephantsql_dsn(vcap_services):
     return dsn
 
 
-@app.route('/')
+@app.route('/home')
 def home():
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
@@ -108,7 +108,9 @@ def initialize_database():
                 FINISH VARCHAR(10),
                 PERIOD FLOAT,
                 LENGTH FLOAT,
-                DATE DATE
+                USERID INTEGER REFERENCES MEMBERS,
+                DATE DATE,
+                ON DELETE CASCADE
                 )"""
         cursor.execute(query)
 
@@ -208,9 +210,9 @@ def initialize_database():
                )"""
         cursor.execute(query)
 
+        cursor.execute("""CREATE TABLE IF NOT EXISTS TOPMEMBERS (ID SERIAL PRIMARY KEY,USERID INTEGER,COUNT INTEGER)""")
 
-
-    return redirect(url_for('home'))
+    return redirect(url_for('guest_page'))
 
 @app.route('/racecalendar')
 def racecalendar_page():
@@ -240,7 +242,7 @@ def news_page():
     return render_template('news.html', current_time=now.ctime())
 
 
-@app.route('/guest')
+@app.route('/')
 def guest_page():
     now = datetime.datetime.now();
     return render_template('guest.html', current_time=now.ctime())
