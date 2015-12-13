@@ -78,7 +78,7 @@ def initialize_database():
         query = "INSERT INTO COUNTER (N) VALUES (0)"
         cursor.execute(query)
         
-        query = "DROP TABLE TEAM CASCADE"
+        query = """DROP TABLE TEAM CASCADE"""
         cursor.execute(query)
         
         query = """CREATE TABLE IF NOT EXISTS TEAM (
@@ -173,7 +173,7 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
-        query = "DROP TABLE MEMBERS CASCADE"
+        query ="""DROP TABLE MEMBERS CASCADE"""
         cursor.execute(query)
 
         query = """CREATE TABLE IF NOT EXISTS MEMBERS (
