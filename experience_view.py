@@ -68,20 +68,21 @@ def experience_edit_page(key=None):
         #experience = app.store.get_experience(key) if key is not None else None
         if key:
             experience = app.store.get_experience(key)
-            name = session['username']
+            aname = session['username']
             with dbapi2.connect(app.config['dsn']) as connection:
-                    cursor = connection.cursor()
-                    cursor.execute("SELECT username FROM EXPERIENCES WHERE id='%s';"%key)
-                    connection.commit()
-                    uname = cursor.fetchone()
-                    if (name == uname):
-                        now = datetime.datetime.now()
-                        return render_template('experience_edit.html', experience=experience,current_time=now.ctime())
+                cursor = connection.cursor()
+                cursor.execute("SELECT USERNAME FROM EXPERIENCE WHERE id='%s';"%key)
+                uname = cursor.fetchone()
+                connection.commit()
+                if (uname[0]==aname):
+                    now = datetime.datetime.now()
+                    return render_template('experience_edit.html', experience=experience,current_time=now.ctime())
+                else:
+                    return render_template('guest.html')
         else:
-            return render_template('guest.html')
-
-        now = datetime.datetime.now()
-        return render_template('experience_edit.html', experience=experience,current_time=now.ctime())
+            now = datetime.datetime.now()
+            return render_template('experience_edit.html',current_time=now.ctime())
     else:
         return render_template('guest.html')
+
 
