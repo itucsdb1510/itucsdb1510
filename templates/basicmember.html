@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Basic Member{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='team.css') }}" />
     <h2>{{ basicmember.nickname }}</h2>
     <table>
      <tr>

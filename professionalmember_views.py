@@ -37,9 +37,7 @@ def professionalmembers_page():
         byear = request.form['byear']
         city = request.form['city']
         interests = request.form['interests']
-        award_G = request.form.get('award_G')
-        award_S = request.form.get('award_S')
-        award_B = request.form.get('award_B')
+
 
         now = str((datetime.datetime.now()));
         now = now[:-7]

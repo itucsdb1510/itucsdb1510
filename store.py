@@ -541,11 +541,11 @@ class Store:
                 return 1
 
 
-    def update_basicmember(self, key, name, surname, nickname, gender, email, password, byear, city, interests):
+    def update_basicmember(self, key, name, surname, username, gender, email, password, byear, city, interests,lastlogin, regtime, role):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE MEMBERS SET NAME = %s,SURNAME= %s, NICKNAME= %s,  GENDER= %s, EMAIL= %s, PASSWORD= %s, YEAR= %s, CITY= %s, INTERESTS= %s WHERE (MEMBERID = %s)"
-            cursor.execute(query, (name, surname, nickname, gender, email, password, byear, city, interests, key))
+            query = "UPDATE MEMBERS SET NAME = %s,SURNAME= %s, USERNAME= %s,  GENDER= %s, EMAIL= %s, PASSWORD= %s, YEAR= %s, CITY= %s, INTERESTS= %s WHERE (MEMBERID = %s)"
+            cursor.execute(query, (name, surname, username, gender, email, password, byear, city, interests, key))
             connection.commit()
 
 
@@ -560,12 +560,12 @@ class Store:
             query = "INSERT INTO MEMBERS (NAME, SURNAME, USERNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE,LASTLOGIN, REGTIME, ROLE ,TEAMID ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s,%s,%s) RETURNING MEMBERS.MEMBERID"
             cursor.execute(query, (professionalmember.name, professionalmember.surname,professionalmember.username, professionalmember.gender, professionalmember.email,professionalmember.password, professionalmember.city, int(professionalmember.byear), professionalmember.interests,1,professionalmember.lastlogin, professionalmember.regtime, professionalmember.role,randteamid))
             self.professionalmember_last_key = cursor.fetchone()[0]
-            connection.commit()
-            if professionalmember.award_G ==0 and professionalmember.award_B ==0 and professionalmember.award_S == 0:
-                currdate=(time.strftime("%Y/%m/%d"))
-                query = "INSERT INTO AWARDS (numofGOLD,numofBRONZE ,numofSILVER, memberid,date ) VALUES (%s, %s, %s, %s,%s)"
-                cursor.execute(query, (professionalmember.award_G,professionalmember.award_B,professionalmember.award_S,self.professionalmember_last_key,currdate))
-                connection.commit()
+            #connection.commit()
+           # if professionalmember.award_G ==0 and professionalmember.award_B ==0 and professionalmember.award_S == 0:
+             #   currdate=(time.strftime("%Y/%m/%d"))
+               # query = "INSERT INTO AWARDS (numofGOLD,numofBRONZE ,numofSILVER, memberid,date ) VALUES (%s, %s, %s, %s,%s)"
+               # cursor.execute(query, (professionalmember.award_G,professionalmember.award_B,professionalmember.award_S,self.professionalmember_last_key,currdate))
+               # connection.commit()
 
 
     def delete_professionalmember(self, key):
@@ -669,10 +669,38 @@ class Store:
         else:
             return 0
 
-            #admin emails derived by surname and passwords derived by last 6 digits of the student num
-            #150-100301 esin
-            #040-110078 nurefþan
-            #040-120018 miyase
-            #040-100042 zehra
-            #040-100232 sinem
+
+    def get_top5team(self):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+             cursor = connection.cursor()
+             query = "select * from team order by score desc limit 5"
+             cursor.execute(query)
+             teams = [(key, Team(name, score, founder, year, team_type, location))
+                      for key, name, score, founder, year, team_type, location in cursor]
+        return teams
+
+
+    def get_top5member(self):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "select * from members where membertype=1 order by score desc limit 5"
+            cursor.execute(query)
+            professionalmembers = [(key, Professionalmember(name, surname, username,gender, email, password, byear, city,interests, 0,0,0,lastlogin, regtime, role))
+                      for key,name, surname, username, gender, membertype, email, password, city, interests, score, byear,lastlogin, regtime, role,teamid in cursor]
+        return professionalmembers
+
+    def get_numofmembers(self):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "select count(memberid) from members"
+            cursor.execute(query)
+            num = cursor.fetchone()
+        return num
+
+
+
+
+
+
+
 

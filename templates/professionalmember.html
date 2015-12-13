@@ -1,6 +1,8 @@
 {% extends "layout.html" %}
 {% block title %}Professional Member{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='team.css') }}" />
     <h2>{{ professionalmember.username }}</h2>
     <table>
      <tr>
@@ -29,20 +31,20 @@
       </tr>
 
        <tr>
-        <th>Score: </th>
-        <td>{{ professionalmember.score }}</td>
-      </tr>
-       <tr>
-        <th>Number of Gold Awards: </th>
+        <th>Gold: </th>
         <td>{{ professionalmember.award_G }}</td>
       </tr>
-           <tr>
-        <th>Number of Silver Awards: </th>
+      <tr>
+        <th>Bronze: </th>
+        <td>{{ professionalmember.award_B }}</td>
+      </tr>
+      <tr>
+        <th>Silver: </th>
         <td>{{ professionalmember.award_S }}</td>
       </tr>
-           <tr>
-        <th>Number of Bronze Awards: </th>
-        <td>{{ professionalmember.award_B }}</td>
+      <tr>
+        <th>Score: </th>
+        <td>{{ professionalmember.score }}</td>
       </tr>
 
 

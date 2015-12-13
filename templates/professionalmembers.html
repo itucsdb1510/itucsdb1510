@@ -6,6 +6,8 @@
 {% block title %}Professional Members List{% endblock %}
 {% block content %}
 <h2>professional Member Home Page</h2>
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='team.css') }}" />
    <form action="{{ url_for('professionalmembers_page') }}" method="post">
     <input type="search" name="search" value="{{search}}">
 	  <input type="submit" value="search" name="submit">

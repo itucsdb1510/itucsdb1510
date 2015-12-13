@@ -220,12 +220,9 @@ div#enter_section{
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="{{ url_for('home') }}">Home</a></li>
 
-  <li><a href="{{ url_for('announcements_page') }}"> Announcements</a></li>
-
-		<li><a href="{{ url_for('news_page') }}"> News</a></li>
 
 		<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Category <span
+						data-toggle="dropdown" href="#"><font size="4" color="black">Category</font>  <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 			<li><a href="{{ url_for('category_edit_page') }}">Add Category</a></li>
@@ -236,7 +233,7 @@ div#enter_section{
 
 
 		<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Forum <span
+						data-toggle="dropdown" href="#"><font size="4" color="black">Forum</font>  <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 			    <li><a href="{{ url_for('forum_page') }}">Forum</a></li>
@@ -251,7 +248,7 @@ div#enter_section{
 
 
 		<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Team  <span
+						data-toggle="dropdown" href="#"><font size="4" color="black">Team</font>  <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="{{ url_for('team_edit_page') }}">Add Team</a></li>
@@ -261,7 +258,7 @@ div#enter_section{
 
 
 		<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Activity  <span
+						data-toggle="dropdown" href="#"><font size="4" color="black">Activity</font>  <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 		<li><a href="{{ url_for('activity_edit_page') }}">Add Activity</a></li>
@@ -270,8 +267,33 @@ div#enter_section{
 		</li>
 
 
-		<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Race  <span
+
+
+
+
+
+	    <li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"><font size="4" color="black">Sales</font><span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+
+			<li><a href="{{ url_for('bikes_page') }}"><font size="4" color="black">List Bikes</font></a></li>
+			<li><a href="{{ url_for('bike_edit_page') }}"><font size="4" color="black">Add Bike</font></a></li>
+	</ul>
+<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"><font size="4" color="black">Route</font>  <span
+							class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="{{ url_for('cycroutes_page') }}">List Routes</font></a></li>
+							<li><a href="{{ url_for('cycroute_edit_page') }}">Add Routes</font></a></li>
+
+						</ul>
+					</li>
+
+  <li><a href="{{ url_for('announcements_page') }}"><font size="4" color="black"> Announcements</font> </a></li>
+
+<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"><font size="4" color="black">Race</font>  <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 										<li><a href="{{ url_for('race_edit_page') }}">Add Race</a></li>
@@ -279,30 +301,8 @@ div#enter_section{
 							<li><a href="{{ url_for('racecalendar_page') }}">RaceCalendar</a></li>
 							</ul>
 		</li>
-
-
-		<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Route  <span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="{{ url_for('cycroutes_page') }}">List Routes</a></li>
-							<li><a href="{{ url_for('cycroute_edit_page') }}">Add Routes</a></li>
-
-						</ul>
-					</li>
-
-	    <li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Sales<span
-							class="caret"></span></a>
-						<ul class="dropdown-menu">
-
-			<li><a href="{{ url_for('bikes_page') }}">List Bikes</a></li>
-			<li><a href="{{ url_for('bike_edit_page') }}">Add Bike</a></li>
-	</ul>
-
-
 	<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Experience <span
+						data-toggle="dropdown" href="#"><font size="4" color="black">Experience</font> <span
 							class="caret"></span></a>
 						<ul class="dropdown-menu">
 							<li><a href="{{ url_for('experiences_page') }}"> List Experience</a></li>
@@ -312,6 +312,7 @@ div#enter_section{
 						</ul>
 					</li>
 
+		<li><a href="{{ url_for('news_page') }}"><font size="4" color="black"> News</font> </a></li>
 
 			</div>
 		</div>
@@ -323,13 +324,16 @@ div#enter_section{
 <nk>
 
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="{{ url_for('message_page') }}"> Messages</a></li>
-						<li><a href="{{url_for('basicmembers_page')}}">List Basic Members</a></li>
-						<li><a href="{{url_for('professionalmembers_page')}}">List Professional Members</a></li>
-					    <li><a href="{{url_for('admin_edit_page')}}">Add Admin</a></li>
-						<li><a href="{{url_for('admins_page')}}">List/Delete Admins</a></li>
+  <li class="active"><a data-toggle="tab" href="{{ url_for('message_page') }}"><font size="4" color="#800080"> Messages</font></a></li>
+						<li><a href="{{url_for('basicmembers_page')}}"><font size="4" color="#800080">List Basic Members</font></a></li>
+						<li><a href="{{url_for('professionalmembers_page')}}"><font size="4" color="#800080">List Professional Members</font></a></li>
+					    <li><a href="{{url_for('admin_edit_page')}}"> <font size="4" color="#800080">Add Admin</font></a></li>
+						<li><a href="{{url_for('admins_page')}}">
+						<font size="4" color="#800080">List/Delete Admins</font>
+
+					</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{{url_for('logout')}}">Log out</a></li>
+                        <li><a href="{{url_for('logout')}}"><font size="4" color="#800080">Log out</font></a></li>
 </ul>
 
 
@@ -338,7 +342,7 @@ div#enter_section{
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-thumbs-up icon-rounded"></i>
                     <div class="stats">
-                      <h5><strong>45%</strong></h5>
+                      <h5><strong>0</strong></h5>
                       <span>Total Comments</span>
                     </div>
                 </div>
@@ -354,18 +358,19 @@ div#enter_section{
         	</div>
         	<div class="col-md-3 widget widget1">
         		<div class="r3_counter_box">
+                    <i class="pull-left fa fa-comment user2 icon-rounded"></i>
                     <div class="stats">
                       <h5><strong>0</strong></h5>
                       <span>Total Messages</span>
                     </div>
-
+                </div>
         	</div>
         	<div class="col-md-3 widget">
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-dollar dollar1 icon-rounded"></i>
                     <div class="stats">
-                      <h5><strong>$0</strong></h5>
-                      <span>Profit from Sales</span>
+                      <h5><strong>0</strong></h5>
+                      <span>Sales</span>
                     </div>
                 </div>
         	 </div>
@@ -377,90 +382,53 @@ div#enter_section{
       <div class="col_1">
 
 		    <div class="col-md-4 span_7">
-		          <h3>Calendar!</h3>
+		        <h2 style="color:black;">Calendar!</h2>
 		      <div class="cal1 cal_2"><div class="clndr"><div class="clndr-controls"><div class="clndr-control-button"><p class="clndr-previous-button">previous</p></div><div class="month">July 2015</div><div class="clndr-control-button rightalign"><p class="clndr-next-button">next</p></div></div><table class="clndr-table" border="0" cellspacing="0" cellpadding="0"><thead><tr class="header-days"><td class="header-day">S</td><td class="header-day">M</td><td class="header-day">T</td><td class="header-day">W</td><td class="header-day">T</td><td class="header-day">F</td><td class="header-day">S</td></tr></thead><tbody><tr><td class="day adjacent-month last-month calendar-day-2015-06-28"><div class="day-contents">28</div></td><td class="day adjacent-month last-month calendar-day-2015-06-29"><div class="day-contents">29</div></td><td class="day adjacent-month last-month calendar-day-2015-06-30"><div class="day-contents">30</div></td><td class="day calendar-day-2015-07-01"><div class="day-contents">1</div></td><td class="day calendar-day-2015-07-02"><div class="day-contents">2</div></td><td class="day calendar-day-2015-07-03"><div class="day-contents">3</div></td><td class="day calendar-day-2015-07-04"><div class="day-contents">4</div></td></tr><tr><td class="day calendar-day-2015-07-05"><div class="day-contents">5</div></td><td class="day calendar-day-2015-07-06"><div class="day-contents">6</div></td><td class="day calendar-day-2015-07-07"><div class="day-contents">7</div></td><td class="day calendar-day-2015-07-08"><div class="day-contents">8</div></td><td class="day calendar-day-2015-07-09"><div class="day-contents">9</div></td><td class="day calendar-day-2015-07-10"><div class="day-contents">10</div></td><td class="day calendar-day-2015-07-11"><div class="day-contents">11</div></td></tr><tr><td class="day calendar-day-2015-07-12"><div class="day-contents">12</div></td><td class="day calendar-day-2015-07-13"><div class="day-contents">13</div></td><td class="day calendar-day-2015-07-14"><div class="day-contents">14</div></td><td class="day calendar-day-2015-07-15"><div class="day-contents">15</div></td><td class="day calendar-day-2015-07-16"><div class="day-contents">16</div></td><td class="day calendar-day-2015-07-17"><div class="day-contents">17</div></td><td class="day calendar-day-2015-07-18"><div class="day-contents">18</div></td></tr><tr><td class="day calendar-day-2015-07-19"><div class="day-contents">19</div></td><td class="day calendar-day-2015-07-20"><div class="day-contents">20</div></td><td class="day calendar-day-2015-07-21"><div class="day-contents">21</div></td><td class="day calendar-day-2015-07-22"><div class="day-contents">22</div></td><td class="day calendar-day-2015-07-23"><div class="day-contents">23</div></td><td class="day calendar-day-2015-07-24"><div class="day-contents">24</div></td><td class="day calendar-day-2015-07-25"><div class="day-contents">25</div></td></tr><tr><td class="day calendar-day-2015-07-26"><div class="day-contents">26</div></td><td class="day calendar-day-2015-07-27"><div class="day-contents">27</div></td><td class="day calendar-day-2015-07-28"><div class="day-contents">28</div></td><td class="day calendar-day-2015-07-29"><div class="day-contents">29</div></td><td class="day calendar-day-2015-07-30"><div class="day-contents">30</div></td><td class="day calendar-day-2015-07-31"><div class="day-contents">31</div></td><td class="day adjacent-month next-month calendar-day-2015-08-01"><div class="day-contents">1</div></td></tr></tbody></table></div></div>
 		    </div>
-		    <div class="col-md-4 span_8">
-		       <h3>Last Comments!</h3>
-		       <div class="activity_box">
-		        <div class="scrollbar" id="style-2">
-                   <div class="activity-row">
-	                 <div class="col-xs-1"><i class="fa fa-thumbs-up text-info icon_13"> </i>  </div>
-	                 <div class="col-xs-3 activity-img"><img src='image/5.png' class="img-responsive" alt=""/></div>
-	                 <div class="col-xs-8 activity-desc">
-	                 	<h5><a href="#">Lorem Ipsum</a> liked <a href="#">random</a></h5>
-	                    <p>Lorem Ipsum is simply dummy</p>
-	                    <h6>8:03</h6>
-	                 </div>
-	                 <div class="clearfix"> </div>
-                    </div>
-	  			    <div class="activity-row">
-	                 <div class="col-xs-1"><i class="fa fa-comment text-info"></i> </div>
-	                 <div class="col-xs-3 activity-img"><img src='image/3.png' class="img-responsive" alt=""/></div>
-	                 <div class="col-xs-8 activity-desc">
-	                 	<h5><a href="#">simply random</a> liked <a href="#">passages</a></h5>
-	                    <p>Lorem Ipsum is simply dummy</p>
-	                    <h6>8:03</h6>
-	                 </div>
-	                 <div class="clearfix"> </div>
-                    </div>
-                    <div class="activity-row">
-	                 <div class="col-xs-1"><i class="fa fa-check text-info icon_11"></i></div>
-	                 <div class="col-xs-3 activity-img"><img src='image/1.png' class="img-responsive" alt=""/></div>
-	                 <div class="col-xs-8 activity-desc">
-	                 	<h5><a href="#">standard chunk</a> liked <a href="#">model</a></h5>
-	                    <p>Lorem Ipsum is simply dummy</p>
-	                    <h6>8:03</h6>
-	                 </div>
-	                 <div class="clearfix"> </div>
-                    </div>
-                    <div class="activity-row1">
-	                 <div class="col-xs-1"><i class="fa fa-user text-info icon_12"></i></div>
-	                 <div class="col-xs-3 activity-img"><img src='image/4.png' class="img-responsive" alt=""/></div>
-	                 <div class="col-xs-8 activity-desc">
-	                 	<h5><a href="#">perspiciatis</a> liked <a href="#">donating</a></h5>
-	                    <p>Lorem Ipsum is simply dummy</p>
-	                    <h6>8:03</h6>
-	                 </div>
-	                 <div class="clearfix"> </div>
-                     </div>
-	  		        </div>
-		          </div>
-		    </div>
-		        <h3>Top 5 Member!</h3>
+
+
+<nrf>
+
+		<h2 style="color:black;">Top 5 Member!</h2>
 			<div class="col-md-4 stats-info">
-
                 <div class="panel-heading">
-
                 </div>
                 <div class="panel-body">
                     <ul class="list-unstyled">
- 			<table class="table">
+                     <table class="table">
 		      <thead>
 		        <tr>
 		          <th>#</th>
-		          <th>Username</th>
-		          <th>Score</th>
-		         </tr>
-		      </thead>
-      <tbody>
-
-		  {% for key, professionalmember in professionalmembers %}
-		        <tr class="active">
-		          <th scope="row">1</th>
-		          <td> {{ professionalmember.username }}</td>
-		          <td>{{ professionalmember.score }} </td>
-		          <td> nnnn</td>
-		          <td>ss </td>
+		             <th>Username</th>
+		          <th>Member Score</th>
+		          <th>City</th>
 
 		        </tr>
-		   {% endfor %}
-		       </tbody>
+		      </thead>
+		      <tbody>
+		        <tr class="active">
+		        {% for key, professionalmember in professionalmembers %}
+        <tr>
+            <td> <a href="{{ url_for('professionalmember_page', key=key) }}"> {{ professionalmember.username }} </a> </td>
+	        <td>{{ professionalmember.score }}</td>
+	        <td>{{ professionalmember.city}}</td>
+
+        </tr>
+        {% endfor %}
+
+		      </tbody>
 		    </table>
+
+
+
+
+                    </ul>
                 </div>
             </div>
-
+</nrf>
 	  </div>
+	  	<div class="clearfix"> </div>
+	  		<div class="clearfix"> </div>
 	  <div class="span_11">
 
 		  <!----Calender -------->
@@ -476,34 +444,36 @@ div#enter_section{
     </div>
 
 
-
      <div class="col-md-8 span_3">
 		  <div class="bs-example1" data-example-id="contextual-table">
 		    <table class="table">
 		      <thead>
 		        <tr>
 		          <th>#</th>
+		             <th>Team Name</th>
 		          <th>Team Score</th>
-		          <th>Team Name</th>
 		          <th>Founder</th>
+		             <th>Location</th>
 		        </tr>
 		      </thead>
 		      <tbody>
-
-		      {% for key, team in teams %}
 		        <tr class="active">
-		          <th scope="row">1</th>
-		          <td>{{ team.score }}</td>
-		          <td>{{ team.name }}</td>
-		          <td>{{ team.founder }}</td>
-		        </tr>
-		           {% endfor %}
-		       </tbody>
+		        {% for key, team in teams %}
+        <tr>
+            <td> <a href="{{ url_for('team_page', key=key) }}"> {{ team.title }} </a> </td>
+	        <td>{{ team.score }}</td>
+	        <td>{{ team.founder}}</td>
+	        <td>{{ team.location }}</td>
+        </tr>
+        {% endfor %}
+
+		      </tbody>
 		    </table>
 		   </div>
 	   </div>
 
 <dn>
+<nrfs>
 	   <div class="col-md-4 span_4">
 		 <div class="col_2">
 		  <div class="box_1">
@@ -520,7 +490,7 @@ div#enter_section{
 			    <div class="tiles-head tiles_blue1">
 			        <div class="text-center">Sales</div>
 			    </div>
-			    <div class="tiles-body blue1">30</div>
+			    <div class="tiles-body blue1">0</div>
 			  </a>
 		   </div>
 		   <div class="clearfix"> </div>
@@ -545,10 +515,11 @@ div#enter_section{
 		   <div class="clearfix"> </div>
 		   </div>
 		  </div>
-
+</nrfs>
 </dn>
 	    </div>
 		</div>
+
 
 
 </body>
