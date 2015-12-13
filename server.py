@@ -77,7 +77,10 @@ def initialize_database():
 
         query = "INSERT INTO COUNTER (N) VALUES (0)"
         cursor.execute(query)
-
+        
+        query = "DROP TABLE TEAM CASCADE"
+        cursor.execute(query)
+        
         query = """CREATE TABLE IF NOT EXISTS TEAM (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(80),
@@ -156,7 +159,8 @@ def initialize_database():
                 TYPEE VARCHAR(30)
                 )"""
         cursor.execute(query)
-
+        
+        
 
         query = """CREATE TABLE IF NOT EXISTS ADMIN (
                 ID SERIAL PRIMARY KEY,
@@ -167,6 +171,9 @@ def initialize_database():
                 PASSWORD VARCHAR(6) NOT NULL,
                 YEAR NUMERIC(4)
                 )"""
+        cursor.execute(query)
+
+        query = "DROP TABLE MEMBERS CASCADE"
         cursor.execute(query)
 
         query = """CREATE TABLE IF NOT EXISTS MEMBERS (
