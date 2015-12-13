@@ -82,9 +82,6 @@ def initialize_database():
         query = "INSERT INTO COUNTER (N) VALUES (0)"
         cursor.execute(query)
 
-        query = """DROP TABLE TEAM CASCADE"""
-        cursor.execute(query)
-
         query = """CREATE TABLE IF NOT EXISTS TEAM (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(80),
@@ -254,10 +251,16 @@ def guest_page():
     now = datetime.datetime.now();
     return render_template('guest.html', current_time=now.ctime())
 
+
+
+
 @app.route('/adminpanel')
 def adminpanel_page():
     now = datetime.datetime.now()
-    return render_template('adminpanel.html', current_time=now.ctime())
+    teams=app.store.get_top5team()
+    professionalmembers=app.store.get_top5member()
+    num=app.store.get_numofmembers()
+    return render_template('adminpanel.html',teams=teams,professionalmembers=professionalmembers,num=num, current_time=now.ctime())
 
 
 
