@@ -173,9 +173,6 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
-        query ="""DROP TABLE MEMBERS CASCADE"""
-        cursor.execute(query)
-
         query = """CREATE TABLE IF NOT EXISTS MEMBERS (
                 MEMBERID SERIAL PRIMARY KEY,
                 NAME VARCHAR(30) NOT NULL,
