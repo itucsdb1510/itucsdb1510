@@ -29,7 +29,8 @@ from race import Race
 import race_views
 from category import Category
 import category_views
-
+from topic import Topic
+import topic_views
 from admin import Admin
 import admin_views
 
@@ -164,6 +165,13 @@ def initialize_database():
                 )"""
         cursor.execute(query)
 
+        query = """CREATE TABLE IF NOT EXISTS TOPIC (
+                ID SERIAL PRIMARY KEY,
+                TITLE VARCHAR(40),
+                TEXT VARCHAR(40),
+                CURTIME DATE,
+                CATEGORYID INTEGER"""
+        cursor.execute(query)
 
 
         query = """CREATE TABLE IF NOT EXISTS ADMIN (

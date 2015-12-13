@@ -9,6 +9,7 @@ from activity import Activity
 from race import Race
 from _datetime import date
 from announcement import Announcement
+from topic import Topic
 from category import Category
 from admin import Admin
 from basicmember import Basicmember
@@ -54,6 +55,9 @@ class Store:
 
         self.activities = {}
         self.activity_last_key = None
+
+        self.topics = {}
+        self.topic_last_key = 0
 
 #TEAM
     def add_team(self, team):
@@ -211,18 +215,54 @@ class Store:
 
 #TOPIC
     def add_topic(self, topic):
-        self.topic_last_key += 1
-        self.topics[self.topic_last_key] = topic
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO TOPIC (TITLE,TEXT,CURTIME, CATEGORYID) VALUES (%s,%s,%s,%s) RETURNING TOPIC.ID"
+            cursor.execute(query, (topic.title, topic.text, topic.time, topic.categoryId ))
+            connection.commit()
+            self.category_last_key = cursor.fetchone()[0]
+
 
     def delete_topic(self, key):
-        del self.topics[key]
-        self.topic_last_key -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM TOPIC WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_topic(self, key):
-        return self.topics[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT TITLE, TEXT, CURTIME,CATEGORYID FROM TOPIC WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            title,text,time, categoryId = cursor.fetchone()
+        return Topic(title,text,time,categoryId)
 
     def get_topics(self):
-        return sorted(self.topics.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM TOPIC ORDER BY ID"
+            cursor.execute(query)
+            topics = [(key, Topic(title,text,time,categoryId))
+                      for key, title,text,time,categoryId in cursor]
+        return topics
+    def update_topic(self, key, title, text, time, categoryId):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE TOPIC SET TITLE = %s, TEXT = %s, CURTIME = %s, CATEGORYID = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, text, time,  categoryId, key))
+            connection.commit()
+
+    def search_topic(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM TOPIC WHERE (TITLE ILIKE %s OR TEXT ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key))
+            topics = [(key, Topic(title, text, time, categoryId))
+                      for key, title, text, time, categoryId in cursor]
+        return topics
+
 
 #EXPERIENCE
     def add_experience(self, experience):
