@@ -60,8 +60,12 @@ def get_elephantsql_dsn(vcap_services):
              dbname='{}'""".format(user, password, host, port, dbname)
     return dsn
 
-
 @app.route('/')
+def guest():
+    now = datetime.datetime.now()
+    return render_template('guest.html', current_time=now.ctime())
+
+@app.route('/home')
 def home():
     now = datetime.datetime.now()
     return render_template('home.html', current_time=now.ctime())
@@ -77,10 +81,10 @@ def initialize_database():
 
         query = "INSERT INTO COUNTER (N) VALUES (0)"
         cursor.execute(query)
-        
+
         query = """DROP TABLE TEAM CASCADE"""
         cursor.execute(query)
-        
+
         query = """CREATE TABLE IF NOT EXISTS TEAM (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(80),
@@ -159,16 +163,17 @@ def initialize_database():
                 TYPEE VARCHAR(30)
                 )"""
         cursor.execute(query)
-        
-        
+
+
 
         query = """CREATE TABLE IF NOT EXISTS ADMIN (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(30) NOT NULL,
                 SURNAME VARCHAR(30),
-                NICKNAME VARCHAR(30) ,
+                USERNAME VARCHAR(30) ,
                 EMAIL VARCHAR(30) NOT NULL,
                 PASSWORD VARCHAR(6) NOT NULL,
+                ROLE VARCHAR(20),
                 YEAR NUMERIC(4)
                 )"""
         cursor.execute(query)
@@ -177,7 +182,7 @@ def initialize_database():
                 MEMBERID SERIAL PRIMARY KEY,
                 NAME VARCHAR(30) NOT NULL,
                 SURNAME VARCHAR(30),
-                NICKNAME VARCHAR(30) ,
+                USERNAME VARCHAR(30) UNIQUE NOT NULL ,
                 GENDER VARCHAR(10) ,
                 MEMBERTYPE NUMERIC(1) DEFAULT 0,
                 EMAIL VARCHAR(30) NOT NULL,
@@ -248,6 +253,11 @@ def news_page():
 def guest_page():
     now = datetime.datetime.now();
     return render_template('guest.html', current_time=now.ctime())
+
+@app.route('/adminpanel')
+def adminpanel_page():
+    now = datetime.datetime.now()
+    return render_template('adminpanel.html', current_time=now.ctime())
 
 
 

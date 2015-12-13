@@ -4,7 +4,7 @@ from flask import redirect
 from flask import render_template
 from flask import request
 from flask import url_for
-
+import time
 from config import app
 from basicmember import Basicmember
 
@@ -30,7 +30,7 @@ def basicmembers_page():
     else:
         name = request.form['name']
         surname = request.form['surname']
-        nickname = request.form['nickname']
+        username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         byear = request.form['byear']
@@ -44,7 +44,8 @@ def basicmembers_page():
             role = 'admin'
         else:
             role = 'user'
-        basicmember = Basicmember(name, surname, nickname, gender, email,password, byear, city, interests, now, now, role)
+
+        basicmember = Basicmember(name, surname, username, gender, email,password, byear, city, interests, now, now, role)
         app.store.add_basicmember(basicmember)
 
         return render_template('login.html')
@@ -61,14 +62,20 @@ def basicmember_page(key):
     else:
         name = request.form['name']
         surname = request.form['surname']
-        nickname = request.form['nickname']
+        username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         byear = request.form['byear']
         city = request.form['city']
         interests = request.form['interests']
         gender = request.form.get('gender')
-        app.store.update_basicmember(key, name, surname, nickname, gender, email,password, byear, city, interests)
+        now = str((datetime.datetime.now()));
+        now = now[:-7]
+        if (app.store.check_admin(email)):
+            role = 'admin'
+        else:
+            role = 'user'
+        app.store.update_basicmember(key, name, surname, username, gender, email, password, byear, city, interests, now, now, role)
         return redirect(url_for('basicmember_page', key=key))
 
 @app.route('/basicmembers/add')

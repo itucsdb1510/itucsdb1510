@@ -21,13 +21,20 @@ def login_page():
         if(app.store.find_member(email,password)):
             with dbapi2.connect(app.config['dsn']) as connection:
                 cursor = connection.cursor()
-                cursor.execute("SELECT role, lastlogin, name FROM MEMBERS WHERE email='%s';"%email)
+                query = "SELECT NAME, ROLE FROM MEMBERS WHERE email=%s UNION SELECT NAME, ROLE FROM ADMIN WHERE email=%s"
+                cursor.execute(query,(email,email))
                 connection.commit()
-            role,lastlogin,name = cursor.fetchone()
-            g.role = role
-            g.lastlogin = lastlogin
-            session['username'] = name
-            return redirect(url_for('home'))
+           # role,lastlogin,name = cursor.fetchone()
+                name, role = cursor.fetchone()
+                g.role = role
+          #g.lastlogin = lastlogin
+                session['username'] = name
+                if role == 'user':
+                    return redirect(url_for('home'))
+
+                else:
+                    return redirect(url_for('adminpanel_page'))
+
         else:
             return redirect(url_for('login_page'))
     return render_template('login.html')

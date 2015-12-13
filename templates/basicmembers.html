@@ -22,12 +22,13 @@
                      value="{{ key }}" /></td>
           <td>
             <a href="{{ url_for('basicmember_page', key=key) }}">
-              {{ basicmember.nickname }}
+              {{ basicmember.username }}
             </a>
           </td>
         </tr>
         {% endfor %}
       </table>
+        {% endif %}
       <input type="submit" value="Delete" name="submit" />
     </form>
 {% endblock %}

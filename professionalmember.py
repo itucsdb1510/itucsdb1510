@@ -1,8 +1,8 @@
 class Professionalmember:
-    def __init__(self, name, surname, nickname,gender, email, password, byear, city,interests, award_G,award_B, award_S):
+    def __init__(self, name, surname, username,gender, email, password, byear, city,interests, award_G,award_B, award_S,lastlogin, regtime, role):
         self.name = name
         self.surname = surname
-        self.nickname = nickname
+        self.username = username
         self.gender=gender
         self.email = email
         self.password=password
@@ -15,3 +15,6 @@ class Professionalmember:
         self.score=0
         self.teamid=0
         self.membertype=1  #1 means professional user
+        self.lastlogin = lastlogin
+        self.regtime = regtime
+        self.role = role
