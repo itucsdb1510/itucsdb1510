@@ -6,5 +6,3 @@ class Experience:
         self.finish=finish
         self.period=period
         self.length=length
-        
-        

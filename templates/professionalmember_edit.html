@@ -67,7 +67,7 @@
     {% set action = url_for('professionalmember_page', key=key) if professionalmember else url_for('professionalmembers_page') %}
     {% set name = professionalmember.name if professionalmember else '' %}
     {% set surname = professionalmember.surname if professionalmember else '' %}
-    {% set nickname = professionalmember.nickname if professionalmember else '' %}
+    {% set username = professionalmember.username if professionalmember else '' %}
     {% set gender = professionalmember.gender if professionalmember else '' %}
     {% set email = professionalmember.email if professionalmember else '' %}
     {% set password = professionalmember.password if professionalmember else '' %}
@@ -95,7 +95,7 @@
         <tr>
           <th>Nickname:</th>
           <td>
-           <input type="text"   name="nickname"  value="{{ nickname }}"/>
+           <input type="text"   name="username"  value="{{ username }}"/>
           </td>
         </tr>
          <tr>

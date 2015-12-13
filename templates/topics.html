@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block title %}Topic Edit Form{% endblock %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,30 +11,38 @@
 
 <form action="{{ url_for('topics_page') }}" method="post">
  <input type="search" name="search" value="{{search}}">
-	  <input type="submit" value="search" name="submit">
+	  <input type="submit" value="Search" name="submit">
       <table>
         {% for key, topic in topics %}
         <tr>
           <td><input type="checkbox" name="topics_to_delete"
                      value="{{ key }}" /></td>
+
           <td>
             <a href="{{ url_for('topic_page', key=key) }}">
               {{ topic.title }}
             </a>
-           <br> {{ topic.text }}  {{ topic.time}}  <br>
+            </td>
+            <td> {{ topic.text }}
+          </td>
+            <td>  {{ topic.time}}
+          </td>
+          </td>
+            <td>  {{ topic.categoryId}}
           </td>
         </tr>
 
         {% endfor %}
       </table>
+
       <input type="submit" value="Delete" name="submit" />
     </form>
 
 
-<div class="navbar-header">
-				<a class="navbar-brand" href="{{ url_for('topic_edit_page') }}">Add topic</a>
-</div>
+<!--  <div class="navbar-header">
+				<a class="navbar-brand" href="{{ url_for('topic_edit_page',key=None) }}">Add topic</a>
+</div>-->
 
-</nav>
 </body>
 </html>
+{% endblock %}

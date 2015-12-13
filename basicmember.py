@@ -1,8 +1,8 @@
 class Basicmember:
-    def __init__(self, name, surname, nickname, gender, email, password, byear, city, interests, lastlogin, regtime, role):
+    def __init__(self, name, surname, username, gender, email, password, byear, city, interests, lastlogin, regtime, role):
         self.name = name
         self.surname = surname
-        self.nickname = nickname
+        self.username = username
         self.gender=gender
         self.email = email
         self.password=password

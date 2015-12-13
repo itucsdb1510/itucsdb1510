@@ -30,11 +30,19 @@ def admins_page():
     else:
         name = request.form['name']
         surname = request.form['surname']
-        nickname = request.form['nickname']
+        username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         year = request.form['year']
-        admin = Admin(name, surname, nickname, email,password, year)
+
+        now = str((datetime.datetime.now()));
+        now = now[:-7]
+        if (app.store.check_admin(email)):
+            role = 'admin'
+        else:
+            role = 'user'
+
+        admin = Admin(name, surname, username, email,password, year,role)
         app.store.add_admin(admin)
         return redirect(url_for('admin_page', key=app.store.admin_last_key))
 
@@ -50,11 +58,12 @@ def admin_page(key):
     else:
         name = request.form['name']
         surname = request.form['surname']
-        nickname = request.form['nickname']
+        username = request.form['username']
         email = request.form['email']
         password = request.form['password']
         year = request.form['year']
-        app.store.update_admin(key,name, surname, nickname, email,password, year)
+        role='admin'
+        app.store.update_admin(key,name, surname, username, email,password, year,role)
         return redirect(url_for('admin_page', key=key))
 
 @app.route('/admins/add')

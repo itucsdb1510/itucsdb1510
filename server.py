@@ -61,6 +61,12 @@ def get_elephantsql_dsn(vcap_services):
     return dsn
 
 
+@app.route('/')
+def guest():
+    now = datetime.datetime.now()
+    return render_template('guest.html', current_time=now.ctime())
+
+
 @app.route('/home')
 def home():
     now = datetime.datetime.now()
@@ -77,6 +83,7 @@ def initialize_database():
 
         query = "INSERT INTO COUNTER (N) VALUES (0)"
         cursor.execute(query)
+
 
         query = """CREATE TABLE IF NOT EXISTS TEAM (
                 ID SERIAL PRIMARY KEY,
@@ -96,22 +103,24 @@ def initialize_database():
                 TYPE VARCHAR(40),
                 SIZE VARCHAR(10),
                 YEAR VARCHAR(10),
-                PRICE FLOAT
+                PRICE FLOAT,
+                USERNAME VARCHAR(40) ,
+                DATE DATE DEFAULT current_timestamp
                 )"""
         cursor.execute(query)
+
+        query = """ ALTER TABLE BIKE ADD COLUMN description text;"""
 
         query = """CREATE TABLE IF NOT EXISTS EXPERIENCE (
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
-                USERNAME VARCHAR(40),
+                USERNAME VARCHAR(40) ,
                 START VARCHAR(40),
                 FINISH VARCHAR(10),
                 PERIOD FLOAT,
                 LENGTH FLOAT,
-                USERID INTEGER REFERENCES MEMBERS,
-                DATE DATE,
-                ON DELETE CASCADE
-                )"""
+                DATE DATE DEFAULT current_timestamp
+                 )"""
         cursor.execute(query)
 
         query = """CREATE TABLE IF NOT EXISTS CYCROUTE (
@@ -120,7 +129,8 @@ def initialize_database():
                 USERNAME VARCHAR(40),
                 START VARCHAR(40),
                 FINISH VARCHAR(10),
-                LENGTH FLOAT
+                LENGTH FLOAT,
+                DATE DATE DEFAULT current_timestamp
                 )"""
         cursor.execute(query)
 
@@ -160,13 +170,15 @@ def initialize_database():
         cursor.execute(query)
 
 
+
         query = """CREATE TABLE IF NOT EXISTS ADMIN (
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(30) NOT NULL,
                 SURNAME VARCHAR(30),
-                NICKNAME VARCHAR(30) ,
+                USERNAME VARCHAR(30) ,
                 EMAIL VARCHAR(30) NOT NULL,
                 PASSWORD VARCHAR(6) NOT NULL,
+                ROLE VARCHAR(20),
                 YEAR NUMERIC(4)
                 )"""
         cursor.execute(query)
@@ -175,7 +187,7 @@ def initialize_database():
                 MEMBERID SERIAL PRIMARY KEY,
                 NAME VARCHAR(30) NOT NULL,
                 SURNAME VARCHAR(30),
-                NICKNAME VARCHAR(30) ,
+                USERNAME VARCHAR(30) UNIQUE NOT NULL ,
                 GENDER VARCHAR(10) ,
                 MEMBERTYPE NUMERIC(1) DEFAULT 0,
                 EMAIL VARCHAR(30) NOT NULL,
@@ -211,6 +223,10 @@ def initialize_database():
         cursor.execute(query)
 
         cursor.execute("""CREATE TABLE IF NOT EXISTS TOPMEMBERS (ID SERIAL PRIMARY KEY,USERID INTEGER,COUNT INTEGER)""")
+        cursor.execute("""ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE CYCROUTE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE""")
+
 
     return redirect(url_for('guest_page'))
 
@@ -246,6 +262,11 @@ def news_page():
 def guest_page():
     now = datetime.datetime.now();
     return render_template('guest.html', current_time=now.ctime())
+
+@app.route('/adminpanel')
+def adminpanel_page():
+    now = datetime.datetime.now()
+    return render_template('adminpanel.html', current_time=now.ctime())
 
 
 

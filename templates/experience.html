@@ -2,7 +2,7 @@
 {% block title %}EXPERIENCE{% endblock %}
 {% block content %}
 <link rel="stylesheet"
-	href="{{ url_for('static', filename='experience.css') }}" />
+	href="{{ url_for('static', filename='team.css') }}" />
    <body>
     <h2>{{ experience.title }}</h2>
     <table>
@@ -23,7 +23,12 @@
 
     </table>
  <br/>
-	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
+ 	{%if visible==1 %}
+	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit" class="btn btn-default btn-sm"> </a>
+	{%endif%}
+	{%if visible==0 %}
+	 <a href="{{ request.path + '/edit' }}"> <input style="visibility:hidden; id="edit_button" type="submit" value="Edit" disabled> </a>
+	{%endif%}
     <br/>
     <br/>
     <br/>

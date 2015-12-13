@@ -5,9 +5,32 @@
     {% set action = url_for('topic_page', key=key) if topic else url_for('topics_page') %}
     {% set title = topic.title if topic else '' %}
     {% set text = topic.text if topic else '' %}
-
+    {% set time = topic.time if topic else '' %}
+    {% set categoryId = topic.categoryId if topic else '' %}
    <form action="{{ action }}" method="post">
-      <table>
+
+      <div>
+        <p> Title:
+          <input type="text" name="title" value="{{ title }}" required autofocus />
+        <p> Text:
+          <input type="text" name="text" value="{{ text }}"/>
+        <p> Category
+          <select style="position: fixed;width: 250px;" name="categoryId">
+         	{% for key, category in categories %}
+         		<option value="{{key}}" >{{category.title}}</option>
+        	{% endfor %}
+
+         	</select></p>
+
+
+
+      <input value="Save" name="save" type="submit" />
+      </div>
+
+
+
+
+      <!--  <table>
         <tr>
           <th>Title:</th>
           <td>
@@ -20,7 +43,19 @@
           	 <input type="text" name="text" value="{{ text }}"/>
           </td>
         </tr>
-		  <tr>
+        <tr>
+          <th> Category</th>
+					<td>
+						<select id="add_label" name="team_type">
+			         		<option value="sdff"> sdff </option>
+			         		<option value="donanım"> guyu </option>
+			         		<option value="deeded"> deeded </option>
+			         		<option value="merhaba"> merhaba </option>
+			         		<option value="yazılım"> yazılım </option>
+         			</select>
+				    </td>
+        </tr>
+		 <!-- <tr>
           <th>time:</th>
           <td>
           	 <input type="text" name="text" value="{{ time }}"/>
@@ -28,7 +63,11 @@
         </tr>
 
 
-      </table>
-      <input value="Save" name="save" type="submit" />
+      </table>-->
     </form>
 {% endblock %}
+
+
+
+
+

@@ -32,7 +32,8 @@
 							<li><a href="{{ url_for('category_edit_page') }}">Add Category</a></li>
 							<li><a href="{{ url_for('categories_page') }}"> Category List</a></li>
 							<li><a href="{{ url_for('announcements_page') }}"> Announcements</a></li>
-							<li><a href="{{ url_for('topics_page') }}"> Topics</a></li>
+							<li><a href="{{ url_for('topic_edit_page') }}">Add Topics</a></li>
+							<li><a href="{{ url_for('topics_page') }}">List Topics</a></li>
 						</ul>
 					</li>
 					<li><a href="{{ url_for('news_page') }}"> News</a></li>
@@ -87,6 +88,7 @@
 
 
 					<li><a href="{{ url_for('guest_page') }}"> Guest</a></li>
+					     <li><a href="{{ url_for('adminpanel_page') }}"> Admin Panel</a></li>
 
  <ul class="nav navbar-nav navbar-right">
                 {%if 'username' in session%}

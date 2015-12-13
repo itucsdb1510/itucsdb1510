@@ -22,68 +22,78 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 #request.form.get('delete',None)
 @app.route('/bikes', methods=['GET', 'POST'])
 def bikes_page():
-    if request.method == 'GET':
-        bikes = app.store.get_bikes()
-        now = datetime.datetime.now()
-        return render_template('bikes.html', bikes=bikes,
-                               current_time=now.ctime())
-
-    elif  'bike_to_delete' in request.form or 'search' in request.form:
-        if request.form['submit'] == 'Delete':
-            keys = request.form.getlist('bikes_to_delete')
-            for key in keys:
-                app.store.delete_bike(int(key))
-            return redirect(url_for('bikes_page'))
-
-        elif  request.form['submit'] == 'Search' :
-            keyword=request.form['search']
-            bikes = app.store.search_bike(keyword)
+    if 'username' in session:
+        if request.method == 'GET':
+            bikes = app.store.get_bikes()
             now = datetime.datetime.now()
             return render_template('bikes.html', bikes=bikes,
-                               current_time=now.ctime())
+                                   current_time=now.ctime())
+
+        elif  'bike_to_delete' in request.form or 'search' in request.form:
+            if request.form['submit'] == 'Delete':
+                keys = request.form.getlist('bikes_to_delete')
+                for key in keys:
+                    app.store.delete_bike(int(key))
+                return redirect(url_for('bikes_page'))
+
+            elif  request.form['submit'] == 'Search' :
+                keyword=request.form['search']
+                bikes = app.store.search_bike(keyword)
+                now = datetime.datetime.now()
+                return render_template('bikes.html', bikes=bikes,
+                                   current_time=now.ctime())
+        else:
+                model = request.form['model']
+                brand = request.form['brand']
+                type = request.form.get('type')
+                size = request.form['size']
+                year = request.form['year']
+                price = request.form['price']
+                bike = Bike(model,brand,type,size,year,price)
+                app.store.add_bike(bike)
+                image=request.files['file']
+                if image:
+                    image.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/image/teams/' + str(app.store.bike_last_key) + '.jpg'))
+
+                return redirect(url_for('bike_page', key=app.store.bike_last_key))
     else:
+        return redirect(url_for('guest_page'))
+
+
+@app.route('/bike/<int:key>', methods=['GET', 'POST'])
+def bike_page(key):
+    if 'username' in session:
+        if request.method == 'GET':
+            bike = app.store.get_bike(key)
+            now = datetime.datetime.now()
+            return render_template('bike.html', bike=bike, key = str(key),
+                                   current_time=now.ctime())
+        else:
             model = request.form['model']
             brand = request.form['brand']
             type = request.form.get('type')
             size = request.form['size']
             year = request.form['year']
             price = request.form['price']
-            bike = Bike(model,brand,type,size,year,price)
-            app.store.add_bike(bike)
             image=request.files['file']
             if image:
-                image.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/image/teams/' + str(app.store.bike_last_key) + '.jpg'))
+                image.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/image/teams/' + str(key) + '.jpg'))
 
-            return redirect(url_for('bike_page', key=app.store.bike_last_key))
-
-
-
-@app.route('/bike/<int:key>', methods=['GET', 'POST'])
-def bike_page(key):
-    if request.method == 'GET':
-        bike = app.store.get_bike(key)
-        now = datetime.datetime.now()
-        return render_template('bike.html', bike=bike, key = str(key),
-                               current_time=now.ctime())
+            app.store.update_bike(key,model,brand,type,size,year,price)
+            return redirect(url_for('bike_page', key=key))
     else:
-        model = request.form['model']
-        brand = request.form['brand']
-        type = request.form.get('type')
-        size = request.form['size']
-        year = request.form['year']
-        price = request.form['price']
-        image=request.files['file']
-        if image:
-            image.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/image/teams/' + str(key) + '.jpg'))
-
-        app.store.update_bike(key,model,brand,type,size,year,price)
-        return redirect(url_for('bike_page', key=key))
+        return redirect(url_for('guest_page'))
 
 
 @app.route('/bikes/add')
 @app.route('/bike/<int:key>/edit')
 def bike_edit_page(key=None):
-    bike = app.store.get_bike(key) if key is not None else None
-    now = datetime.datetime.now()
-    return render_template('bike_edit.html', bike=bike,
-                           current_time=now.ctime())
+    if 'username' in session:
+        bike = app.store.get_bike(key) if key is not None else None
+        now = datetime.datetime.now()
+        return render_template('bike_edit.html', bike=bike,
+                               current_time=now.ctime())
+    else:
+        return redirect(url_for('guest_page'))
+    
+    

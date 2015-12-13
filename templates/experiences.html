@@ -2,12 +2,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet"
-	href="{{ url_for('static', filename='experiences.css') }}" />
+    <link rel="stylesheet"
+	href="{{ url_for('static', filename='teams.css') }}" />
 <meta charset="UTF-8">
+    </head>
 {% extends "layout.html" %}
 {% block title %}Experience List{% endblock %}
 {% block content %}
+
+
+
 <body>
 <h2>Experiences</h2>
    <form action="{{ url_for('experiences_page') }}" method="post">
@@ -17,7 +21,7 @@
 	  <th> <input id="search_button" type="submit" value="Search" name="submit"> </th>
 	  </tr>
 	  </table>
-      <table id="experienceTable" style = "width:45%">
+      <table id="teamTable" style = "width:45%">
       <tr>
 		    <th id="empty_column"> </th>
 		    <th>Title</th>
@@ -48,6 +52,22 @@
         <th id="empty_column"> </th>
       	<th> <input id="button_in_table" type="submit" value="Delete" name="submit" /> </th>
       </tr>
+
+	  <th>TOPMEMBERS</th>
+	   <tr>
+
+          <td>SCORE</td>
+	      <td>USERNAME</td>
+
+      </tr>
+      {% for userid,count in topmembers %}
+      <tr>
+
+          <td>{{ count }}</td>
+	      <td>{{ userid }}</td>
+
+      </tr>
+        {% endfor %}
       </table>
     </form>
  </body>
