@@ -59,8 +59,8 @@ class Store:
     def add_team(self, team):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO TEAM (NAME, SCORE, FOUNDER, YEAR, TEAMTYPE, LOCATION) VALUES (%s, %s, %s, %s, %s, %s) RETURNING TEAM.ID"
-            cursor.execute(query, (team.title, int(team.score), team.founder, int(team.year), team.team_type, team.location))
+            query = "INSERT INTO TEAM (NAME, SCORE, FOUNDER, MEMBER_COUNT, YEAR, TEAMTYPE, LOCATION) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING TEAM.ID"
+            cursor.execute(query, (team.title, int(team.score), team.founder, team.member_count, int(team.year), team.team_type, team.location))
             connection.commit()
             self.team_last_key = cursor.fetchone()[0]
 
@@ -75,39 +75,41 @@ class Store:
     def get_team(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT NAME, SCORE, FOUNDER, YEAR, TEAMTYPE, LOCATION FROM TEAM WHERE (ID = %s)"
+            query = "SELECT NAME, SCORE, FOUNDER, MEMBER_COUNT, YEAR, TEAMTYPE, LOCATION FROM TEAM WHERE (ID = %s)"
             cursor.execute(query, (key,))
-            name, score, founder, year, team_type, location = cursor.fetchone()
-        return Team(name, score, founder, year, team_type, location)
+            name, score, founder, member_count, year, team_type, location = cursor.fetchone()
+        return Team(name, score, founder, member_count, year, team_type, location)
 
     def get_teams(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "SELECT * FROM TEAM ORDER BY ID"
             cursor.execute(query)
-            teams = [(key, Team(name, score, founder, year, team_type, location))
-                      for key, name, score, founder, year, team_type, location in cursor]
+            teams = [(key, Team(name, score, founder, member_count, year, team_type, location))
+                      for key, name, score, founder, member_count, year, team_type, location in cursor]
         return teams
 
     def search_team(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT * FROM TEAM WHERE (NAME ILIKE %s OR FOUNDER ILIKE %s)"
+            query = "SELECT * FROM TEAM WHERE (NAME ILIKE %s OR LOCATION ILIKE %s)"
             key = '%'+key+'%'
             cursor.execute(query, (key, key))
-            teams = [(key, Team(name, score, founder, year, team_type, location))
-                      for key, name, score, founder, year, team_type, location in cursor]
+            teams = [(key, Team(name, score, founder, member_count, year, team_type, location))
+                      for key, name, score, founder, member_count, year, team_type, location in cursor]
         return teams
 
-    def update_team(self, key, title, score, founder, year, team_type, location):
+    def update_team(self, key, title, score, year, team_type, location):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE TEAM SET NAME = %s, SCORE = %s, FOUNDER = %s, YEAR = %s, TEAMTYPE = %s, LOCATION = %s WHERE (ID = %s)"
-            cursor.execute(query, (title, score, founder, year, team_type, location, key))
+            query = "UPDATE TEAM SET NAME = %s, SCORE = %s, YEAR = %s, TEAMTYPE = %s, LOCATION = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, score, year, team_type, location, key))
             connection.commit()
 
     def addMember(self, key):
         self.teams[key].team_count = 5
+
+
 
 
 #ANNOUNCEMENT
@@ -178,7 +180,7 @@ class Store:
     def get_category(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT TITLE, TYPEE FROM CATEGORY WHERE (ID = %s)"
+            query = "SELECT TITLE,TYPEE FROM CATEGORY WHERE (ID = %s)"
             cursor.execute(query, (key,))
             title,typee = cursor.fetchone()
         return Category(title,typee)
@@ -189,7 +191,7 @@ class Store:
             query = "SELECT * FROM CATEGORY ORDER BY ID"
             cursor.execute(query)
             categories = [(key, Category(title, typee))
-                      for key, title,typee  in cursor]
+                      for key, title,typee in cursor]
         return categories
     def update_category(self, key, title,typee):
         with dbapi2.connect(self.app.config['dsn']) as connection:
@@ -211,18 +213,53 @@ class Store:
 
 #TOPIC
     def add_topic(self, topic):
-        self.topic_last_key += 1
-        self.topics[self.topic_last_key] = topic
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "INSERT INTO TOPIC (TITLE,TEXT,CURTIME, CATEGORYID) VALUES (%s,%s,%s,%s) RETURNING TOPIC.ID"
+            cursor.execute(query, (topic.title, topic.text, topic.time, topic.categoryId ))
+            connection.commit()
+            self.topic_last_key = cursor.fetchone()[0]
+
 
     def delete_topic(self, key):
-        del self.topics[key]
-        self.topic_last_key -= 1
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "DELETE FROM TOPIC WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            connection.commit()
 
     def get_topic(self, key):
-        return self.topics[key]
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT TITLE, TEXT, CURTIME,CATEGORYID FROM TOPIC WHERE (ID = %s)"
+            cursor.execute(query, (key,))
+            title,text,time, categoryId = cursor.fetchone()
+        return Topic(title,text,time,categoryId)
 
     def get_topics(self):
-        return sorted(self.topics.items())
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM TOPIC ORDER BY ID"
+            cursor.execute(query)
+            topics = [(key, Topic(title,text,time,categoryId))
+                      for key, title,text,time,categoryId in cursor]
+        return topics
+    def update_topic(self, key, title, text, time, categoryId):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "UPDATE TOPIC SET TITLE = %s, TEXT = %s, CURTIME = %s, CATEGORYID = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, text, time,  categoryId, key))
+            connection.commit()
+
+    def search_topic(self, key):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM TOPIC WHERE (TITLE ILIKE %s OR TEXT ILIKE %s)"
+            key = '%'+key+'%'
+            cursor.execute(query, (key, key))
+            topics = [(key, Topic(title, text, time, categoryId))
+                      for key, title, text, time, categoryId in cursor]
+        return topics
 
 #EXPERIENCE
     def add_experience(self, experience):
@@ -258,7 +295,7 @@ class Store:
             query = "SELECT * FROM EXPERIENCE ORDER BY ID"
             cursor.execute(query)
             experiences = [(key, Experience(title, username, start, finish, period, length))
-                      for key, title, username, start, finish, period, length, userid,date in cursor]
+                      for key, title, username, start, finish, period, length,userid,date in cursor]
             return experiences
 
 
@@ -276,15 +313,15 @@ class Store:
             keyword='%'+keyword+'%'
             cursor.execute(query, (keyword,keyword,keyword))
             experiences = [(key, Experience(title, username, start, finish, period, length))
-                      for key, title, username, start, finish, period, length in cursor]
+                      for key, title, username, start, finish, period, length,userid,date in cursor]
         return experiences
 
 #RACE
     def add_race(self, race):
        with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO RACE (TITLE, RACE_TYPE, FOUNDERID, TIME, CYCROUTEID) VALUES (%s, %s, %s, %s, %s) RETURNING RACE.ID"
-            cursor.execute(query, (race.title, race.race_type, int(race.founder), race.time, race.place))
+            query = "INSERT INTO RACE (TITLE, RACE_TYPE, FOUNDERID, PARTICIPANT_COUNT, TIME, CYCROUTEID) VALUES (%s, %s, %s, %s, %s, %s) RETURNING RACE.ID"
+            cursor.execute(query, (race.title, race.race_type, int(race.founder), race.participant_count, race.time, race.place))
             connection.commit()
             self.race_last_key = cursor.fetchone()[0]
 
@@ -298,25 +335,25 @@ class Store:
     def get_race(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT TITLE, RACE_TYPE, FOUNDERID, TIME, CYCROUTEID FROM RACE WHERE (ID = %s)"
+            query = "SELECT TITLE, RACE_TYPE, FOUNDERID, PARTICIPANT_COUNT, TIME, CYCROUTEID FROM RACE WHERE (ID = %s)"
             cursor.execute(query, (key,))
-            title, race_type, founder, time, place  = cursor.fetchone()
-        return Race(title, race_type, founder, time, place)
+            title, race_type, founder, participant_count, time, place  = cursor.fetchone()
+        return Race(title, race_type, founder, participant_count, time, place)
 
     def get_races(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "SELECT * FROM RACE ORDER BY ID"
             cursor.execute(query)
-            races = [(key, Race(title, race_type, founder, time, place))
-                      for key, title, race_type, founder, time, place in cursor]
+            races = [(key, Race(title, race_type, founder, participant_count, time, place))
+                      for key, title, race_type, founder, participant_count, time, place in cursor]
         return races
 
-    def update_race(self, key, title, race_type, founder, time, place):
+    def update_race(self, key, title, race_type, time, place):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE RACE SET TITLE = %s, RACE_TYPE = %s, FOUNDERID = %s, TIME = %s, CYCROUTEID = %s WHERE (ID = %s)"
-            cursor.execute(query, (title, race_type, founder, time, place, key))
+            query = "UPDATE RACE SET TITLE = %s, RACE_TYPE = %s, TIME = %s, CYCROUTEID = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, race_type, time, place, key))
             connection.commit()
 
     def search_race(self, key):
@@ -325,8 +362,8 @@ class Store:
             query = "SELECT * FROM RACE WHERE (TITLE ILIKE %s OR RACE_TYPE ILIKE %s)"
             key = '%'+key+'%'
             cursor.execute(query, (key, key))
-            races = [(key, Race(title, race_type, founder, time, place))
-                      for key, title, race_type, founder, time, place in cursor]
+            races = [(key, Race(title, race_type, founder, participant_count, time, place))
+                      for key, title, race_type, founder, participant_count, time, place in cursor]
         return races
 
 
@@ -334,8 +371,8 @@ class Store:
     def add_admin(self, admin):
          with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO ADMIN (NAME, SURNAME, NICKNAME, EMAIL, PASSWORD, YEAR) VALUES (%s, %s, %s, %s, %s, %s) RETURNING ADMIN.ID"
-            cursor.execute(query, (admin.name, admin.surname, admin.nickname, admin.email, admin.password, int(admin.year)))
+            query = "INSERT INTO ADMIN (NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR, ROLE) VALUES (%s, %s, %s, %s, %s, %s,%s) RETURNING ADMIN.ID"
+            cursor.execute(query, (admin.name, admin.surname, admin.username, admin.email, admin.password, int(admin.year), 'admin'))
             connection.commit()
             self.admin_last_key = cursor.fetchone()[0]
 
@@ -349,10 +386,10 @@ class Store:
     def get_admin(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT NAME, SURNAME, NICKNAME, EMAIL, PASSWORD, YEAR FROM ADMIN WHERE (ID = %s)"
+            query = "SELECT NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR FROM ADMIN WHERE (ID = %s)"
             cursor.execute(query, (key,))
-            name, surname, nickname, email, password, year = cursor.fetchone()
-        return Admin(name, surname, nickname, email, password, year)
+            name, surname, username, email, password, year = cursor.fetchone()
+        return Admin(name, surname, username, email, password, year,"admin")
 
 
     def get_admins(self):
@@ -360,25 +397,25 @@ class Store:
             cursor = connection.cursor()
             query = "SELECT * FROM ADMIN ORDER BY ID"
             cursor.execute(query)
-            admins = [(key, Admin(name, surname, nickname, email, password, year))
-                      for key, name, surname, nickname, email, password, year in cursor]
+            admins = [(key, Admin(name, surname, username, email, password, year,role))
+                      for key, name, surname, username, email, password, year,role in cursor]
         return admins
 
-    def update_admin(self, key, name, surname, nickname, email, password, year):
+    def update_admin(self, key, name, surname, username, email, password, year, role):
        with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE ADMIN SET NAME=%s, SURNAME=%s, NICKNAME=%s, EMAIL=%s, PASSWORD=%s, YEAR=%s WHERE (ID = %s)"
-            cursor.execute(query, (name, surname, nickname, email, password, year, key))
+            query = "UPDATE ADMIN SET NAME=%s, SURNAME=%s, USERNAME=%s, EMAIL=%s, PASSWORD=%s, YEAR=%s, ROLE=%s  WHERE (ID = %s)"
+            cursor.execute(query, (name, surname, username, email, password, year, role, key))
             connection.commit()
 
     def search_admin(self,keyword):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query="SELECT * FROM ADMIN WHERE (NAME ILIKE %s OR NICKNAME ILIKE%s ) ORDER BY ID"
+            query="SELECT * FROM ADMIN WHERE (NAME ILIKE %s OR USERNAME ILIKE%s ) ORDER BY ID"
             keyword='%'+keyword+'%'
             cursor.execute(query, (keyword,keyword))
-            admins = [(key, Admin(name, surname, nickname, email, password, year))
-                      for key, name, surname, nickname, email, password, year in cursor]
+            admins = [(key, Admin(name, surname, username, email, password, year, role))
+                      for key, name, surname, username, email, password, year,role  in cursor]
         return admins
 
 #CYCROUTE
@@ -412,15 +449,15 @@ class Store:
             query = "SELECT * FROM CYCROUTE ORDER BY ID"
             cursor.execute(query)
             cycroutes = [(key, Cycroute(title, username, start, finish, length))
-                      for key, title, username, start, finish, length in cursor]
+                      for key, title, username, start, finish, length,date in cursor]
             return cycroutes
 
 
-    def update_cycroute(self, key, title, username, start, finish, length):
+    def update_cycroute(self, key, title,start, finish, length):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE CYCROUTE SET TITLE=%s, USERNAME=%s, START=%s,FINISH=%s,LENGTH=%s WHERE (ID = %s)"
-            cursor.execute(query, (title, username, start, finish, length, key))
+            query = "UPDATE CYCROUTE SET TITLE=%s,START=%s,FINISH=%s,LENGTH=%s WHERE (ID = %s)"
+            cursor.execute(query, (title,start, finish, length, key))
             connection.commit()
     def search_cycroute(self,keyword):
         with dbapi2.connect(self.app.config['dsn']) as connection:
@@ -429,15 +466,15 @@ class Store:
             keyword='%'+keyword+'%'
             cursor.execute(query, (keyword,keyword,keyword))
             cycroutes = [(key, Cycroute(title, username, start, finish,length))
-                      for key, title, username, start, finish, length in cursor]
+                      for key, title, username, start, finish, length,date in cursor]
         return cycroutes
 
 #BIKE
     def add_bike(self, bike):
          with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO BIKE (MODEL, BRAND, TYPE, SIZE, YEAR, PRICE) VALUES (%s, %s, %s, %s, %s, %s) RETURNING BIKE.ID"
-            cursor.execute(query, (bike.model, bike.brand ,bike.type ,bike.size ,bike.year ,bike.price))
+            query = "INSERT INTO BIKE (MODEL, BRAND, TYPE, SIZE, YEAR, PRICE,USERNAME) VALUES (%s, %s, %s, %s, %s, %s,%s) RETURNING BIKE.ID"
+            cursor.execute(query, (bike.model, bike.brand ,bike.type ,bike.size ,bike.year ,bike.price,bike.username))
             connection.commit()
             self.bike_last_key = cursor.fetchone()[0]
 
@@ -451,18 +488,18 @@ class Store:
     def get_bike(self, key):
           with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT MODEL, BRAND, TYPE, SIZE, YEAR, PRICE FROM BIKE WHERE (ID = %s)"
+            query = "SELECT MODEL, BRAND, TYPE, SIZE, YEAR, PRICE,USERNAME FROM BIKE WHERE (ID = %s)"
             cursor.execute(query, (key,))
-            model,brand, type, size, year, price = cursor.fetchone()
-            return Bike(model, brand, type, size, year, price)
+            model,brand, type, size, year, price,username = cursor.fetchone()
+            return Bike(model, brand, type, size, year, price,username)
 
     def get_bikes(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "SELECT * FROM BIKE ORDER BY ID"
             cursor.execute(query)
-            bikes = [(key, Bike(model,brand, type, size, year, price))
-                      for key, model,brand, type, size, year, price in cursor]
+            bikes = [(key, Bike(model,brand, type, size, year, price,username))
+                      for key, model,brand, type, size, year, price,username,date in cursor]
         return bikes
 
 
@@ -479,8 +516,8 @@ class Store:
             query="SELECT * FROM BIKE WHERE (MODEL ILIKE %s OR BRAND ILIKE%s OR TYPE ILIKE %s ) ORDER BY ID"
             keyword='%'+keyword+'%'
             cursor.execute(query, (keyword,keyword,keyword))
-            bikes = [(key, Bike(model,brand, type, size, year, price))
-                      for key, model,brand, type, size, year, price in cursor]
+            bikes = [(key, Bike(model,brand, type, size, year, price,username))
+                      for key, model,brand, type, size, year, price,username,date in cursor]
         return bikes
 
 
@@ -489,8 +526,8 @@ class Store:
     def add_basicmember(self, basicmember):
          with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS, LASTLOGIN, REGTIME, ROLE ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING MEMBERS.MEMBERID"
-            cursor.execute(query, (basicmember.name, basicmember.surname,basicmember.nickname, basicmember.gender, basicmember.email,basicmember.password, basicmember.city, int(basicmember.byear), basicmember.interests, basicmember.lastlogin, basicmember.regtime, basicmember.role))
+            query = "INSERT INTO MEMBERS (NAME, SURNAME, USERNAME, GENDER, MEMBERTYPE,EMAIL,PASSWORD, CITY, YEAR, INTERESTS, LASTLOGIN, REGTIME, ROLE ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) RETURNING MEMBERS.MEMBERID"
+            cursor.execute(query, (basicmember.name, basicmember.surname,basicmember.username, basicmember.gender, 0, basicmember.email,basicmember.password, basicmember.city, int(basicmember.byear), basicmember.interests, basicmember.lastlogin, basicmember.regtime, basicmember.role))
             connection.commit()
             self.basicmember_last_key = cursor.fetchone()[0]
 
@@ -505,40 +542,40 @@ class Store:
     def get_basicmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, LASTLOGIN, REGTIME, ROLE  FROM MEMBERS WHERE (MEMBERID = %s)"
+            query = "SELECT NAME, SURNAME, USERNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, LASTLOGIN, REGTIME, ROLE  FROM MEMBERS WHERE (MEMBERID = %s)"
             cursor.execute(query, (key,))
-            name, surname, nickname, gender, membertype, email, password, city, interests, score, byear, lastlogin, regtime, role = cursor.fetchone()
-        return Basicmember(name, surname, nickname, gender, email, password, byear, city, interests, lastlogin, regtime, role)
+            name, surname, username, gender, membertype, email, password, city, interests, score, byear, lastlogin, regtime, role = cursor.fetchone()
+        return Basicmember(name, surname, username, gender, email, password, byear, city, interests, lastlogin, regtime, role)
 
     def get_basicmembers(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "SELECT * FROM MEMBERS WHERE MEMBERTYPE=0 ORDER BY MEMBERID"
             cursor.execute(query)
-            basicmembers = [(key, Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
-                      for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear,teamid in cursor]
+            basicmembers = [(key, Basicmember(name, surname, username, gender, email, password, byear, city, interests, lastlogin, regtime, role))
+                      for key, name, surname, username, gender, membertype, email, password, city, interests, score, byear, lastlogin, regtime, role,teamid in cursor]
         return basicmembers
 
 
     def search_basicmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s) AND (MEMBERTYPE=0)"
+            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR USERNAME ILIKE %s) AND (MEMBERTYPE=0)"
             key = '%'+key+'%'
             cursor.execute(query, (key, key))
-            basicmembers = [(key,  Basicmember(name, surname, nickname, gender, email, password, byear, city, interests))
-                      for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear,teamid in cursor]
+            basicmembers = [(key, Basicmember(name, surname, username, gender, email, password, byear, city, interests, lastlogin, regtime, role))
+                      for key, name, surname, username, gender, membertype, email, password, city, interests, score, byear, lastlogin, regtime, role,teamid in cursor]
         return basicmembers
 
     def find_member(self, key1, key2):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT EMAIL, PASSWORD FROM MEMBERS WHERE (EMAIL = %s) AND (PASSWORD = %s)"
+            query = "SELECT NAME FROM MEMBERS UNION SELECT NAME FROM ADMIN WHERE ((email=%s)and (password=%s))"
             cursor.execute(query, (key1, key2))
             if cursor.fetchone() is None:
-                return 0
+                    return 0
             else:
-                return 1
+                    return 1
 
 
     def update_basicmember(self, key, name, surname, username, gender, email, password, byear, city, interests,lastlogin, regtime, role):
@@ -557,8 +594,8 @@ class Store:
             query = "SELECT id FROM team ORDER BY RANDOM()LIMIT 1"
             cursor.execute(query)
             randteamid= cursor.fetchone()
-            query = "INSERT INTO MEMBERS (NAME, SURNAME, NICKNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE,TEAMID ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s) RETURNING MEMBERS.MEMBERID"
-            cursor.execute(query, (professionalmember.name, professionalmember.surname,professionalmember.nickname, professionalmember.gender, professionalmember.email,professionalmember.password, professionalmember.city, int(professionalmember.byear), professionalmember.interests,1,randteamid))
+            query = "INSERT INTO MEMBERS (NAME, SURNAME, USERNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE,LASTLOGIN, REGTIME, ROLE ,TEAMID ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s,%s,%s) RETURNING MEMBERS.MEMBERID"
+            cursor.execute(query, (professionalmember.name, professionalmember.surname,professionalmember.username, professionalmember.gender, professionalmember.email,professionalmember.password, professionalmember.city, int(professionalmember.byear), professionalmember.interests,1,professionalmember.lastlogin, professionalmember.regtime, professionalmember.role,randteamid))
             self.professionalmember_last_key = cursor.fetchone()[0]
             #connection.commit()
            # if professionalmember.award_G ==0 and professionalmember.award_B ==0 and professionalmember.award_S == 0:
@@ -581,43 +618,43 @@ class Store:
             query = "SELECT sum(numofGOLD),sum(numofBRONZE), sum(numofSILVER) FROM MEMBERS, AWARDS WHERE( (members.memberid=awards.memberid) and members.memberid=%s )"
             cursor.execute(query, (key,))
             award_G,award_B, award_S= cursor.fetchone()
-            query = "SELECT NAME, SURNAME, NICKNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, TEAMID FROM MEMBERS WHERE (MEMBERID =%s)"
+            query = "SELECT NAME, SURNAME, USERNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, LASTLOGIN, REGTIME, ROLE, TEAMID FROM MEMBERS WHERE (MEMBERID =%s)"
             cursor.execute(query, (key,))
-            name, surname, nickname, gender, membertype, email, password, city, interests, score, byear, teamid = cursor.fetchone()
-        return Professionalmember(name, surname, nickname, gender, email, password, byear, city, interests,award_G,award_B, award_S)
+            name, surname, username, gender, membertype, email, password, city, interests, score, byear,lastlogin, regtime, role, teamid = cursor.fetchone()
+        return Professionalmember(name, surname, username, gender, email, password, byear, city, interests,award_G,award_B, award_S,lastlogin, regtime, role)
 
     def get_professionalmembers(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "SELECT * FROM MEMBERS WHERE MEMBERTYPE=1 ORDER BY MEMBERID"
             cursor.execute(query)
-            professionalmembers = [(key, Professionalmember(name, surname, nickname, gender, email, password, byear, city, interests,0,0,0))
-                      for key, name, surname, nickname, gender, membertype, email, password, city, interests, score, byear,teamid in cursor]
+            professionalmembers = [(key, Professionalmember(name, surname, username, gender, email, password, byear, city, interests,0,0,0,lastlogin, regtime, role))
+                      for key, name, surname, username, gender, membertype, email, password, city, interests, score, byear,lastlogin, regtime, role,teamid in cursor]
         return professionalmembers
 
     def search_professionalmember(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR NICKNAME ILIKE %s) AND (MEMBERTYPE=1)"
+            query = "SELECT * FROM MEMBERS WHERE (NAME ILIKE %s OR USERNAME ILIKE %s) AND (MEMBERTYPE=1)"
             key = '%'+key+'%'
             cursor.execute(query, (key, key))
-            professionalmembers = [(key,  Professionalmember(name, surname, nickname, gender, email, password, byear, city, interests,0,0,0))
-                      for key, name, surname, nickname, gender, membertype,email, password, city, interests, score, byear,teamid in cursor]
+            professionalmembers = [(key,  Professionalmember(name, surname, username, gender, email, password, byear, city, interests,0,0,0,lastlogin, regtime, role))
+                      for key, name, surname, username, gender, membertype,email, password, city, interests, score, byear,lastlogin, regtime, role,teamid in cursor]
         return professionalmembers
 
-    def update_professionalmember(self, key, name, surname, nickname, gender, email, password, byear, city, interests,award_G,award_B, award_S):
+    def update_professionalmember(self, key, name, surname, username, gender, email, password, byear, city, interests,award_G,award_B, award_S,lastlogin, regtime, role):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE MEMBERS SET NAME = %s,SURNAME= %s, NICKNAME= %s,  GENDER= %s, EMAIL= %s, PASSWORD= %s, YEAR= %s, CITY= %s, INTERESTS= %s WHERE (MEMBERID = %s)"
-            cursor.execute(query, (name, surname, nickname, gender, email, password, byear, city, interests, key))
+            query = "UPDATE MEMBERS SET NAME = %s,SURNAME= %s, USERNAME= %s,  GENDER= %s, EMAIL= %s, PASSWORD= %s, YEAR= %s, CITY= %s, INTERESTS= %s, LASTLOGIN= %s  WHERE (MEMBERID = %s)"
+            cursor.execute(query, (name, surname, username, gender, email, password, byear, city, interests, lastlogin,key))
             connection.commit()
 
 #ACTIVITY
     def add_activity(self, activity):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "INSERT INTO ACTIVITY (TITLE, ACTIVITY_TYPE, FOUNDERID, TIME, PLACE, ACTIVITY_INFO) VALUES (%s, %s, %s, %s, %s, %s) RETURNING ACTIVITY.ID"
-            cursor.execute(query, (activity.title, activity.activity_type, int(activity.founder), activity.time, activity.place, activity.activity_info))
+            query = "INSERT INTO ACTIVITY (TITLE, ACTIVITY_TYPE, FOUNDERID, PARTICIPANT_COUNT, TIME, PLACE, ACTIVITY_INFO) VALUES (%s, %s, %s, %s, %s, %s, %s) RETURNING ACTIVITY.ID"
+            cursor.execute(query, (activity.title, activity.activity_type, int(activity.founder), activity.participant_count, activity.time, activity.place, activity.activity_info))
             connection.commit()
             self.activity_last_key = cursor.fetchone()[0]
 
@@ -632,25 +669,25 @@ class Store:
     def get_activity(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT TITLE, ACTIVITY_TYPE, FOUNDERID, TIME, PLACE, ACTIVITY_INFO FROM ACTIVITY WHERE (ID = %s)"
+            query = "SELECT TITLE, ACTIVITY_TYPE, FOUNDERID, PARTICIPANT_COUNT,  TIME, PLACE, ACTIVITY_INFO FROM ACTIVITY WHERE (ID = %s)"
             cursor.execute(query, (key,))
-            title, activity_type, founder, time, place, activity_info = cursor.fetchone()
-        return Activity(title, activity_type, founder, time, place, activity_info)
+            title, activity_type, founder, participant_count, time, place, activity_info = cursor.fetchone()
+        return Activity(title, activity_type, founder, participant_count, time, place, activity_info)
 
     def get_activities(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
             query = "SELECT * FROM ACTIVITY ORDER BY ID"
             cursor.execute(query)
-            activities = [(key, Activity(title, activity_type, founder, time, place, activity_info))
-                      for key, title, activity_type, founder, time, place, activity_info in cursor]
+            activities = [(key, Activity(title, activity_type, founder, participant_count, time, place, activity_info))
+                      for key, title, activity_type, founder, participant_count, time, place, activity_info in cursor]
         return activities
 
-    def update_activity(self, key, title, activity_type, founder, time, place, activity_info):
+    def update_activity(self, key, title, activity_type, time, place, activity_info):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "UPDATE ACTIVITY SET TITLE = %s, ACTIVITY_TYPE = %s, FOUNDERID = %s, TIME = %s, PLACE = %s, ACTIVITY_INFO = %s WHERE (ID = %s)"
-            cursor.execute(query, (title, activity_type, founder, time, place, activity_info, key))
+            query = "UPDATE ACTIVITY SET TITLE = %s, ACTIVITY_TYPE = %s, TIME = %s, PLACE = %s, ACTIVITY_INFO = %s WHERE (ID = %s)"
+            cursor.execute(query, (title, activity_type, time, place, activity_info, key))
             connection.commit()
 
     def search_activity(self, key):
@@ -659,12 +696,22 @@ class Store:
             query = "SELECT * FROM ACTIVITY WHERE (TITLE ILIKE %s OR ACTIVITY_TYPE ILIKE %s OR PLACE ILIKE %s OR ACTIVITY_INFO ILIKE %s)"
             key = '%'+key+'%'
             cursor.execute(query, (key, key, key, key))
-            activities = [(key, Activity( title, activity_type, founder, time, place, activity_info))
-                      for key,  title, activity_type, founder, time, place, activity_info in cursor]
+            activities = [(key, Activity( title, activity_type, founder, participant_count, time, place, activity_info))
+                      for key,  title, activity_type, founder, participant_count, time, place, activity_info in cursor]
         return activities
 
-    def check_admin(self, email):
-        if email == 'ersogan@itu.edu.tr' or email == 'sertbas@itu.edu.tr'  or email == 'tekpinar@itu.edu.tr'  or email == 'ozer@itu.edu.tr'  or email == 'sasmazel@itu.edu.tr' :
+
+
+    def check_admin(self, email,password):
+        if email == 'ersogan@itu.edu.tr' and password=='321321':
+            return 1
+        elif email == 'sertbasn@itu.edu.tr'  and password=='321321':
+            return 1
+        elif  email == 'tekpinar@itu.edu.tr'  and password=='321321':
+             return 1
+        elif email == 'ozer@itu.edu.tr'  and password=='321321' :
+             return 1
+        elif email == 'sasmazel@itu.edu.tr'  and password=='321321':
             return 1
         else:
             return 0
@@ -689,18 +736,36 @@ class Store:
                       for key,name, surname, username, gender, membertype, email, password, city, interests, score, byear,lastlogin, regtime, role,teamid in cursor]
         return professionalmembers
 
-    def get_numofmembers(self):
+    def get_numofbasicmembers(self):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "select count(memberid) from members"
+            query = "select count(memberid) from members where membertype=0"
             cursor.execute(query)
-            num = cursor.fetchone()
-        return num
+            numb = cursor.fetchone()
+        return numb
 
+    def get_numofprofessionalmembers(self):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "select count(memberid) from members where membertype=1"
+            cursor.execute(query)
+            nump = cursor.fetchone()
+        return nump
 
+    def get_numofadmins(self):
+        with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "select count(id) from admin"
+            cursor.execute(query)
+            numa = cursor.fetchone()
+        return numa
 
-
-
-
-
+    def get_myexperiences(self,name):
+          with dbapi2.connect(self.app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = "SELECT * FROM EXPERIENCE where (username=%s)"
+            cursor.execute(query,(name,))
+            experiences = [(key, Experience(title, username, start, finish, period, length))
+                      for key, title, username, start, finish, period, length,userid,date in cursor]
+            return experiences
 
