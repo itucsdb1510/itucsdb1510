@@ -89,12 +89,14 @@ def initialize_database():
                 ID SERIAL PRIMARY KEY,
                 NAME VARCHAR(80),
                 SCORE INTEGER,
-                FOUNDER VARCHAR(80),
+                FOUNDER INTEGER ,
+                MEMBER_COUNT INTEGER,
                 YEAR INTEGER,
                 TEAMTYPE VARCHAR(80),
                 LOCATION VARCHAR(80)
                 )"""
         cursor.execute(query)
+
 
         query = """CREATE TABLE IF NOT EXISTS BIKE (
                 ID SERIAL PRIMARY KEY,
@@ -104,28 +106,29 @@ def initialize_database():
                 SIZE VARCHAR(10),
                 YEAR VARCHAR(10),
                 PRICE FLOAT,
-                USERNAME VARCHAR(40) ,
+                USERNAME VARCHAR(40) unique ,
                 DATE DATE DEFAULT current_timestamp
                 )"""
         cursor.execute(query)
 
-        query = """ ALTER TABLE BIKE ADD COLUMN description text;"""
 
         query = """CREATE TABLE IF NOT EXISTS EXPERIENCE (
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
-                USERNAME VARCHAR(40) ,
+                USERNAME VARCHAR(40),
                 START VARCHAR(40),
                 FINISH VARCHAR(10),
                 PERIOD FLOAT,
                 LENGTH FLOAT,
+                USERID INTEGER,
                 DATE DATE DEFAULT current_timestamp
-                 )"""
+                )"""
         cursor.execute(query)
+
 
         query = """CREATE TABLE IF NOT EXISTS CYCROUTE (
                 ID SERIAL PRIMARY KEY,
-                TITLE VARCHAR(40),
+                TITLE VARCHAR(40) UNIQUE,
                 USERNAME VARCHAR(40),
                 START VARCHAR(40),
                 FINISH VARCHAR(10),
@@ -138,22 +141,43 @@ def initialize_database():
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
                 ACTIVITY_TYPE VARCHAR(40),
-                FOUNDERID INTEGER,
+                FOUNDERID INTEGER ,
+                PARTICIPANT_COUNT INTEGER,
                 TIME VARCHAR(40),
                 PLACE VARCHAR(40),
                 ACTIVITY_INFO VARCHAR(150)
                 )"""
         cursor.execute(query)
 
+
+        query = """CREATE TABLE IF NOT EXISTS ACTIVITY_MEMBERS (
+                ID SERIAL PRIMARY KEY,
+                MEMBERID INTEGER,
+                ACTIVITYID INTEGER
+                )"""
+        cursor.execute(query)
+
+
         query = """CREATE TABLE IF NOT EXISTS RACE (
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
                 RACE_TYPE VARCHAR(40),
                 FOUNDERID INTEGER,
+                PARTICIPANT_COUNT INTEGER,
                 TIME VARCHAR(40),
-                CYCROUTEID INTEGER
+                CYCROUTEID VARCHAR(40)
                 )"""
         cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS RACE_RESULTS (
+                ID SERIAL PRIMARY KEY,
+                MEMBERID INTEGER ,
+                RACEID INTEGER,
+                ORD INTEGER
+                )"""
+        cursor.execute(query)
+
+
 
         query = """CREATE TABLE IF NOT EXISTS ANNOUNCEMENT (
                 ID SERIAL PRIMARY KEY,
@@ -167,6 +191,14 @@ def initialize_database():
                 TITLE VARCHAR(40),
                 TYPEE VARCHAR(30)
                 )"""
+        cursor.execute(query)
+
+        query = """CREATE TABLE IF NOT EXISTS TOPIC (
+                ID SERIAL PRIMARY KEY,
+                TITLE VARCHAR(40),
+                TEXT VARCHAR(40),
+                CURTIME VARCHAR(20),
+                CATEGORYID INTEGER)"""
         cursor.execute(query)
 
 
@@ -223,10 +255,17 @@ def initialize_database():
         cursor.execute(query)
 
         cursor.execute("""CREATE TABLE IF NOT EXISTS TOPMEMBERS (ID SERIAL PRIMARY KEY,USERID INTEGER,COUNT INTEGER)""")
-        cursor.execute("""ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE""")
+        #cursor.execute("""ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE""")
         cursor.execute("""ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE""")
         cursor.execute("""ALTER TABLE CYCROUTE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE""")
-
+        cursor.execute("""ALTER TABLE TEAM ADD  FOREIGN KEY(FOUNDER) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE ACTIVITY ADD  FOREIGN KEY(FOUNDERID) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE ACTIVITY_MEMBERS ADD  FOREIGN KEY(MEMBERID) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE ACTIVITY_MEMBERS ADD  FOREIGN KEY(ACTIVITYID) REFERENCES ACTIVITY(ID) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE RACE ADD  FOREIGN KEY(FOUNDERID) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE RACE ADD  FOREIGN KEY(CYCROUTEID) REFERENCES CYCROUTE(TITLE) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE RACE_RESULTS ADD  FOREIGN KEY(MEMBERID) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE RACE_RESULTS ADD  FOREIGN KEY(RACEID) REFERENCES RACE(ID) ON DELETE CASCADE""")
 
     return redirect(url_for('guest_page'))
 
@@ -263,15 +302,11 @@ def guest_page():
     now = datetime.datetime.now();
     return render_template('guest.html', current_time=now.ctime())
 
+
 @app.route('/adminpanel')
 def adminpanel_page():
     now = datetime.datetime.now()
-    teams=app.store.get_top5team()
-    professionalmembers=app.store.get_top5member()
-    num=app.store.get_numofmembers()
-    return render_template('adminpanel.html',teams=teams,professionalmembers=professionalmembers,num=num, current_time=now.ctime())
-
-
+    return render_template('adminpanel.html', current_time=now.ctime())
 
 @app.route('/counter')
 def counter_page():
