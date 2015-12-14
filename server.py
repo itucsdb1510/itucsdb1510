@@ -77,6 +77,39 @@ def home():
 def initialize_database():
     with dbapi2.connect(app.config['dsn']) as connection:
         cursor = connection.cursor()
+        
+         query = """drop table team cascade"""
+        cursor.execute(query)
+        query = """drop table race cascade"""
+        cursor.execute(query)
+        query = """drop table activity cascade"""
+        cursor.execute(query)
+        query = """drop table race_results cascade"""
+        cursor.execute(query)
+        query = """drop table activity_members cascade"""
+        cursor.execute(query)
+        query = """drop table members cascade"""
+        cursor.execute(query)
+        query = """drop table admin cascade"""
+        cursor.execute(query)
+        query = """drop table admincheck cascade"""
+        cursor.execute(query)
+        query = """drop table announcement cascade"""
+        cursor.execute(query)
+        query = """drop table awards cascade"""
+        cursor.execute(query)
+        query = """drop table bike cascade"""
+        cursor.execute(query)
+        query = """drop table category cascade"""
+        cursor.execute(query)
+        query = """drop table counter cascade"""
+        cursor.execute(query)
+        query = """drop table experience cascade"""
+        cursor.execute(query)
+        query = """drop table cycroute cascade"""
+        cursor.execute(query)
+        query = """drop table topic cascade"""
+        cursor.execute(query)
 
         query = """CREATE TABLE IF NOT EXISTS COUNTER ( N INTEGER )"""
         cursor.execute(query)
