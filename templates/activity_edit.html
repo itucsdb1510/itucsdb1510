@@ -7,7 +7,6 @@
     {% set action = url_for('activity_page', key=key) if activity else url_for('activities_page') %}
     {% set title = activity.title if activity else '' %}
     {% set activity_type = activity.activity_type if activity else '' %}
-    {% set founder = activity.founder if activity else '' %}
     {% set time = activity.time if activity else '' %}
     {% set place = activity.place if activity else '' %}
     {% set activity_info = activity.activity_info if activity else '' %}
@@ -48,8 +47,6 @@
 				<option value="Workout">Workout</option>
 				<option value="Yoga">Yoga</option>
          	</select></p>
-         <p>Founder:
-           <input id="add_label" type="text" name="founder" value="{{ founder }}" required autofocus/></p>
           <p>Time:
            <input id="add_label" type="text" name="time" value="{{ time }}" /></p>
           <p>Place:

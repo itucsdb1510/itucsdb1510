@@ -4,7 +4,9 @@
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='team.css') }}" />
 <body>
-    <h2>{{ activity.title }} </h2>
+    <h2>{{ activity.title }}
+	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
+     </h2>
     <div id="invite" >
 	    <h4> Invite Atheletes to This Activity </h4>
 	    <form action="{{ url_for('login_page') }}">
@@ -12,9 +14,7 @@
 	    </form>
 	    <br/>
 	    <h4> Join to This Activity </h4>
-	    <form action="{{ url_for('login_page') }}">
-	    	<input id="join_button" type="submit" value="Join Activity">
-	    </form>
+	    <a href="{{ request.path + '/join' }}"> <input id="join_button" type="submit" value="Join Activity"> </a>
     </div>
     <table>
     <tr>
@@ -37,8 +37,36 @@
       </tr>
     </table>
      <br/>
-	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
     <br/>
+
+    <div class="nav-tab">
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home" >Participants</a></li>
+    <li><a data-toggle="tab" href="#menu1">Recent Activities</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h4>Members</h4>
+      <p>
+      {% for key, member in members %}
+         	{{member.nickname}}
+         	{{member.name}}
+         	{{member.surname}}
+         	{{member.score}}
+         	{{member.city}}
+    {% endfor %}
+    </p>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h4>Recent Activities</h4>
+      <p>There is no race result</p>
+    </div>
+  </div>
+</div>
+</div>
+
+
     <br/>
     <br/>
     <br/>

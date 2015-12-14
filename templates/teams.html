@@ -21,6 +21,7 @@
 	      <table id="teamTable" style = "width:45%" >
          <tr>
 		    <th id="empty_column"> </th>
+		    <th>Image</th>
 		    <th>Name</th>
 		    <th>Score</th>
 		    <th>Member Count</th>
@@ -31,6 +32,7 @@
 	        {% for key, team in teams %}
         <tr>
             <td> <input type="checkbox" name="teams_to_delete" value="{{ key }}" /></td>
+            <td> <img src="../static/image/teams/{{key}}.jpg" alt="team" style="width:30px;height:30px; margin-left:5%;">  </td>
             <td> <a href="{{ url_for('team_page', key=key) }}"> {{ team.title }} </a> </td>
 	        <td>{{ team.score }}</td>
 	        <td>{{ team.member_count }} {{'members'}}</td>

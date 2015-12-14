@@ -1,8 +1,12 @@
 {% extends "layout.html" %}
 {% block title %}Topic{% endblock %}
 {% block content %}
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='category.css') }}" />
+
+<body>
     <h2><strong>Topic</strong></h2>
-    <table>
+    <table  id="t01" style="align:left; left:5%">
      <tr>
         <th>Topic Name: </th>
         <td>{{ topic.title}}</td>
@@ -15,18 +19,24 @@
         <th>Time: </th>
         <td>{{ topic.time }}</td>
         </tr>
-	<tr>
-        <th>Topic Category: </th>
-        <td>{{ topic.categoryId }}</td>
-        </tr>
+
 
     </table>
+
+    <br>
+    <div id="comment_region">
+    <h5><b>Leave a comment.</b></h5>
+	<textarea id="comment" name="comment" placeholder="Enter your comment here" cols="50" rows="5" maxlength="250"></textarea>
+    <form action="{{ url_for('login_page') }}">
+    	<input id="comment_button" type="submit" value="Comment">
+    </form>
+	</div>
+
+
+
     <br><br>
     <form action="{{ request.path + '/edit' }}">
     	<input type="submit" value=" Edit">
     </form>
-
-    <form action="{{ url_for('login_page') }}">
-    	<input type="submit" value=" Add new topic">
-    </form>
+ </body>
 {% endblock %}

@@ -1,5 +1,5 @@
 class Race:
-    def __init__(self, title, race_type, founder, time, place):
+    def __init__(self, title, race_type, founder, participant_count, time, place):
         self.title = title
         self.race_type = race_type
         self.founder = founder

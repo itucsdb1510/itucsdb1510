@@ -7,7 +7,6 @@
     {% set action = url_for('race_page', key=key) if race else url_for('races_page') %}
     {% set title = race.title if race else '' %}
     {% set race_type = race.race_type if race else '' %}
-    {% set founder = race.founder if race else '' %}
     {% set time = race.time if race else '' %}
     {% set place = race.place if race else '' %}
 <body>
@@ -23,8 +22,6 @@
          		<option value="Bicycle Moto-Cross"> Bicycle Moto-Cross </option>
          		<option value="Cyclo-Cross"> Cyclo-Cross </option>
          	</select> </p>
-         <p>Founder:
-           <input id="add_label" type="text" name="founder" value="{{ founder }}" required autofocus/></p>
          <p>Time:
            <input id="add_label" type="text" name="time" value="{{ time }}" /></p>
          <p>Place:

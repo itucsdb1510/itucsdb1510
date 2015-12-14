@@ -1,9 +1,3 @@
- <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <link rel="stylesheet"
-
 body {
   background-image: url("../static/image/bcyy.jpg");
   background-repeat: no-repeat;
@@ -18,7 +12,9 @@ table{
     border: 1px solid white;
     width: 45%;
     background-color: #CCCCCC;
-    margin-left: 5%;
+}
+div#racetable{
+	margin-left: 5%;
 }
 th, td {
 	border: 1px solid #AAAAAA;
@@ -27,7 +23,6 @@ th, td {
 }
 #edit_button {
 	color: #444444;
-	margin-left: 5%;
 	height: 25px;
 	width: 80px;
 }
@@ -40,7 +35,7 @@ div#invite {
 	color: #444444;
 	position:absolute;
 	left: 70%;
-	top: 30%;
+	top: 20%;
 }
 #join_button, #invite_button {
 	color: #444444;
@@ -78,3 +73,11 @@ div#comment_region{
 	background-color: #669999;
 	height: 28px;
 }
+.nav-tab{
+	margin-left:5%;
+	margin-right:50%;
+	content-color: black;
+}
+.nav-tabs li a {
+     color: #2E2E2E;
+ }

@@ -37,6 +37,44 @@ block content %}
         </tr>
         {% endfor %}
 	</table>
+
+
+	<h2>Topics</h2>
+	<table id="t01">
+	  <tr>
+    		<th>Name</th>
+   			<th>Content</th>
+   			<th>Date</th>
+   			<th>Category</th>
+      </tr>
+      {% for key, topic in topics %}
+
+        <tr>
+          <td>
+            <a style="color:black;" href="#">
+              {{ topic.title }}
+            </a>
+          </td>
+          <td>
+          <a style="color:black;" href="#">
+               {{ topic.text }}
+            </a>
+          </td>
+          <td>
+               {{ topic.time }}
+          </td>
+             {% for key, category in categories %}
+             {% if topic.categoryId == key %}
+      			   <td>   {{ category.title}} </td>
+             {% endif %}
+
+             {% endfor %}
+        </tr>
+        {% endfor %}
+	</table>
+
+
+
 	<h2>Categories</h2>
 	<table id="t01">
 	  <tr>

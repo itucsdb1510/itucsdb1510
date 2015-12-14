@@ -72,6 +72,10 @@ def experiences_page():
             name = session['username']
             experience = Experience(title, name, start, finish,period,length)
             app.store.add_experience(experience)
+            with dbapi2.connect(app.config['dsn']) as connection:
+                cursor = connection.cursor()
+                cursor.execute("UPDATE  MEMBERS SET SCORE=SCORE+10 WHERE username='%s';"%name)
+                connection.commit()
 
             with dbapi2.connect(app.config['dsn']) as connection:
                 cursor = connection.cursor()

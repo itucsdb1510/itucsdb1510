@@ -21,7 +21,7 @@ def login_page():
         if(app.store.find_member(email,password)):
             with dbapi2.connect(app.config['dsn']) as connection:
                 cursor = connection.cursor()
-                query = "SELECT NAME, ROLE FROM MEMBERS WHERE email=%s UNION SELECT NAME, ROLE FROM ADMIN WHERE email=%s"
+                query = "SELECT USERNAME, ROLE FROM MEMBERS WHERE email=%s UNION SELECT NAME, ROLE FROM ADMIN WHERE email=%s"
                 cursor.execute(query,(email,email))
                 connection.commit()
            # role,lastlogin,name = cursor.fetchone()
@@ -29,13 +29,20 @@ def login_page():
                 g.role = role
           #g.lastlogin = lastlogin
                 session['username'] = name
-                if role == 'user':
-                    return redirect(url_for('home'))
+                perm=app.store.check_admin(email,password)
+                if perm==0:
+                    experiences=app.store.get_myexperiences(name)
+                    return render_template('home.html',experiences=experiences)
 
                 else:
+                   now = datetime.datetime.now()
                    teams=app.store.get_top5team()
-                   #return redirect(url_for('adminpanel_page'))
-                   return render_template('adminpanel.html', teams=teams, professionalmembers=professionalmembers)
+                   professionalmembers=app.store.get_top5member()
+                   numa=app.store.get_numofadmins()
+                   numb=app.store.get_numofbasicmembers()
+                   nump=app.store.get_numofprofessionalmembers()
+                   return render_template('adminpanel.html',teams=teams,professionalmembers=professionalmembers,numa=numa,numb=numb,nump=nump, current_time=now.ctime())
+
 
 
         else:
@@ -56,4 +63,4 @@ def profile(username):
 
 @app.route('/logout')
 def logout():
-    return redirect(url_for('home'))
+    return redirect(url_for('guest'))

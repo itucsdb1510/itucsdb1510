@@ -1,5 +1,5 @@
 class Activity:
-    def __init__(self, title, activity_type, founder, time, place, activity_info):
+    def __init__(self, title, activity_type, founder, participant_count, time, place, activity_info):
         self.title = title
         self.activity_type = activity_type
         self.founder = founder

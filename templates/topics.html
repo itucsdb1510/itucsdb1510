@@ -23,16 +23,25 @@
               {{ topic.title }}
             </a>
             </td>
+
             <td> {{ topic.text }}
           </td>
+
             <td>  {{ topic.time}}
           </td>
-          </td>
-            <td>  {{ topic.categoryId}}
+
+          {% for key, category in categories %}
+            {% if topic.categoryId == key %}
+      			   <td>   {{ category.title}} </td>
+            {% endif %}
+
+          {% endfor %}
           </td>
         </tr>
 
         {% endfor %}
+
+
       </table>
 
       <input type="submit" value="Delete" name="submit" />

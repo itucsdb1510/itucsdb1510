@@ -324,7 +324,8 @@ div#enter_section{
 <nk>
 
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" href="{{ url_for('message_page') }}"><font size="4" color="#800080"> Messages</font></a></li>
+  <li class="active"><a data-toggle="tab"><font size="4" color="#800080">Admin|Special</font></a></li>
+  						<li><a href="{{ url_for('message_page') }}"><font size="4" color="#800080"> Messages</font></a></li>
 						<li><a href="{{url_for('basicmembers_page')}}"><font size="4" color="#800080">List Basic Members</font></a></li>
 						<li><a href="{{url_for('professionalmembers_page')}}"><font size="4" color="#800080">List Professional Members</font></a></li>
 					    <li><a href="{{url_for('admin_edit_page')}}"> <font size="4" color="#800080">Add Admin</font></a></li>
@@ -342,8 +343,8 @@ div#enter_section{
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-thumbs-up icon-rounded"></i>
                     <div class="stats">
-                      <h5><strong>0</strong></h5>
-                      <span>Total Comments</span>
+                      <h5><strong>{{numb}}</strong></h5>
+                      <span>Number of Basic Members</span>
                     </div>
                 </div>
         	</div>
@@ -351,8 +352,8 @@ div#enter_section{
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-users user1 icon-rounded"></i>
                     <div class="stats">
-                      <h5><strong>{{num}}</strong></h5>
-                      <span>Number of Members</span>
+                      <h5><strong>{{nump}}</strong></h5>
+                      <span>Number of Professional Members</span>
                     </div>
                 </div>
         	</div>
@@ -360,20 +361,11 @@ div#enter_section{
         		<div class="r3_counter_box">
                     <i class="pull-left fa fa-comment user2 icon-rounded"></i>
                     <div class="stats">
-                      <h5><strong>0</strong></h5>
-                      <span>Total Messages</span>
+                      <h5><strong>{{numa}}</strong></h5>
+                      <span>Number of Admins</span>
                     </div>
                 </div>
         	</div>
-        	<div class="col-md-3 widget">
-        		<div class="r3_counter_box">
-                    <i class="pull-left fa fa-dollar dollar1 icon-rounded"></i>
-                    <div class="stats">
-                      <h5><strong>0</strong></h5>
-                      <span>Sales</span>
-                    </div>
-                </div>
-        	 </div>
         	<div class="clearfix"> </div>
 
 </nk>
@@ -410,6 +402,7 @@ div#enter_section{
 		        {% for key, professionalmember in professionalmembers %}
         <tr>
             <td> <a href="{{ url_for('professionalmember_page', key=key) }}"> {{ professionalmember.username }} </a> </td>
+            <td>{{ professionalmember.username }} </td>
 	        <td>{{ professionalmember.score }}</td>
 	        <td>{{ professionalmember.city}}</td>
 
@@ -453,17 +446,20 @@ div#enter_section{
 		             <th>Team Name</th>
 		          <th>Team Score</th>
 		          <th>Founder</th>
-		             <th>Location</th>
+		             <th>Year</th>
+		            <th>Location</th>
 		        </tr>
 		      </thead>
 		      <tbody>
 		        <tr class="active">
 		        {% for key, team in teams %}
         <tr>
-            <td> <a href="{{ url_for('team_page', key=key) }}"> {{ team.title }} </a> </td>
+           <td> <a href="{{ url_for('team_page', key=key) }}"> {{ team.title }} </a> </td>
+            <td>{{ team.title }} </td>
 	        <td>{{ team.score }}</td>
 	        <td>{{ team.founder}}</td>
-	        <td>{{ team.location }}</td>
+	        <td>{{ team.year }}</td>
+	          <td>{{ team.location }}</td>
         </tr>
         {% endfor %}
 

@@ -4,7 +4,6 @@
 <link rel="stylesheet"
 	href="{{ url_for('static', filename='team.css') }}" />
    <body>
-    <h2>{{ team.title }}</h2>
     <div id="invite" >
 	    <h4> Invite Atheletes to This Team </h4>
 	    <form action="{{ url_for('login_page') }}">
@@ -12,24 +11,26 @@
 	    </form>
 	    <br/>
 	    <h4> Join to This Team </h4>
-
 	    	<a href="{{ request.path + '/join' }}"> <input id="join_button" type="submit" value="Join Team"> </a>
-
     </div>
+    <h2>{{ team.title }}
+	  <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
+
+    </h2>
     <table>
 	 <tr>
+	 	<th>Image </th>
 	    <th>Score</th>
 	    <th>Founder</th>
-	    <th>Members</th>
 	    <th>Total Number of Members</th>
 	    <th>Year</th>
 	    <th>Team Type</th>
 	    <th>Location</th>
 	 </tr>
      <tr>
+     <td> <img src="../static/image/teams/{{key}}.jpg" alt="team" style="width:30px;height:30px; margin-left:5%;"> </td>
         <td>{{ team.score }}</td>
         <td>{{ team.founder }}</td>
-        <td>{{ team.members }}</td>
         <td>{{ team.member_count }}</td>
         <td>{{ team.year }}</td>
         <td>{{ team.team_type }}</td>
@@ -37,7 +38,35 @@
       </tr>
     </table>
 	<br/>
-	 <a href="{{ request.path + '/edit' }}"> <input id="edit_button" type="submit" value="Edit"> </a>
+    <br/>
+	<br/>
+
+<div class="nav-tab">
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home" >Members</a></li>
+    <li><a data-toggle="tab" href="#menu1">Recent Activities</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h4>Members</h4>
+       <p>
+      {% for key, member in members %}
+         	<a href="{{ url_for('basicmember_page', key=key) }}">  {{member.nickname}} </a>
+         	{{member.name}}
+         	{{member.surname}}
+         	{{member.score}}
+         	{{member.city}}
+    {% endfor %}
+    </p>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h4>Recent Activities</h4>
+      <p>There is no recent activity</p>
+    </div>
+  </div>
+</div>
+</div>
     <br/>
     <br/>
     <br/>

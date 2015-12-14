@@ -7,6 +7,7 @@ from flask import url_for
 
 from config import app
 from category import Category
+from topic import Topic
 
 @app.route('/categories', methods=['GET', 'POST', 'SEARCH'])
 def categories_page():
@@ -21,7 +22,7 @@ def categories_page():
             for key in keys:
                 app.store.delete_category(int(key))
             return redirect(url_for('categories_page'))
-        elif  request.form['submit'] == 'Search' :
+        elif  request.form['submit'] == 'search' :
             keyword=request.form['search']
             categories = app.store.search_category(keyword)
             now = datetime.datetime.now()
@@ -39,9 +40,10 @@ def categories_page():
 @app.route('/category/<int:key>', methods=['GET', 'POST'])
 def category_page(key):
     if request.method == 'GET':
+        topics = app.store.get_topics()
         category = app.store.get_category(key)
         now = datetime.datetime.now()
-        return render_template('category.html', category=category,
+        return render_template('category.html', category=category,topics=topics,
                                current_time=now.ctime())
     else:
        title=request.form["title"]

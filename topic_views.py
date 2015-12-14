@@ -13,8 +13,9 @@ from topic import Topic
 def topics_page():
     if request.method == 'GET':
         topics = app.store.get_topics()
+        categories = app.store.get_categories()
         now = datetime.datetime.now()
-        return render_template('topics.html', topics=topics,
+        return render_template('topics.html', topics=topics,categories=categories,
                                current_time=now.ctime())
     elif 'topics_to_delete' in request.form  or 'search' in request.form:
         if request.form['submit'] == 'Delete':
@@ -31,7 +32,8 @@ def topics_page():
     else:
         title = request.form['title']
         text= request.form['text']
-        time=datetime.datetime.now()
+        time=str((datetime.datetime.now()));
+        time=time[:-7]
         category_id = request.form.get('categoryId')
         #time=request.form['time']
         topic = Topic(title, text, time, category_id)
@@ -44,6 +46,7 @@ def topics_page():
 def topic_page(key):
     if request.method == 'GET':
         topic = app.store.get_topic(key)
+        #category = app.store.get_category(topic.categoryId)
         now = datetime.datetime.now()
         return render_template('topic.html', topic=topic,
                                current_time=now.ctime())
@@ -52,7 +55,8 @@ def topic_page(key):
         text = request.form['text']
         category_id = request.form['categoryId']
         #time=request.form['time']
-        time=datetime.datetime.now()
+        time=str((datetime.datetime.now()));
+        time=time[:-7]
         app.store.update_topic(key, title,text,time,category_id)
         return redirect(url_for('topic_page', key=key))
 

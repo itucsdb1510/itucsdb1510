@@ -58,4 +58,43 @@
   </a>
 </div>
 
+<link rel="stylesheet"
+	href="{{ url_for('static', filename='team.css') }}" />
+
+< <body>
+	{% for experience in experiences %}
+    <h2>{{ experiences.title }}</h2>
+    {% endfor %}
+
+           <table class="table">
+		      <thead>
+		        <tr>
+		            <th>Username: </th>
+			         <th>Start: </th>
+			         <th>Finish: </th>
+			         <th>Period: </th>
+			         <th>Length: </th>
+
+		        </tr>
+		      </thead>
+		      <tbody>
+		        <tr class="active">
+		        {% for experience in experiences %}
+        <tr>
+               <td>{{ experiences.username }}</td>
+		        <td>{{ experiences.start }}</td>
+		        <td>{{ experiences.finish }}</td>
+		 		<td>{{ experiences.period}}</td>
+			    <td>{{ experiences.length}}</td>
+
+        </tr>
+        		{% endfor %}
+
+		      </tbody>
+		    </table>
+
+
+</center>
+
+
 {% endblock %}

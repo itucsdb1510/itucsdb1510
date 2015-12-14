@@ -37,7 +37,7 @@ def admins_page():
 
         now = str((datetime.datetime.now()));
         now = now[:-7]
-        if (app.store.check_admin(email)):
+        if (app.store.check_admin(email,password)):
             role = 'admin'
         else:
             role = 'user'
