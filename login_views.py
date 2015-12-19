@@ -21,7 +21,7 @@ def login_page():
         if(app.store.find_member(email,password)):
             with dbapi2.connect(app.config['dsn']) as connection:
                 cursor = connection.cursor()
-                query = "SELECT USERNAME, ROLE FROM MEMBERS WHERE email=%s UNION SELECT NAME, ROLE FROM ADMIN WHERE email=%s"
+                query = "SELECT USERNAME, ROLE FROM MEMBERS WHERE email=%s UNION SELECT USERNAME, ROLE FROM ADMIN WHERE email=%s"
                 cursor.execute(query,(email,email))
                 connection.commit()
            # role,lastlogin,name = cursor.fetchone()
