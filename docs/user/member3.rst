@@ -134,6 +134,7 @@ Activity Operations:
 
 .. figure:: member3/addactivity.png
    :align: center
+--
 
   * List Activity
 
@@ -141,6 +142,7 @@ Activity Operations:
 
 .. figure:: member3/listactivity.png
    :align: center
+--
 
   * Update Activity
 
@@ -148,6 +150,7 @@ Activity Operations:
 
 .. figure:: member3/editactivity.png
    :align: center
+--
 
   * Delete Activity
 
@@ -155,6 +158,7 @@ Activity Operations:
 
 .. figure:: member3/deleteactivity.png
    :align: center
+--
 
   * Search Activity
 
@@ -162,6 +166,7 @@ Activity Operations:
 
 .. figure:: member3/searchactivity.png
    :align: center
+--
 
   * Join Activity
 
@@ -169,3 +174,4 @@ Activity Operations:
 
 .. figure:: member3/joinactivity.png
    :align: center
+--
