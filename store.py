@@ -722,8 +722,8 @@ class Store:
              cursor = connection.cursor()
              query = "select * from team order by score desc limit 5"
              cursor.execute(query)
-             teams = [(key, Team(name, score, founder, year, team_type, location))
-                      for key, name, score, founder, year, team_type, location in cursor]
+             teams = [(key, Team(name, score, founder, member_count, year, team_type, location))
+                      for key, name, score, founder, member_count, year, team_type, location in cursor]
         return teams
 
 
