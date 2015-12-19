@@ -78,7 +78,7 @@ def initialize_database():
     with dbapi2.connect(app.config['dsn']) as connection:
         cursor = connection.cursor()
         
-         query = """drop table team cascade"""
+        query = """drop table team cascade"""
         cursor.execute(query)
         query = """drop table race cascade"""
         cursor.execute(query)
