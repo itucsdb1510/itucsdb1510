@@ -570,8 +570,8 @@ class Store:
     def find_member(self, key1, key2):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
-            query = "SELECT NAME FROM MEMBERS UNION SELECT NAME FROM ADMIN WHERE ((email=%s)and (password=%s))"
-            cursor.execute(query, (key1, key2))
+            query = "SELECT NAME FROM MEMBERS WHERE ((email=%s)and (password=%s)) UNION SELECT NAME FROM ADMIN WHERE ((email=%s)and (password=%s))"
+            cursor.execute(query, (key1, key2,key1, key2))
             if cursor.fetchone() is None:
                     return 0
             else:
