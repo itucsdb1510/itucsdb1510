@@ -7,38 +7,36 @@ TABLES
 Team Table
 ----------
    ID attribute holds the primary key of the team table.
-   FOUNDER attribute references to the ID attribute in the MEMBERS table.
+   | FOUNDER attribute references to the ID attribute in the MEMBERS table.
 
    CREATE TABLE TEAM (
-      ID SERIAL PRIMARY KEY,
--
-      NAME VARCHAR(80),
--
-      SCORE INTEGER,
-      FOUNDER INTEGER ,
-      MEMBER_COUNT INTEGER,
-      YEAR INTEGER,
-      TEAMTYPE VARCHAR(80),
-      LOCATION VARCHAR(80)
-      )
+      | ID SERIAL PRIMARY KEY,
+      | NAME VARCHAR(80),
+      | SCORE INTEGER,
+      | FOUNDER INTEGER ,
+      | MEMBER_COUNT INTEGER,
+      | YEAR INTEGER,
+      | TEAMTYPE VARCHAR(80),
+      | LOCATION VARCHAR(80)
+      | )
 
-   ALTER TABLE TEAM ADD  FOREIGN KEY(FOUNDER) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE
+   |ALTER TABLE TEAM ADD  FOREIGN KEY(FOUNDER) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE
 
 Race Table
 ----------
 
    ID attribute holds the primary key of the race table.
-   FOUNDERID attribute references to the ID attribute in the MEMBERS table.
-   CYCROUTEID attribute references to the TITLE attribute in the CYCROUTE table.
+   | FOUNDERID attribute references to the ID attribute in the MEMBERS table.
+   | CYCROUTEID attribute references to the TITLE attribute in the CYCROUTE table.
 
    CREATE TABLE RACE (
-       ID SERIAL PRIMARY KEY,
-       TITLE VARCHAR(40),
-       RACE_TYPE VARCHAR(40),
-       FOUNDERID INTEGER,
-       PARTICIPANT_COUNT INTEGER,
-       TIME VARCHAR(40),
-       CYCROUTEID VARCHAR(40)
+       | ID SERIAL PRIMARY KEY,
+       | TITLE VARCHAR(40),
+       | RACE_TYPE VARCHAR(40),
+       | FOUNDERID INTEGER,
+       | PARTICIPANT_COUNT INTEGER,
+       | TIME VARCHAR(40),
+       | CYCROUTEID VARCHAR(40)
        )
 
    ALTER TABLE RACE ADD  FOREIGN KEY(FOUNDERID) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE
