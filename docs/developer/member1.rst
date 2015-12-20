@@ -8,10 +8,10 @@ Tables
   only if a user trigger to "/intdb".
 
 
-**CycRoute Table** 
+CycRoute Table ::
 -------------------
 
-::
+                  
   CREATE TABLE IF NOT EXISTS CYCROUTE (
                  ID SERIAL PRIMARY KEY,
                  TITLE VARCHAR(40) UNIQUE,
@@ -24,9 +24,9 @@ Tables
 
    ALTER TABLE CYCROUTE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
 
-Bike Table
+Bike Table ::
 -----------
-::
+
   CREATE TABLE IF NOT EXISTS BIKE (
                 ID SERIAL PRIMARY KEY,
                 MODEL VARCHAR(40),
@@ -41,9 +41,9 @@ Bike Table
                 
   ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE 
 
-Experience Table
+Experience Table ::
 ----------------
-::
+
   CREATE TABLE IF NOT EXISTS EXPERIENCE (
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
@@ -72,12 +72,12 @@ Software Design
 
  
 
-  cycroute_view.py
+  cycroute_view.py ::
   ----------------
-  ::
+ 
     @app.route('/cycroutes', methods=['GET', 'POST']) 
     def cycroutes_page(): 
- - If the method is GET to access the page defined by html files this function returns the 'cycroutes .html' with cycroutes and list     all routes in the page::
+ - If the method is GET to access the page defined by html files this function returns the 'cycroutes .html' with cycroutes and list     all routes in the page ::
             if request.method == 'GET': 
             cycroutes = app.store.get_cycroutes() 
             now = datetime.datetime.now() 
@@ -86,7 +86,7 @@ Software Design
                                    
  - If the method is POST in related page 
    and if delete button is clicked, the marked checkboxes are taken from 'cycroutes.html' and delete operation are called,
-   if search button is clicked, the keyword in search line is taken and list of related routes are returned the same page::
+   if search button is clicked, the keyword in search line is taken and list of related routes are returned the same page ::
       elif 'cycroutes_to_delete' in request.form or 'search' in request.form:
             if request.form['submit'] == 'Delete':
                 keys = request.form.getlist('cycroutes_to_delete')
