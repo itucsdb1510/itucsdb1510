@@ -108,7 +108,7 @@ SOFTWARE DESIGN
 - Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view. ::
   
   @app.route('/admins', methods=['GET', 'POST'])
-  def admins_page(): 
+  def admins_page() 
     
 - If the method is GET to access the page defined by html files this function returns the 'admins .html' with admins and lists all admins in the page ::
  
@@ -191,7 +191,7 @@ SOFTWARE DESIGN
     @app.route('/admin/<int:key>/edit')
     def admin_edit_page(key=None)
  
- - If the 'Add Admin' button in adminpanel is clicked, admin_edit.html is returned with blank form or if edit button in                  admin.html are clicked, the edit_admin.html with attributes of related object is returned::
+- If the 'Add Admin' button in adminpanel is clicked, admin_edit.html is returned with blank form or if edit button in                  admin.html are clicked, the edit_admin.html with attributes of related object is returned::
  
     admin = app.store.get_admin(key) if key is not None else None
     now = datetime.datetime.now()
@@ -250,8 +250,8 @@ Admin Functions
 Basic Member Functions
 ------------------------
 
-  | Basic member database operations has the same concept with admins' functions which are stated above.
-  | Note that in each operation it just fills/retrieves the basic member related columns.
+| Basic member database operations has the same concept with admins' functions which are stated above.
+| Note that in each operation it just fills/retrieves the basic member related columns.
 
 Professional Member Functions
 -------------------------------
@@ -259,41 +259,44 @@ Professional Member Functions
 * Add Professional Member:
 
   | One of the main difference between basic and professional member is joining a team.
-  | In below query random team id is generated:
+  | In below query random team id is generated::
+  
   | "SELECT id FROM team ORDER BY RANDOM()LIMIT 1"
-  | Then, new row to members table with information in professional member type object and generated team id is
+  
+Then, new row to members table with information in professional member type object and generated team id is::
+
   | "INSERT INTO MEMBERS (NAME, SURNAME, USERNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE,LASTLOGIN, REGTIME, ROLE ,TEAMID )
   | VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s,%s,%s) RETURNING MEMBERS.MEMBERID"
-  | It inserts a new row into table for a professional member.
+  
+It inserts a new row into table for a professional member.
 
 
 * Delete Professional Member:
 
-  | It is similar to other delete operations.
+| It is similar to other delete operations.
 
 
 * Get Professional Member:
 
-  | First it retrieves the numbers of awards in each group for the user
-  | then it gets the personal information from the members table
-  | as a result it combines these into html form to show.
-  | Following queries should be executed:
+| First it retrieves the numbers of awards in each group for the user then it gets the personal information from the members table
+as a result it combines these into html form to show.
+| Following queries should be executed::
 
   | "SELECT sum(numofGOLD),sum(numofBRONZE), sum(numofSILVER) FROM MEMBERS, AWARDS WHERE( (members.memberid=awards.memberid) and members.memberid=%s )"
   | "SELECT NAME, SURNAME, USERNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, LASTLOGIN, REGTIME, ROLE, TEAMID FROM MEMBERS WHERE (MEMBERID =%s)"
 
 * Get Professional Members:
 
-  | It is similar to other gets operations.
+| It is similar to other gets operations.
 
 * Search Professional Member:
 
-  | It is similar to other search operations.
+| It is similar to other search operations.
 
 * Update Professional Member:
 
-  | It is similar to other update operations.
-  | Note  that there is no award update because it is only done at the end of team races and en the end of the week by experiences of the users.
+| It is similar to other update operations.
+| Note  that there is no award update because it is only done at the end of team races and en the end of the week by experiences of the users.
 
 
 ADDITIONAL FUNCTIONS
@@ -301,55 +304,64 @@ ADDITIONAL FUNCTIONS
 
 * Find Member:
 
-  | It takes an email and password as a key which are entered at login page by the user.
-  | Then it executes the below query to check existencty of the user in database:
+| It takes an email and password as a key which are entered at login page by the user.
+| Then it executes the below query to check existencty of the user in database::
+  
   | SELECT NAME FROM MEMBERS WHERE ((email=%s)and (password=%s)) UNION SELECT NAME FROM ADMIN WHERE ((email=%s)and (password=%s))"
-  | It gets one row from the database which has matched email and password.
-  | Note that above query searches on both members and admin tables.
-  | If there exists any record with related email and password it returns 1 else it returns 0. Returning 0 means record has not found.
+
+| It gets one row from the database which has matched email and password.
+| Note that above query searches on both members and admin tables.
+| If there exists any record with related email and password it returns 1 else it returns 0. Returning 0 means record has not found.
 
 * Check Admin:
 
-  | It gets an email and password.
-  | Actually it is not an database operation it just returns whether the record is available for becoming an admin or not.
-  | If the user may be an admin it will return 1 else it will return 0.
+| It gets an email and password.
+| Actually it is not an database operation it just returns whether the record is available for becoming an admin or not.
+| If the user may be an admin it will return 1 else it will return 0.
 
 * Get Top 5 Team:
 
-  | It select 5 teams from the team table which have the higher scores.
-  | For this purpose, it executes below query:
+| It select 5 teams from the team table which have the higher scores.
+| For this purpose, it executes below query::
+  
   | "select * from team order by score desc limit 5"
-  | It returns with 5 object from the team class.
-  | Note that it is not guaranteed that all of them is different from none.
+  
+| It returns with 5 object from the team class.
+| Note that it is not guaranteed that all of them is different from none.
 
 * Get Top 5 Member:
 
-  | It select 5 members from the members table which have the higher scores.
-  | For this purpose, it executes below query:
+| It select 5 members from the members table which have the higher scores.
+| For this purpose, it executes below query::
+
   | "select * from members where membertype=1 order by score desc limit 5"
-  | It returns with 5 object from the member class.
-  | Note that it is not guaranteed that all of them is different from none.
+  
+| It returns with 5 object from the member class.
+| Note that it is not guaranteed that all of them is different from none.
 
 
 * Get Num of Basic/Professional Members:
 
-  | In database professional and basic members are hold in the same table which is named as 'members'.
-  | They can be differ by 'membertype' column which is 0 for basic members and 1 for professional members.
-  | So that,
+| In database professional and basic members are hold in the same table which is named as 'members'.
+| They can be differ by 'membertype' column which is 0 for basic members and 1 for professional members.
+| So that,
 
-      | for basic members >> "select count(memberid) from members where membertype=0"
-      | for professional members >> "select count(memberid) from members where membertype=1"
+    | for basic members >> "select count(memberid) from members where membertype=0"
+    | for professional members >> "select count(memberid) from members where membertype=1"
 
 * Get Num of Admins:
  
-  | By the help of below query we can obtain the number of admins in the database:
+| By the help of below query we can obtain the number of admins in the database::
+
   | "select count(id) from admin"
 
 * Get My Experiences:
 
-  | It gets the name of the member to list his/her experiences in his/her home page.
-  | For this purpose it executes the following query:
+| It gets the name of the member to list his/her experiences in his/her home page.
+| For this purpose it executes the following query::
+
   | "SELECT * FROM EXPERIENCE where (username=%s)"
-  | Note that it can return with multiple rows or none.
+  
+| Note that it can return with multiple rows or none.
 
 ----------------------------------------------------------------------------------------------------
