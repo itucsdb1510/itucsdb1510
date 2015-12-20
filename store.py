@@ -174,6 +174,8 @@ class Store:
     def delete_category(self, key):
         with dbapi2.connect(self.app.config['dsn']) as connection:
             cursor = connection.cursor()
+            query= "DELETE FROM TOPIC WHERE (TOPIC.CATEGORYID = %s)"
+            cursor.execute(query,(key,))
             query = "DELETE FROM CATEGORY WHERE (ID = %s)"
             cursor.execute(query, (key,))
             connection.commit()
