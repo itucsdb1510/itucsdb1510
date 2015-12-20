@@ -206,44 +206,59 @@ Admin Functions
 
 * Add Admin:
 
-  | It takes the object from admin class by html form.
-  | Then it executes the below query to add admin to the database:
+| It takes the object from admin class by html form.
+| Then it executes the below query to add admin to the database:
   | "INSERT INTO ADMIN (NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR, ROLE) VALUES (%s, %s, %s, %s, %s, %s,%s) RETURNING ADMIN.ID"
-  | It adds the record to the table and returns with the id of the current record.
+| It adds the record to the table and returns with the id of the current record.
+
 
 * Delete Admin:
 
-  | It takes the key, index, of the related admin by the form.
-  | Then it executes the below query to delete admin to the database:
+| It takes the key, index, of the related admin by the form.
+| Then it executes the below query to delete admin to the database::
+
   | "DELETE FROM ADMIN WHERE (ID = %s)"
-  | It deletes the record which is selected by its index in html.
+  
+| It deletes the record which is selected by its index in html.
+
 
 * Get Admin:
 
-  | It takes the key, index, of the related admin by the form.
-  | Then it executes the below query to get admin to the database:
+| It takes the key, index, of the related admin by the form.
+| Then it executes the below query to get admin to the database::
+
   | "SELECT NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR FROM ADMIN WHERE (ID = %s)"
-  | It gets one row from the database whose id is key.
+  
+| It gets one row from the database whose id is key.
+
 
 * Get Admins:
 
-  | It executes the below query to get admins in each row in table.
+| It executes the below query to get admins in each row in table::
+
   | "SELECT * FROM ADMIN ORDER BY ID"
-  | It gets one row from the database in each iteration. It continues until covering all rows.
+
+| It gets one row from the database in each iteration. It continues until covering all rows.
+
 
 * Update Admin:
 
-  | It takes the key, index, of the related admin and new object from admin class with updated information.
-  | Then it executes the below query to update the existing admin in the database:
+| It takes the key, index, of the related admin and new object from admin class with updated information.
+| Then it executes the below query to update the existing admin in the database::
+
   | "UPDATE ADMIN SET NAME=%s, SURNAME=%s, USERNAME=%s, EMAIL=%s, PASSWORD=%s, YEAR=%s, ROLE=%s  WHERE (ID = %s)"
-  | It updates the related row in the database whose id is key.
+  
+| It updates the related row in the database whose id is key.
+
 
 * Search Admin:
 
-  | It takes the name or username of the admin to search his/her in database.
-  | Then it executes the below query to search an admin with name/username from database.
+| It takes the name or username of the admin to search his/her in database.
+| Then it executes the below query to search an admin with name/username from database::
+
   | "SELECT * FROM ADMIN WHERE (NAME ILIKE %s OR USERNAME ILIKE%s ) ORDER BY ID"
-  | It returns an admin object whose fields are filled with the result of the database query.
+  
+| It returns an admin object whose fields are filled with the result of the database query.
 
 
 
