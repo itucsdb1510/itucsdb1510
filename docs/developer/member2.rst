@@ -156,15 +156,11 @@ SOFTWARE DESIGN
         admin = Admin(name, surname, username, email,password, year,role)
         app.store.add_admin(admin)
         return redirect(url_for('admin_page', key=app.store.admin_last_key))
-  |
-  |
-  |
   
- 
+  Then ::
   
-  ::
       @app.route('/admin/<int:key>', methods=['GET', 'POST'])
-      def admin_page(key):
+      def admin_page(key)
    
 - If the username of the admin is clicked in '/admins' path,  related admin class object is returned::
   
@@ -189,10 +185,11 @@ SOFTWARE DESIGN
  
             
             
-  ::
+  Then::
+  
     @app.route('/admins/add')
     @app.route('/admin/<int:key>/edit')
-    def admin_edit_page(key=None):
+    def admin_edit_page(key=None)
  
  - If the 'Add Admin' button in adminpanel is clicked, admin_edit.html is returned with blank form or if edit button in                  admin.html are clicked, the edit_admin.html with attributes of related object is returned::
  
