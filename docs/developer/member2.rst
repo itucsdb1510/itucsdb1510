@@ -31,8 +31,8 @@ Admin Table
 Member Table
 ------------
 
-   Both professional and basic members have the following attributes.|
-   Here role attribute is again used for assisting the redirections according to being user or admin.|
+   Both professional and basic members have the following attributes.
+   Here role attribute is again used for assisting the redirections according to being user or admin.
    In basic member
             |TEAMID column is inserted as NULL
             |MEMBERTYPE column is inserted as 0 for repersenting it is basic member
