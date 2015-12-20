@@ -104,12 +104,13 @@ SOFTWARE DESIGN
   
 * admin_view.py :
   
-  - Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view.
+  - Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view.::
   
     @app.route('/admins', methods=['GET', 'POST'])
     def admins_page(): 
     
  - If the method is GET to access the page defined by html files this function returns the 'admins .html' with admins and lists all admins in the page ::
+ 
       if request.method == 'GET':
         admins = app.store.get_admins()
         now = datetime.datetime.now()
@@ -117,6 +118,7 @@ SOFTWARE DESIGN
                                current_time=now.ctime())
                                    
  - If the method is POST in related page and if delete button is clicked, the marked checkboxes are taken from the admins list in 'admins.html' and delete operation is performed::
+ 
       elif  'admins_to_delete' in request.form or 'search' in request.form:
         if request.form['submit'] == 'Delete':
             keys = request.form.getlist('admins_to_delete')
@@ -125,6 +127,7 @@ SOFTWARE DESIGN
             return redirect(url_for('admins_page'))
             
   - If search button is clicked, the keyword in search line is taken and list of related results are returned to the same page ::
+  
         elif  request.form['submit'] == 'search' :
             keyword=request.form['search']
             admins = app.store.search_admin(keyword)
@@ -133,6 +136,7 @@ SOFTWARE DESIGN
                                current_time=now.ctime())  
             
   - If submit button is clicked new row is added to table. Attributes of this row are taken from the form in 'admin_edit.html'::
+  
     else:
         name = request.form['name']
         surname = request.form['surname']
@@ -158,10 +162,11 @@ SOFTWARE DESIGN
  
   
   :: @app.route('/admin/<int:key>', methods=['GET', 'POST'])
-    def admin_page(key):
+     def admin_page(key):
    
   - If the username of the admin is clicked in '/admins' path,  related admin class object is returned::
-       if request.method == 'GET':
+  
+      if request.method == 'GET':
         admin = app.store.get_admin(key)
         now = datetime.datetime.now()
         return render_template('admin.html', admin=admin,
@@ -169,7 +174,7 @@ SOFTWARE DESIGN
                                
   - If the edit button is clicked in the admin.html, the attributes of form in admin_edit html is taken and admin_page is returned      with updated attributes::
   
-       else:
+      else:
         name = request.form['name']
         surname = request.form['surname']
         username = request.form['username']
@@ -180,15 +185,15 @@ SOFTWARE DESIGN
         app.store.update_admin(key,name, surname, username, email,password, year,role)
         return redirect(url_for('admin_page', key=key))
   |
-  |
-  |        
+       
             
             
+  ::
   @app.route('/admins/add')
   @app.route('/admin/<int:key>/edit')
   def admin_edit_page(key=None):
  
- - If the 'Add Admin' button in adminpanel is clicked, admin_edit.html is returned with blank form or if edit button in                  admin.html are clicked, the edit_admin.html with attributes of related object is returned.
+ - If the 'Add Admin' button in adminpanel is clicked, admin_edit.html is returned with blank form or if edit button in                  admin.html are clicked, the edit_admin.html with attributes of related object is returned::
  
     admin = app.store.get_admin(key) if key is not None else None
     now = datetime.datetime.now()
