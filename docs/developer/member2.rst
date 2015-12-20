@@ -1,35 +1,44 @@
 Parts Implemented by Nurefşan Sertbaş
 =====================================
 
-* Admin, basic user and professional user classes are implemented by this developer.
+TABLES
+======
+
+- In our code all create table queries creatse a table if not exists. Also, they are triggered by /initdb.
+- Admin, basic user and professional user classes are implemented by this developer.
   There exists two main tables in database for this purpose and also 2 helper tables.
 
-
-* TABLES *
-----------
 
 Admin Table
 -----------
 
    Admin has the following attributes.
-   Here role is used for assisting the redirections according to being user or admin.
-
+   Here role attribute is used for assisting the redirections according to being user or admin.
+   There exists no any foreign key to any table.
 
   CREATE TABLE IF NOT EXISTS ADMIN (
              |   ID SERIAL PRIMARY KEY,
              |   NAME VARCHAR(30) NOT NULL,
              |   SURNAME VARCHAR(30),
-             |   USERNAME VARCHAR(30) ,
+             |   USERNAME VARCHAR(30) UNIQUE NOT NULL,
              |   EMAIL VARCHAR(30) NOT NULL,
              |   PASSWORD VARCHAR(6) NOT NULL,
              |   ROLE VARCHAR(20),
              |   YEAR NUMERIC(4)
              |   )
 
+
 Member Table
 ------------
 
-
+   Both professional and basic members have the following attributes.|
+   Here role attribute is again used for assisting the redirections according to being user or admin.|
+   In basic member
+            |TEAMID column is inserted as NULL
+            |MEMBERTYPE column is inserted as 0 for repersenting it is basic member
+    In professional member
+            |TEAMID refers to the team table
+            |MEMBERTYPE column is inserted as 1 for repersenting it is professional member
 
    CREATE TABLE IF NOT EXISTS MEMBERS (
               |  MEMBERID SERIAL PRIMARY KEY,
@@ -52,7 +61,6 @@ Member Table
               |  )
 
 
-
 Additional Tables
 -----------------
 
@@ -72,12 +80,17 @@ Additional Tables
               |  EMAIL VARCHAR(30) NOT NULL,
               |  PASSWORD VARCHAR(6) NOT NULL
               | )
+              
 
+SOFTWARE DESIGN
+==================
 
-* DATABASE OPERATIONS *
------------------------
-* Admin Functions
+DATABASE OPERATIONS 
+========================
+
+Admin Functions
 -----------------
+
 * Add Admin:
 
    It takes the object from admin class by html form.
@@ -119,17 +132,15 @@ Additional Tables
    "SELECT * FROM ADMIN WHERE (NAME ILIKE %s OR USERNAME ILIKE%s ) ORDER BY ID"
    It returns an admin object whose fields are filled with the result of the database query.
 
-----------------------------
-----------------------------
 
 
-* Basic Member Functions
+Basic Member Functions
 ------------------------
 
    Basic member database operations has the same concept with admins' functions which are stated above.
    Note that in each operation it just fills/retrieves the basic member related columns.
 
-* Professional Member Functions
+Professional Member Functions
 -------------------------------
 
 * Add Professional Member:
@@ -172,8 +183,8 @@ Additional Tables
       Note  that there is no award update because it is only done at the end of team races and en the end of the week by experiences of the users.
 
 
-* Additional Functions
-----------------------
+ADDITIONAL FUNCTIONS
+====================
 
 * Find Member:
 
