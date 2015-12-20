@@ -197,11 +197,7 @@ SOFTWARE DESIGN
     now = datetime.datetime.now()
     return render_template('admin_edit.html', admin=admin, current_time=now.ctime())
   
-  |
-  |
-  |
-
-
+ 
 DATABASE OPERATIONS 
 ========================
 
@@ -210,10 +206,10 @@ Admin Functions
 
 * Add Admin:
 
-  |It takes the object from admin class by html form.
-  |Then it executes the below query to add admin to the database:
-  |"INSERT INTO ADMIN (NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR, ROLE) VALUES (%s, %s, %s, %s, %s, %s,%s) RETURNING ADMIN.ID"
-  |It adds the record to the table and returns with the id of the current record.
+  | It takes the object from admin class by html form.
+  | Then it executes the below query to add admin to the database:
+  | "INSERT INTO ADMIN (NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR, ROLE) VALUES (%s, %s, %s, %s, %s, %s,%s) RETURNING ADMIN.ID"
+  | It adds the record to the table and returns with the id of the current record.
 
 * Delete Admin:
 
