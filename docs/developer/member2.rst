@@ -105,7 +105,7 @@ SOFTWARE DESIGN
   
 * admin_view.py :
   
-- Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view. ::
+- Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view ::
   
   @app.route('/admins', methods=['GET', 'POST'])
   def admins_page() 
@@ -162,7 +162,7 @@ SOFTWARE DESIGN
       @app.route('/admin/<int:key>', methods=['GET', 'POST'])
       def admin_page(key)
    
-- If the username of the admin is clicked in '/admins' path,  related admin class object is returned::
+- If the username of the admin is clicked in '/admins' path,  related admin class object is returned ::
   
       if request.method == 'GET':
         admin = app.store.get_admin(key)
@@ -170,7 +170,7 @@ SOFTWARE DESIGN
         return render_template('admin.html', admin=admin,
                                current_time=now.ctime())
                                
-- If the edit button is clicked in the admin.html, the attributes of form in admin_edit html is taken and admin_page is returned      with updated attributes::
+- If the edit button is clicked in the admin.html, the attributes of form in admin_edit html is taken and admin_page is returned      with updated attributes ::
   
       else:
         name = request.form['name']
@@ -185,13 +185,13 @@ SOFTWARE DESIGN
  
             
             
-  Then::
+  Then ::
   
     @app.route('/admins/add')
     @app.route('/admin/<int:key>/edit')
     def admin_edit_page(key=None)
  
-- If the 'Add Admin' button in adminpanel is clicked, admin_edit.html is returned with blank form or if edit button in                  admin.html are clicked, the edit_admin.html with attributes of related object is returned::
+- If the 'Add Admin' button in adminpanel is clicked, admin_edit.html is returned with blank form or if edit button in                  admin.html are clicked, the edit_admin.html with attributes of related object is returned ::
  
     admin = app.store.get_admin(key) if key is not None else None
     now = datetime.datetime.now()
@@ -207,7 +207,7 @@ Admin Functions
 * Add Admin:
 
 | It takes the object from admin class by html form.
-| Then it executes the below query to add admin to the database::
+| Then it executes the below query to add admin to the database ::
 
   | "INSERT INTO ADMIN (NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR, ROLE) VALUES (%s, %s, %s, %s, %s, %s,%s) RETURNING ADMIN.ID"
   
@@ -218,7 +218,7 @@ Admin Functions
 * Delete Admin:
 
 | It takes the key, index, of the related admin by the form.
-| Then it executes the below query to delete admin to the database::
+| Then it executes the below query to delete admin to the database ::
 
   | "DELETE FROM ADMIN WHERE (ID = %s)"
   
@@ -229,7 +229,7 @@ Admin Functions
 * Get Admin:
 
 | It takes the key, index, of the related admin by the form.
-| Then it executes the below query to get admin to the database::
+| Then it executes the below query to get admin to the database ::
 
   | "SELECT NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR FROM ADMIN WHERE (ID = %s)"
   
@@ -239,7 +239,7 @@ Admin Functions
 
 * Get Admins:
 
-| It executes the below query to get admins in each row in table::
+| It executes the below query to get admins in each row in table ::
 
   | "SELECT * FROM ADMIN ORDER BY ID"
 
@@ -250,7 +250,7 @@ Admin Functions
 * Update Admin:
 
 | It takes the key, index, of the related admin and new object from admin class with updated information.
-| Then it executes the below query to update the existing admin in the database::
+| Then it executes the below query to update the existing admin in the database ::
 
   | "UPDATE ADMIN SET NAME=%s, SURNAME=%s, USERNAME=%s, EMAIL=%s, PASSWORD=%s, YEAR=%s, ROLE=%s  WHERE (ID = %s)"
   
@@ -260,7 +260,7 @@ Admin Functions
 * Search Admin:
 
 | It takes the name or username of the admin to search his/her in database.
-| Then it executes the below query to search an admin with name/username from database::
+| Then it executes the below query to search an admin with name/username from database ::
 
   | "SELECT * FROM ADMIN WHERE (NAME ILIKE %s OR USERNAME ILIKE%s ) ORDER BY ID"
   
@@ -281,11 +281,11 @@ Professional Member Functions
 * Add Professional Member:
 
 | One of the main difference between basic and professional member is joining a team.
-| In below query random team id is generated::
+| In below query random team id is generated ::
   
   | "SELECT id FROM team ORDER BY RANDOM()LIMIT 1"
   
-| Then, new row to members table with information in professional member type object and generated team id is::
+| Then, new row to members table with information in professional member type object and generated team id is ::
 
   | "INSERT INTO MEMBERS 
       |(NAME, SURNAME, USERNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE,LASTLOGIN, REGTIME, ROLE ,TEAMID )
@@ -304,7 +304,7 @@ Professional Member Functions
 
 | First it retrieves the numbers of awards in each group for the user then it gets the personal information from the members table
 as a result it combines these into html form to show.
-| Following queries should be executed::
+| Following queries should be executed ::
 
   | "SELECT sum(numofGOLD),sum(numofBRONZE), sum(numofSILVER) FROM MEMBERS, AWARDS 
           |WHERE( (members.memberid=awards.memberid) and members.memberid=%s )"
@@ -334,7 +334,7 @@ ADDITIONAL FUNCTIONS
 * Find Member:
 
 | It takes an email and password as a key which are entered at login page by the user.
-| Then it executes the below query to check existencty of the user in database::
+| Then it executes the below query to check existencty of the user in database ::
   
   | SELECT NAME FROM MEMBERS WHERE ((email=%s)and (password=%s)) UNION SELECT NAME FROM ADMIN WHERE ((email=%s)and (password=%s))"
 
@@ -353,7 +353,7 @@ ADDITIONAL FUNCTIONS
 * Get Top 5 Team:
 
 | It select 5 teams from the team table which have the higher scores.
-| For this purpose, it executes below query::
+| For this purpose, it executes below query ::
   
   | "select * from team order by score desc limit 5"
   
@@ -364,7 +364,7 @@ ADDITIONAL FUNCTIONS
 * Get Top 5 Member:
 
 | It select 5 members from the members table which have the higher scores.
-| For this purpose, it executes below query::
+| For this purpose, it executes below query ::
 
   | "select * from members where membertype=1 order by score desc limit 5"
   
@@ -384,7 +384,7 @@ ADDITIONAL FUNCTIONS
 
 * Get Num of Admins:
 
-| By the help of below query we can obtain the number of admins in the database::
+| By the help of below query we can obtain the number of admins in the database ::
 
   | "select count(id) from admin"
 
