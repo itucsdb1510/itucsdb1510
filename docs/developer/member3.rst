@@ -97,8 +97,14 @@ Activity Members Table
 SOFTWARE DESIGN
 ===============
 
+Class Definitions
+-----------------
+
    - For team, race and avtivity classes, class definitions and constructors are implemented as
    team.py, race.py and activity.py.
+
+Interfaces
+----------
 
    - For interfaces,
       -  team.html, teams.html, team_edit.html
@@ -110,6 +116,9 @@ SOFTWARE DESIGN
 
 DATABASE OPERATIONS
 ===================
+
+Basic Operations
+----------------
 
    - The following database operations are implemented for the team, race, and activity classes listed below:
       -Add Operation:
@@ -158,6 +167,9 @@ DATABASE OPERATIONS
             UPDATE ACTIVITY SET TITLE = %s, ACTIVITY_TYPE = %s, TIME = %s, PLACE = %s, ACTIVITY_INFO = %s WHERE (ID = %s)
 
 
+Operations for Race and Race Results Tables
+-------------------------------------------
+
     - The following database operations are implemented for the race and race_results tables:
       -When a new race is created, the founder of the race is inserted to the race_results table
       to keep the participants of the races using the following queries:
@@ -180,6 +192,8 @@ DATABASE OPERATIONS
          SELECT participant_count FROM RACE WHERE id='%s';"%key
          UPDATE RACE SET participant_count=%s  WHERE (id=%s)
 
+Operations for Activity and Activity Members Tables
+---------------------------------------------------
 
    - The following database operations are implemented
       -When a new activity is created, the founder of the activity is inserted to the activity_members table
