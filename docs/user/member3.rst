@@ -33,7 +33,7 @@ Team Operations:
 
 .. figure:: member3/addteam.png
    :align: center
-   --
+--
 
   * List Team
 
@@ -41,7 +41,7 @@ Team Operations:
 
 .. figure:: member3/listteams.png
    :align: center
-   --
+--
 
   * Update Team
 
@@ -49,14 +49,15 @@ Team Operations:
 
 .. figure:: member3/editteam.png
    :align: center
-   --
+--
+
   * Delete Team
 
     A team can be deleted by its owner. To delete a team, checkbox should be selected next to the name of the team.
 
 .. figure:: member3/deleteteam.png
    :align: center
-   --
+--
 
   * Search Team
 
@@ -64,7 +65,7 @@ Team Operations:
 
 .. figure:: member3/searchteam.png
    :align: center
-   --
+--
 
   * Join Team
 
@@ -72,7 +73,7 @@ Team Operations:
 
 .. figure:: member3/jointeam.png
    :align: center
-   --
+--
 
 Race Operations:
 ----------------
