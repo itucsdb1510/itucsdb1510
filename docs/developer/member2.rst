@@ -5,8 +5,8 @@ Parts Implemented by Nurefşan Sertbaş
   There exists two main tables in database for this purpose and also 2 helper tables.
 
 
-** TABLES **
-------------
+* TABLES *
+----------
 
 Admin Table
 -----------
@@ -16,15 +16,15 @@ Admin Table
 
 
   CREATE TABLE IF NOT EXISTS ADMIN (
-                ID SERIAL PRIMARY KEY,
-                NAME VARCHAR(30) NOT NULL,
-                SURNAME VARCHAR(30),
-                USERNAME VARCHAR(30) ,
-                EMAIL VARCHAR(30) NOT NULL,
-                PASSWORD VARCHAR(6) NOT NULL,
-                ROLE VARCHAR(20),
-                YEAR NUMERIC(4)
-                )
+             |   ID SERIAL PRIMARY KEY,
+             |   NAME VARCHAR(30) NOT NULL,
+             |   SURNAME VARCHAR(30),
+             |   USERNAME VARCHAR(30) ,
+             |   EMAIL VARCHAR(30) NOT NULL,
+             |   PASSWORD VARCHAR(6) NOT NULL,
+             |   ROLE VARCHAR(20),
+             |   YEAR NUMERIC(4)
+             |   )
 
 Member Table
 ------------
@@ -32,24 +32,24 @@ Member Table
 
 
    CREATE TABLE IF NOT EXISTS MEMBERS (
-                MEMBERID SERIAL PRIMARY KEY,
-                NAME VARCHAR(30) NOT NULL,
-                SURNAME VARCHAR(30),
-                USERNAME VARCHAR(30) UNIQUE NOT NULL ,
-                GENDER VARCHAR(10) ,
-                MEMBERTYPE NUMERIC(1) DEFAULT 0,
-                EMAIL VARCHAR(30) NOT NULL,
-                PASSWORD VARCHAR(6) NOT NULL,
-                CITY VARCHAR(30),
-                INTERESTS VARCHAR(30),
-                SCORE INTEGER DEFAULT 0,
-                YEAR NUMERIC(4),
-                LASTLOGIN VARCHAR(20),
-                REGTIME VARCHAR(20),
-                ROLE VARCHAR(20),
-                TEAMID INTEGER REFERENCES TEAM
-                ON DELETE RESTRICT
-                )
+              |  MEMBERID SERIAL PRIMARY KEY,
+              |  NAME VARCHAR(30) NOT NULL,
+              |  SURNAME VARCHAR(30),
+              |  USERNAME VARCHAR(30) UNIQUE NOT NULL ,
+              |  GENDER VARCHAR(10) ,
+              |  MEMBERTYPE NUMERIC(1) DEFAULT 0,
+              |  EMAIL VARCHAR(30) NOT NULL,
+              |  PASSWORD VARCHAR(6) NOT NULL,
+              |  CITY VARCHAR(30),
+              |  INTERESTS VARCHAR(30),
+              |  SCORE INTEGER DEFAULT 0,
+              |  YEAR NUMERIC(4),
+              |  LASTLOGIN VARCHAR(20),
+              |  REGTIME VARCHAR(20),
+              |  ROLE VARCHAR(20),
+              |  TEAMID INTEGER REFERENCES TEAM
+              |  ON DELETE RESTRICT
+              |  )
 
 
 
@@ -57,25 +57,25 @@ Additional Tables
 -----------------
 
    CREATE TABLE IF NOT EXISTS AWARDS (
-                AWARDID SERIAL PRIMARY KEY,
-                numofGOLD INTEGER,
-                numofBRONZE INTEGER,
-                numofSILVER INTEGER,
-                DATE DATE,
-                MEMBERID INTEGER REFERENCES MEMBERS
-                ON DELETE CASCADE
-                )
+              |  AWARDID SERIAL PRIMARY KEY,
+              |  numofGOLD INTEGER,
+              |  numofBRONZE INTEGER,
+              |  numofSILVER INTEGER,
+              |  DATE DATE,
+              |  MEMBERID INTEGER REFERENCES MEMBERS
+              |  ON DELETE CASCADE
+              |  )
 
 
    CREATE TABLE IF NOT EXISTS ADMINCHECK (
-                ID SERIAL PRIMARY KEY,
-                EMAIL VARCHAR(30) NOT NULL,
-                PASSWORD VARCHAR(6) NOT NULL
-               )
+              |  ID SERIAL PRIMARY KEY,
+              |  EMAIL VARCHAR(30) NOT NULL,
+              |  PASSWORD VARCHAR(6) NOT NULL
+              | )
 
 
-** DATABASE OPERATIONS **
--------------------------
+* DATABASE OPERATIONS *
+-----------------------
 * Admin Functions
 -----------------
 * Add Admin:
@@ -227,4 +227,5 @@ Additional Tables
    For this purpose it executes the following query:
    "SELECT * FROM EXPERIENCE where (username=%s)"
    Note that it can return with multiple rows or none.
+
 
