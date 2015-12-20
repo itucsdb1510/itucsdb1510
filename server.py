@@ -77,8 +77,8 @@ def home():
 def initialize_database():
     with dbapi2.connect(app.config['dsn']) as connection:
         cursor = connection.cursor()
-        
-        
+
+
 
         query = """CREATE TABLE IF NOT EXISTS COUNTER ( N INTEGER )"""
         cursor.execute(query)
@@ -200,7 +200,8 @@ def initialize_database():
                 TITLE VARCHAR(40),
                 TEXT VARCHAR(40),
                 CURTIME VARCHAR(20),
-                CATEGORYID INTEGER)"""
+                CATEGORYID INTEGER REFERENCES CATEGORY
+                ON DELETE CASCADE)"""
         cursor.execute(query)
 
 

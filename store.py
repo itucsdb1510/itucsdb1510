@@ -11,6 +11,7 @@ from _datetime import date
 from announcement import Announcement
 from category import Category
 from admin import Admin
+from topic import Topic
 from basicmember import Basicmember
 from professionalmember import Professionalmember
 import time
