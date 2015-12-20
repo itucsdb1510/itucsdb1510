@@ -12,9 +12,9 @@ TABLES
 Admin Table
 -----------
 
-   Admin has the following attributes.
-   Here role attribute is used for assisting the redirections according to being user or admin.
-   There exists no any foreign key to any table.
+  Admin has the following attributes.
+  Here role attribute is used for assisting the redirections according to being user or admin.
+  There exists no any foreign key to any table.
 
   CREATE TABLE IF NOT EXISTS ADMIN (
              |   ID SERIAL PRIMARY KEY,
@@ -31,55 +31,55 @@ Admin Table
 Member Table
 ------------
 
-   Both professional and basic members have the following attributes.
-   Here role attribute is again used for assisting the redirections according to being user or admin.
-   In basic member
+  Both professional and basic members have the following attributes.
+  Here role attribute is again used for assisting the redirections according to being user or admin.
+  In basic member
             |TEAMID column is inserted as NULL
             |MEMBERTYPE column is inserted as 0 for repersenting it is basic member
-    In professional member
+  In professional member
             |TEAMID refers to the team table
             |MEMBERTYPE column is inserted as 1 for repersenting it is professional member
 
-   CREATE TABLE IF NOT EXISTS MEMBERS (
-              |  MEMBERID SERIAL PRIMARY KEY,
-              |  NAME VARCHAR(30) NOT NULL,
-              |  SURNAME VARCHAR(30),
-              |  USERNAME VARCHAR(30) UNIQUE NOT NULL ,
-              |  GENDER VARCHAR(10) ,
-              |  MEMBERTYPE NUMERIC(1) DEFAULT 0,
-              |  EMAIL VARCHAR(30) NOT NULL,
-              |  PASSWORD VARCHAR(6) NOT NULL,
-              |  CITY VARCHAR(30),
-              |  INTERESTS VARCHAR(30),
-              |  SCORE INTEGER DEFAULT 0,
-              |  YEAR NUMERIC(4),
-              |  LASTLOGIN VARCHAR(20),
-              |  REGTIME VARCHAR(20),
-              |  ROLE VARCHAR(20),
-              |  TEAMID INTEGER REFERENCES TEAM
-              |  ON DELETE RESTRICT
-              |  )
+ CREATE TABLE IF NOT EXISTS MEMBERS (
+            |  MEMBERID SERIAL PRIMARY KEY,
+            |  NAME VARCHAR(30) NOT NULL,
+            |  SURNAME VARCHAR(30),
+            |  USERNAME VARCHAR(30) UNIQUE NOT NULL ,
+            |  GENDER VARCHAR(10) ,
+            |  MEMBERTYPE NUMERIC(1) DEFAULT 0,
+            |  EMAIL VARCHAR(30) NOT NULL,
+            |  PASSWORD VARCHAR(6) NOT NULL,
+            |  CITY VARCHAR(30),
+            |  INTERESTS VARCHAR(30),
+            |  SCORE INTEGER DEFAULT 0,
+            |  YEAR NUMERIC(4),
+            |  LASTLOGIN VARCHAR(20),
+            |  REGTIME VARCHAR(20),
+            |  ROLE VARCHAR(20),
+            |  TEAMID INTEGER REFERENCES TEAM
+            |  ON DELETE RESTRICT
+            |  )
 
 
 Additional Tables
 -----------------
 
-   CREATE TABLE IF NOT EXISTS AWARDS (
-              |  AWARDID SERIAL PRIMARY KEY,
-              |  numofGOLD INTEGER,
-              |  numofBRONZE INTEGER,
-              |  numofSILVER INTEGER,
-              |  DATE DATE,
-              |  MEMBERID INTEGER REFERENCES MEMBERS
-              |  ON DELETE CASCADE
-              |  )
+  CREATE TABLE IF NOT EXISTS AWARDS (
+            |  AWARDID SERIAL PRIMARY KEY,
+            |  numofGOLD INTEGER,
+            |  numofBRONZE INTEGER,
+            |  numofSILVER INTEGER,
+            |  DATE DATE,
+            |  MEMBERID INTEGER REFERENCES MEMBERS
+            |  ON DELETE CASCADE
+            |  )
 
 
-   CREATE TABLE IF NOT EXISTS ADMINCHECK (
-              |  ID SERIAL PRIMARY KEY,
-              |  EMAIL VARCHAR(30) NOT NULL,
-              |  PASSWORD VARCHAR(6) NOT NULL
-              | )
+  CREATE TABLE IF NOT EXISTS ADMINCHECK (
+            |  ID SERIAL PRIMARY KEY,
+            |  EMAIL VARCHAR(30) NOT NULL,
+            |  PASSWORD VARCHAR(6) NOT NULL
+            | )
               
 
 SOFTWARE DESIGN
