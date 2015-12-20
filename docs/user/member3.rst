@@ -84,7 +84,7 @@ Race Operations:
     A race can be added with filling the below form. Race type is selected from the options served with an dropdown menu.
   Race place is selected from the cycroute options that are composed of routes added by admin served with an dropdown menu.
   The current user's ID is selected by his/her username from the user session to assign a participant to this race
-  and the current race's ID is selected to insert to the RACE_MEMBERS table as a row composed of this user's ID and this race's ID.
+  and the current race's ID is selected to insert to the RACE_RESULTS table as a row composed of this user's ID and this race's ID.
 
 .. figure:: member3/addrace.png
    :align: center
@@ -124,7 +124,8 @@ Race Operations:
 
   * Join Race
 
-    Other members can join any race with clicking to the 'Join Race' button. When a user clicks to this button, this race's ID and the   current user's ID is inserted to the RACE_MEMBERS table.
+    Other members can join any race with clicking to the 'Join Race' button.
+    When a user clicks to this button, this race's ID and the   current user's ID is inserted to the RACE_RESULTS table.
 
 .. figure:: member3/joinrace.png
    :align: center
