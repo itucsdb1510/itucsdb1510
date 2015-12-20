@@ -8,10 +8,10 @@ Tables
   only if a user trigger to "/intdb".
 
 
-CycRoute Table ::
--------------------
+CycRoute Table 
+-------------
 
-                  
+- ::                
   CREATE TABLE IF NOT EXISTS CYCROUTE (
                  ID SERIAL PRIMARY KEY,
                  TITLE VARCHAR(40) UNIQUE,
@@ -24,9 +24,9 @@ CycRoute Table ::
 
    ALTER TABLE CYCROUTE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
 
-Bike Table ::
------------
-
+Bike Table 
+----------
+- :: 
   CREATE TABLE IF NOT EXISTS BIKE (
                 ID SERIAL PRIMARY KEY,
                 MODEL VARCHAR(40),
@@ -41,9 +41,9 @@ Bike Table ::
                 
   ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE 
 
-Experience Table ::
-----------------
-
+Experience Table 
+---------------
+- :: 
   CREATE TABLE IF NOT EXISTS EXPERIENCE (
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
@@ -58,7 +58,7 @@ Experience Table ::
                 
   ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
 
--TOPMEMBERS table holds best five users::
+- TOPMEMBERS table holds best five users ::
    CREATE TABLE IF NOT EXISTS TOPMEMBERS (ID SERIAL PRIMARY KEY,USERID INTEGER,COUNT INTEGER)
 
 Software Design
@@ -195,22 +195,23 @@ Database Operations
 ===================
 Theese operations are defined in 'store.py' for all related tables.
 
-- add_nameofclass(self, nameofclass): Add functions get a object  as a parameter and include that query:
-  INSERT INTO NAMEOFCLASS (COLUMN1,COLUMN2,..) VALUES (ATTRIBUTE1, ATTRIBUTE2,...) RETURNING NAMEOFCLASS.ID
+- add_nameofclass(self, nameofclass): Add functions get a object  as a parameter and include that query ::
+     INSERT INTO NAMEOFCLASS (COLUMN1,COLUMN2,..) VALUES (ATTRIBUTE1, ATTRIBUTE2,...) RETURNING NAMEOFCLASS.ID
   This query's parameters are attributes of the object and it add a new row to related table.
 | 
   
-- delete_nameofclass(self, key): Delete functions get a id as a parameter an include that query:
-  DELETE FROM NAMEOFCLASS WHERE (ID = key)
+- delete_nameofclass(self, key): Delete functions get a id as a parameter an include that query ::
+    DELETE FROM NAMEOFCLASS WHERE (ID = key)
 | 
-- get_nameofclass(self,key): This function gets a id as a parameter and returns a object that is created by using selected attributes.
-  SELECT [ATTRIBUTE1, ATTRIBUTE2,...] FROM EXPERIENCE WHERE (ID = key)
+- get_nameofclass(self,key): This function gets a id as a parameter and returns a object that is created by using selected attributes   ::
+    SELECT [ATTRIBUTE1, ATTRIBUTE2,...] FROM EXPERIENCE WHERE (ID = key)
 |   
-- get_(nameofclass)s(self) : This function returns a list of related objects by creating a array from table using that query:
-  SELECT * FROM NAMEOFCLASS ORDER BY ID
+- get_(nameofclass)s(self) : This function returns a list of related objects by creating a array from table using that query::
+    SELECT * FROM NAMEOFCLASS ORDER BY ID
 |   
 - update_activity(self, key, attribute1, attribute2,..):This function gets attributes of related object and update related row in 
-  table.UPDATE NAMEOFCLASS SET ATTRIBUTE1 =attribute1, ATTRIBUTE2 = attribute2,.. WHERE (ID = key)
+  table::
+    UPDATE NAMEOFCLASS SET ATTRIBUTE1 =attribute1, ATTRIBUTE2 = attribute2,.. WHERE (ID = key)
 |  
 - search_nameofclass(self,keyword): This function searches keyword into related table and returns a list of results of that query:
   SELECT * FROM NAMEOFCLASS WHERE (ATTRIBUTE1 ILIKE '%'+keyword+'%' OR ATTRIBUTE2 ILIKE '%'+keyword+'%' OR ..)
