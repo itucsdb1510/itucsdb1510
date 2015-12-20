@@ -34,13 +34,13 @@ Member Table
 - Both professional and basic members have the following attributes.
 - Here role attribute is again used for assisting the redirections according to being user or admin.
 - In basic member
-            |TEAMID column is inserted as NULL
-            |MEMBERTYPE column is inserted as 0 for repersenting it is basic member
+            - TEAMID column is inserted as NULL
+            - MEMBERTYPE column is inserted as 0 for repersenting it is basic member
 - In professional member
-            |TEAMID refers to the team table
-            |MEMBERTYPE column is inserted as 1 for repersenting it is professional member
+            - TEAMID refers to the team table
+            - MEMBERTYPE column is inserted as 1 for repersenting it is professional member
 
- CREATE TABLE IF NOT EXISTS MEMBERS (
+  CREATE TABLE IF NOT EXISTS MEMBERS (
             |  MEMBERID SERIAL PRIMARY KEY,
             |  NAME VARCHAR(30) NOT NULL,
             |  SURNAME VARCHAR(30),
@@ -76,6 +76,7 @@ Additional Tables
             |  )
 
 - The admin_check table is created to check wheter it possible to be an admin or not. 
+
   CREATE TABLE IF NOT EXISTS ADMINCHECK (
             |  ID SERIAL PRIMARY KEY,
             |  EMAIL VARCHAR(30) NOT NULL,
@@ -93,9 +94,9 @@ SOFTWARE DESIGN
     - basicmember.py, professionalmember.py and admin.py includes definitions and constructors of the 3 main class.
 
     - In interface implementation following pages are created:
-  Basicmember         >> basicmember.html, basicmembers.html, basicmember_edit.html
-  Professionalmember  >> professionalmember.html, professionalmembers.html, professionalmember_edit.html
-  Admin               >> admin.html, admins.html, admin_edit.html
+        - Basicmember         >> basicmember.html, basicmembers.html, basicmember_edit.html
+        - Professionalmember  >> professionalmember.html, professionalmembers.html, professionalmember_edit.html
+        - Admin               >> admin.html, admins.html, admin_edit.html
   
     - basicmember_view.py, professionalmember_view.py and admin_view.py includes functions which use html files to realization of the  database operations.
 
@@ -135,7 +136,7 @@ SOFTWARE DESIGN
             return render_template('admins.html', admins=admins,
                                current_time=now.ctime())  
             
-  - If submit button is clicked new row is added to table. Attributes of this row are taken from the form in 'admin_edit.html'::
+  - If submit button is clicked new row is added to table. Attributes of this row are taken from the form in 'admin_edit.html' ::
   
     else:
         name = request.form['name']
@@ -161,8 +162,9 @@ SOFTWARE DESIGN
   
  
   
-  :: @app.route('/admin/<int:key>', methods=['GET', 'POST'])
-     def admin_page(key):
+  ::
+      @app.route('/admin/<int:key>', methods=['GET', 'POST'])
+      def admin_page(key):
    
   - If the username of the admin is clicked in '/admins' path,  related admin class object is returned::
   
@@ -189,9 +191,9 @@ SOFTWARE DESIGN
             
             
   ::
-  @app.route('/admins/add')
-  @app.route('/admin/<int:key>/edit')
-  def admin_edit_page(key=None):
+    @app.route('/admins/add')
+    @app.route('/admin/<int:key>/edit')
+    def admin_edit_page(key=None):
  
  - If the 'Add Admin' button in adminpanel is clicked, admin_edit.html is returned with blank form or if edit button in                  admin.html are clicked, the edit_admin.html with attributes of related object is returned::
  
