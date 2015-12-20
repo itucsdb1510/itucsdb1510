@@ -11,8 +11,8 @@ Tables
 CycRoute Table 
 -------------
 
-- ::                
-  CREATE TABLE IF NOT EXISTS CYCROUTE (
+                
+::  CREATE TABLE IF NOT EXISTS CYCROUTE (
                  ID SERIAL PRIMARY KEY,
                  TITLE VARCHAR(40) UNIQUE,
                  USERNAME VARCHAR(40),
@@ -26,8 +26,8 @@ CycRoute Table
 
 Bike Table 
 ----------
-- :: 
-  CREATE TABLE IF NOT EXISTS BIKE (
+
+:: CREATE TABLE IF NOT EXISTS BIKE (
                 ID SERIAL PRIMARY KEY,
                 MODEL VARCHAR(40),
                 BRAND VARCHAR(40),
@@ -39,12 +39,12 @@ Bike Table
                 DATE DATE DEFAULT current_timestamp
                 )
                 
-  ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE 
+::  ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE 
 
 Experience Table 
 ---------------
-- :: 
-  CREATE TABLE IF NOT EXISTS EXPERIENCE (
+ 
+::  CREATE TABLE IF NOT EXISTS EXPERIENCE (
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
                 USERNAME VARCHAR(40),
@@ -56,7 +56,7 @@ Experience Table
                 DATE DATE DEFAULT current_timestamp
                 )
                 
-  ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
+::  ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
 
 - TOPMEMBERS table holds best five users ::
    CREATE TABLE IF NOT EXISTS TOPMEMBERS (ID SERIAL PRIMARY KEY,USERID INTEGER,COUNT INTEGER)
@@ -115,8 +115,8 @@ Software Design
   |
   |
   
-  ::
-   @app.route('/cycroute/<int:key>', methods=['GET', 'POST'])
+  
+  :: @app.route('/cycroute/<int:key>', methods=['GET', 'POST'])
    def cycroute_page(key):
    
   - If the title of a route in '/cycroutes ' is clicked, cycroute.html with related cycroute object is returned::
