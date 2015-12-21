@@ -111,11 +111,11 @@ SOFTWARE DESIGN
   
 * admin_view.py :
   
-- Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view ::
-  
-  @app.route('/admins', methods=['GET', 'POST'])
-  def admins_page() 
-  
+-  Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view ::
+ 
+        @app.route('/admins', methods=['GET', 'POST'])
+         def admins_page()
+
 - If the method is GET to access the page defined by html files this function returns the 'admins .html' with admins and lists all admins in the page ::
  
       if request.method == 'GET':
@@ -214,7 +214,8 @@ Admin Functions
 
 - It takes the object from admin class by html form. Then it executes the below query to add admin to the database ::
  
-    "INSERT INTO ADMIN (NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR, ROLE) VALUES (%s, %s, %s, %s, %s, %s,%s) RETURNING ADMIN.ID"
+    "INSERT INTO ADMIN (NAME, SURNAME, USERNAME, EMAIL, PASSWORD, YEAR, ROLE) 
+    VALUES (%s, %s, %s, %s, %s, %s,%s) RETURNING ADMIN.ID"
  
 - It adds the record to the table and returns with the id of the current record.
   
@@ -291,7 +292,8 @@ Professional Member Functions
 - Then, new row to members table with information in professional member type object and generated team id is ::
 
    "INSERT INTO MEMBERS 
-      |(NAME, SURNAME, USERNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE,LASTLOGIN, REGTIME, ROLE ,TEAMID )
+      |(NAME, SURNAME, USERNAME, GENDER,EMAIL,PASSWORD, CITY, YEAR, INTERESTS,MEMBERTYPE,
+      | LASTLOGIN, REGTIME, ROLE ,TEAMID )
       | VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s,%s,%s) RETURNING MEMBERS.MEMBERID"
   
 - It inserts a new row into table for a professional member.
@@ -311,7 +313,8 @@ as a result it combines these into html form to show.
 
    "SELECT sum(numofGOLD),sum(numofBRONZE), sum(numofSILVER) FROM MEMBERS, AWARDS 
           |WHERE( (members.memberid=awards.memberid) and members.memberid=%s )"
-   "SELECT NAME, SURNAME, USERNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, LASTLOGIN, REGTIME, ROLE, TEAMID           |FROM MEMBERS WHERE (MEMBERID =%s)"
+   "SELECT NAME, SURNAME, USERNAME, GENDER, MEMBERTYPE,EMAIL, PASSWORD, CITY, INTERESTS,SCORE,YEAR, 
+          |LASTLOGIN, REGTIME, ROLE, TEAMID FROM MEMBERS WHERE (MEMBERID =%s)"
 
 
 
@@ -339,7 +342,8 @@ ADDITIONAL FUNCTIONS
 - It takes an email and password as a key which are entered at login page by the user.
 - Then it executes the below query to check existencty of the user in database ::
   
-   SELECT NAME FROM MEMBERS WHERE ((email=%s)and (password=%s)) UNION SELECT NAME FROM ADMIN WHERE ((email=%s)and (password=%s))"
+   "SELECT NAME FROM MEMBERS WHERE ((email=%s)and (password=%s)) UNION SELECT NAME FROM ADMIN 
+      WHERE ((email=%s)and (password=%s))"
 
 - It gets one row from the database which has matched email and password.
 - Note that above query searches on both members and admin tables.
