@@ -87,10 +87,10 @@ Admin Pages
 * If user login as an admin he/she would be redirected to admin panel which are represented below into two figures.
 
 .. figure:: member2/adminpanel1.png
-   :align:left
+   :align: center
 
 .. figure:: member2/adminpanel2.png
-   :align: right
+   :align: center
 
 * Admin is allowed to add new admins. Only constraint is available admins are already strored in tha database.
  So current admin can only make their activation.
