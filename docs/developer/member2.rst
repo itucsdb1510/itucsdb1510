@@ -211,8 +211,7 @@ DATABASE OPERATIONS
 Admin Functions
 ---------------
 
-\Add Admin\
-\Add Admin\
+- **Add Admin**:
 
 - It takes the object from admin class by html form. Then it executes the below query to add admin to the database ::
 
@@ -222,7 +221,7 @@ Admin Functions
 - It adds the record to the table and returns with the id of the current record.
 
 
-* Delete Admin:
+- **Delete Admin**:
 
 - It takes the key, index, of the related admin by the form.
 - Then it executes the below query to delete admin to the database::
@@ -232,7 +231,7 @@ Admin Functions
 - It deletes the record which is selected by its index in html.
 
 
-* Get Admin:
+- **Get Admin**:
 
 - It takes the key, index, of the related admin by the form.
 - Then it executes the below query to get admin to the database ::
@@ -243,7 +242,7 @@ Admin Functions
 
 
 
-* Get Admins:
+- **Get Admins**:
 
 - It executes the below query to get admins in each row in table ::
 
@@ -253,7 +252,7 @@ Admin Functions
 
 
 
-* Update Admin:
+- **Update Admin**:
 
 - It takes the key, index, of the related admin and new object from admin class with updated information.
 - Then it executes the below query to update the existing admin in the database ::
@@ -264,7 +263,7 @@ Admin Functions
 - It updates the related row in the database whose id is key.
 
 
-* Search Admin:
+- **Search Admin**:
 
 - It takes the name or username of the admin to search his/her in database.
 - Then it executes the below query to search an admin with name/username from database ::
@@ -285,7 +284,7 @@ Basic Member Functions
 Professional Member Functions
 -----------------------------
 
-* Add Professional Member:
+- **Add Professional Member**:
 
 - One of the main difference between basic and professional member is joining a team.
 - In below query random team id is generated ::
@@ -304,12 +303,12 @@ Professional Member Functions
 
 
 
-* Delete Professional Member:
+- **Delete Professional Member**:
 
 - It is similar to other delete operations.
 
 
-* Get Professional Member:
+- **Get Professional Member**:
 
 - First it retrieves the numbers of awards in each group for the user then it gets the personal information from the members table
 as a result it combines these into html form to show.
@@ -323,17 +322,17 @@ as a result it combines these into html form to show.
           | WHERE (MEMBERID =%s)"
 
 
-* Get Professional Members:
+- **Get Professional Members**:
 
 - It is similar to other gets operations.
 
 
-* Search Professional Member:
+- **Search Professional Member**:
 
 - It is similar to other search operations.
 
 
-* Update Professional Member:
+- **Update Professional Member**:
 
 - It is similar to other update operations.
 - Note  that there is no award update because it is only done at the end of team races and en the end of the week by experiences of the users.
@@ -342,7 +341,7 @@ as a result it combines these into html form to show.
 ADDITIONAL FUNCTIONS
 ====================
 
-* Find Member:
+- **Find Member**:
 
 - It takes an email and password as a key which are entered at login page by the user.
 - Then it executes the below query to check existencty of the user in database ::
@@ -355,14 +354,14 @@ ADDITIONAL FUNCTIONS
 - If there exists any record with related email and password it returns 1 else it returns 0. Returning 0 means record has not found.
 
 
-* Check Admin:
+- **Check Admin**:
 
 - It gets an email and password.
 - Actually it is not an database operation it just returns whether the record is available for becoming an admin or not.
 - If the user may be an admin it will return 1 else it will return 0.
 
 
-* Get Top 5 Team:
+- **Get Top 5 Team**:
 
 - It select 5 teams from the team table which have the higher scores.
 - For this purpose, it executes below query ::
@@ -373,7 +372,7 @@ ADDITIONAL FUNCTIONS
 - Note that it is not guaranteed that all of them is different from none.
 
 
-* Get Top 5 Member:
+- **Get Top 5 Member**:
 
 - It select 5 members from the members table which have the higher scores.
 - For this purpose, it executes below query ::
@@ -384,7 +383,7 @@ ADDITIONAL FUNCTIONS
 - Note that it is not guaranteed that all of them is different from none.
 
 
-* Get Num of Basic/Professional Members:
+- **Get Num of Basic/Professional Members**:
 
 - In database professional and basic members are hold in the same table which is named as 'members'.
 - They can be differ by 'membertype' column which is 0 for basic members and 1 for professional members.
@@ -399,14 +398,14 @@ ADDITIONAL FUNCTIONS
         "select count(memberid) from members where membertype=1"
 
 
-* Get Num of Admins:
+- **Get Num of Admins**:
 
 - By the help of below query we can obtain the number of admins in the database ::
 
    "select count(id) from admin"
 
 
-* Get My Experiences:
+- **Get My Experiences**:
 
 - It gets the name of the member to list his/her experiences in his/her home page.
 - For this purpose it executes the following query::
@@ -415,4 +414,4 @@ ADDITIONAL FUNCTIONS
 
 - Note that it can return with multiple rows or none.
 
-----------------------------------------------------------------------------------------------------
+
