@@ -111,6 +111,7 @@ SOFTWARE DESIGN
 
 * admin_view.py :
 
+
 -  Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view ::
 
         @app.route('/admins', methods=['GET', 'POST'])
@@ -210,7 +211,8 @@ DATABASE OPERATIONS
 Admin Functions
 ---------------
 
-- Add Admin:
+\Add Admin\
+\Add Admin\
 
 - It takes the object from admin class by html form. Then it executes the below query to add admin to the database ::
 
