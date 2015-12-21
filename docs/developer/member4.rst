@@ -100,6 +100,8 @@ Category Class Operation
 * Delete operation:delete_category operation takes a key as parameter related to the requested page and
          deletes the row from the category table that includes the taken key.
          | DELETE FROM CATEGORY WHERE (ID = %s)
+         And also it deletes the row from topic table that its categoryId parameter equals the taken key.
+         | DELETE FROM TOPIC WHERE (TOPIC.CATEGORYID = %s)
 
 * Get operation: get_category operation takes a key as parameter related to the requested page and
          selects the row from the category table that includes the taken key,
