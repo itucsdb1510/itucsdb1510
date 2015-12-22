@@ -200,8 +200,8 @@ def initialize_database():
                 TITLE VARCHAR(40),
                 TEXT VARCHAR(40),
                 CURTIME VARCHAR(20),
-                CATEGORYID INTEGER REFERENCES CATEGORY
-                ON DELETE CASCADE)"""
+                CATEGORYID INTEGER
+                )"""
         cursor.execute(query)
 
 
@@ -269,6 +269,7 @@ def initialize_database():
         cursor.execute("""ALTER TABLE RACE ADD  FOREIGN KEY(CYCROUTEID) REFERENCES CYCROUTE(TITLE) ON DELETE CASCADE""")
         cursor.execute("""ALTER TABLE RACE_RESULTS ADD  FOREIGN KEY(MEMBERID) REFERENCES MEMBERS(MEMBERID) ON DELETE CASCADE""")
         cursor.execute("""ALTER TABLE RACE_RESULTS ADD  FOREIGN KEY(RACEID) REFERENCES RACE(ID) ON DELETE CASCADE""")
+        cursor.execute("""ALTER TABLE TOPIC ADD  FOREIGN KEY(CATEGORYID) REFERENCES CATEGORY(ID) ON DELETE CASCADE""")
 
     return redirect(url_for('guest_page'))
 
