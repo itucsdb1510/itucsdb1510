@@ -6,7 +6,7 @@ TABLES
 
 - In our code all create table queries creatse a table if not exists. Also, they are triggered by /initdb.
 - Admin, basic user and professional user classes are implemented by this developer.
-  There exists two main tables in database for this purpose and also 2 helper tables.
+  There exists two main tables for implementation of 3 classes in database for this purpose and also 2 helper tables.
 
 
 Implementation of 1st class:Admin 
@@ -98,20 +98,26 @@ SOFTWARE DESIGN
     - In interface implementation following pages are created:
 
         - Basicmember
-            - basicmember.html, basicmembers.html, basicmember_edit.html
+            - basicmember.html
+            - basicmembers.html
+            - basicmember_edit.html
 
         - Professionalmember
-            - professionalmember.html, professionalmembers.html, professionalmember_edit.html
+            - professionalmember.html 
+            - professionalmembers.html
+            - professionalmember_edit.html
 
         - Admin
-            - admin.html, admins.html, admin_edit.html
+            - admin.html
+            - admins.html
+            - admin_edit.html
 
   - basicmember_view.py, professionalmember_view.py and admin_view.py includes functions which use html files to realization of the  database operations.
 
 - In order to explain the missions of the above files python classes are explained below only for an admin.
 
 
-** admin_view.py :**
+**admin_view.py:**
 
 
 -  Note that, basicmember_view and professionalmember_view files has the same concept with admin_view. So we will just overview admin_view ::
@@ -307,7 +313,7 @@ Professional Member Functions
 - It is similar to other delete operations.
 
 
- **Get Professional Member:**
+**Get Professional Member:**
 
 - First it retrieves the numbers of awards in each group for the user then it gets the personal information from the members table
 as a result it combines these into html form to show.
