@@ -9,8 +9,8 @@ TABLES
   There exists two main tables in database for this purpose and also 2 helper tables.
 
 
-Admin Table
------------
+Implementation of 1st class:Admin 
+----------------------------------
 
 - Admin has the following attributes.
 - Here role attribute is used for assisting the redirections according to being user or admin.
@@ -28,11 +28,12 @@ Admin Table
              |   )
 
 
-Member Table
-------------
+Implementation of 2nd and 3rd classes:Member Table
+---------------------------------------------------
 
 - Both professional and basic members have the following attributes.
 - Here role attribute is again used for assisting the redirections according to being user or admin.
+- *Note that this is the table that makes possible implementation of both basic and professional member classes.
 - In basic member
             - TEAMID column is inserted as NULL
             - MEMBERTYPE column is inserted as 0 for repersenting it is basic member
@@ -75,6 +76,7 @@ Additional Tables
             |  ON DELETE CASCADE
             |  )
 
+- Note that you can see insert delete select operation queries of awards table in professional member database operations. It is not visible in user interface.
 - The admin_check table is created to check wheter it possible to be an admin or not.
 
   CREATE TABLE IF NOT EXISTS ADMINCHECK (
@@ -413,5 +415,4 @@ ADDITIONAL FUNCTIONS
    "SELECT * FROM EXPERIENCE where (username=%s)"
 
 - Note that it can return with multiple rows or none.
-
 
