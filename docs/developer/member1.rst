@@ -10,47 +10,47 @@ Tables
 CycRoute Table:: 
 -------------
   CREATE TABLE IF NOT EXISTS CYCROUTE (
-                 ID SERIAL PRIMARY KEY,
-                 TITLE VARCHAR(40) UNIQUE,
-                 USERNAME VARCHAR(40),
-                 START VARCHAR(40),
-                 FINISH VARCHAR(10),
-                 LENGTH FLOAT,
-                 DATE DATE DEFAULT current_timestamp)
-  ALTER TABLE CYCROUTE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
+             |   ID SERIAL PRIMARY KEY,
+             |   TITLE VARCHAR(40) UNIQUE,
+             |    USERNAME VARCHAR(40),
+             |    START VARCHAR(40),
+             |    FINISH VARCHAR(10),
+             |    LENGTH FLOAT,
+             |    DATE DATE DEFAULT current_timestamp)
+  | ALTER TABLE CYCROUTE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
 
 Bike Table ::
 ----------
   CREATE TABLE IF NOT EXISTS BIKE (
-                ID SERIAL PRIMARY KEY,
-                MODEL VARCHAR(40),
-                BRAND VARCHAR(40),
-                TYPE VARCHAR(40),
-                SIZE VARCHAR(10),
-                YEAR VARCHAR(10),
-                PRICE FLOAT,
-                USERNAME VARCHAR(40) unique ,
-                DATE DATE DEFAULT current_timestamp
-                )
-  ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE 
+             |  ID SERIAL PRIMARY KEY,
+             |   MODEL VARCHAR(40),
+             |   BRAND VARCHAR(40),
+             |   TYPE VARCHAR(40),
+             |   SIZE VARCHAR(10),
+             |   YEAR VARCHAR(10),
+             |   PRICE FLOAT,
+             |   USERNAME VARCHAR(40) unique ,
+             |   DATE DATE DEFAULT current_timestamp
+             |   )
+|  ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE 
 
 Experience Table:: 
 ---------------
  CREATE TABLE IF NOT EXISTS EXPERIENCE (
-                ID SERIAL PRIMARY KEY,
-                TITLE VARCHAR(40),
-                USERNAME VARCHAR(40),
-                START VARCHAR(40),
-                FINISH VARCHAR(10),
-                PERIOD FLOAT,
-                LENGTH FLOAT,
-                USERID INTEGER,
-                DATE DATE DEFAULT current_timestamp
-                )
-  ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
+            |    ID SERIAL PRIMARY KEY,
+            |    TITLE VARCHAR(40),
+            |    USERNAME VARCHAR(40),
+            |    START VARCHAR(40),
+            |    FINISH VARCHAR(10),
+            |    PERIOD FLOAT,
+            |    LENGTH FLOAT,
+            |    USERID INTEGER,
+            |    DATE DATE DEFAULT current_timestamp
+            |    )
+|  ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
   
 - TOPMEMBERS table holds best five users ::
-   CREATE TABLE IF NOT EXISTS TOPMEMBERS (ID SERIAL PRIMARY KEY,USERID INTEGER,COUNT INTEGER)
+|   CREATE TABLE IF NOT EXISTS TOPMEMBERS (ID SERIAL PRIMARY KEY,USERID INTEGER,COUNT INTEGER)
 
 Software Design
 ===================
