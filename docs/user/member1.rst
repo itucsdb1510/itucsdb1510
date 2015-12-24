@@ -42,7 +42,8 @@ Bike Page for each bike:
    
 All users can list bikes added by other users and click the model button to see in details.This button redirects to bike page.
 Edit authorization is given only the founder user of the bike that wanted to edit.
-If other users click the edit button, they will be redirected to login page.
+If other users click the edit button, they will be redirected to login page:
+
 .. figure:: member1/listbikes.png
    :align: center
    
