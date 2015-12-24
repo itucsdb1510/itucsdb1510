@@ -10,6 +10,7 @@ Category Pages
 
 .. figure:: member4/addcategorypage.png
    :align: center
+--
 
 
  * List Category
@@ -18,6 +19,7 @@ Category Pages
 
 .. figure:: member4/listcategories.png
    :align: center
+--
 
 
  * Update Category
@@ -26,6 +28,7 @@ Category Pages
 
 .. figure:: member4/editcategorypage.png
    :align: center
+--
 
  * Delete Category
 
@@ -33,13 +36,15 @@ Category Pages
 
 .. figure:: member4/deletecategory.png
    :align: center
-
+--
+ 
  * Search Category
 
     A category can be searched by its title or its field.
 
 .. figure:: member4/searchcategory.png
    :align: center
+--
 
 
 Announcement Pages
@@ -52,6 +57,7 @@ Announcement Pages
 
 .. figure:: member4/addannouncementpage.png
    :align: center
+--
 
 
  * List Announcement
@@ -60,6 +66,7 @@ Announcement Pages
 
 .. figure:: member4/listannouncements.png
    :align: center
+--
 
 
  * Update Announcement
@@ -75,6 +82,7 @@ Announcement Pages
 
 .. figure:: member4/deleteannouncement.png
    :align: center
+--
 
  * Search Announcement
 
