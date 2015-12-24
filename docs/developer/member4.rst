@@ -35,9 +35,10 @@ Topic Table
       | TITLE VARCHAR(40),
       | TEXT VARCHAR(40),
       | CURTIME VARCHAR(20),
-      | CATEGORYID INTEGER REFERENCES CATEGORY ON DELETE CASCADE
+      | CATEGORYID INTEGER
       | )
 
+    ALTER TABLE TOPIC ADD  FOREIGN KEY(CATEGORYID) REFERENCES CATEGORY(ID) ON DELETE CASCADE
 
 SOFTWARE DESIGN
 ===============
@@ -45,8 +46,9 @@ SOFTWARE DESIGN
 Class Definitions
 -----------------
 
-   - For announcement, category and topic classes, class definitions and constructors are implemented as
-   announcement.py, category.py and topic.py.
+   - For announcement class is implemented as announcement.py
+   - For category class is implemented as category.py
+   - For topic class is implemented as topic.py
 
 Interfaces
 ----------
@@ -63,63 +65,86 @@ DATABASE OPERATIONS
 Announcement Class Operations
 -----------------------------
 
-* Add operation:add_announcement operation takes an announcement object as parameter related to the requested page and
-         insert a new row into the announcement table.
+* Add operation:add_announcement operation takes an announcement object as parameter related to
+                the requested page and insert a new row into the announcement table.
+
          | INSERT INTO ANNOUNCEMENT (TITLE, TEXT) VALUES (%s, %s) RETURNING ANNOUNCEMENT.ID
 
-* Delete operation:delete_announcement operation takes a key as parameter related to the requested page and
-         deletes the row from the announcement table that includes the taken key.
+
+* Delete operation:delete_announcement operation takes a key as parameter related to
+                  the requested page and deletes the row from the announcement table
+                  that includes the taken key.
+
          | DELETE FROM ANNOUNCEMENT WHERE (ID = %s)
 
+
 * Get operation: get_announcement operation takes a key as parameter related to the requested page and
-         selects the row from the announcement table that includes the taken key,
-         then returns the found announcement to the user.
+                 selects the row from the announcement table that includes the taken key,
+                 then returns the found announcement to the user.
+
          | SELECT TITLE, TEXT FROM ANNOUNCEMENT WHERE (ID = %s)
 
+
 * Get List Operation: get_announcements operation does not take any argument. It selects all rows from the
-         announcement table and returns announcements to the user.
+                      announcement table and returns announcements to the user.
+
          | SELECT * FROM ANNOUNCEMENT ORDER BY ID
 
+
 * Search Operation:search_announcement operation takes a key as parameter related to the requested page and
-         selects the rows from the announcement table that include the key parameter in the
-         specified columns.
+                   selects the rows from the announcement table that include the key parameter in the
+                   specified columns.
+
          | SELECT * FROM ANNOUNCEMENT WHERE (TITLE ILIKE %s OR TEXT ILIKE %s)
 
-* Update Operation:update_announcement operation takes a key and related fields that are wanted to update that is
-         related to the requested page. Then, the rows including the key are selected and the requested
-         fields are updated in the announcement table.
+
+* Update Operation:update_announcement operation takes a key and related fields that are wanted to update
+                   that is related to the requested page. Then, the rows including the key are selected
+                   and the requested fields are updated in the announcement table.
+
          | UPDATE ANNOUNCEMENT SET TITLE = %s, TEXT = %s WHERE (ID = %s)
 
 
 Category Class Operation
 ------------------------
-* Add operation:add_category operation takes a category object as parameter related to the requested page and
-         insert a new row into the category table.
+* Add operation:add_category operation takes a category object as parameter related to the requested page
+               and insert a new row into the category table.
+
          | INSERT INTO CATEGORY (TITLE,TYPEE) VALUES (%s,%s) RETURNING CATEGORY.ID
 
+
 * Delete operation:delete_category operation takes a key as parameter related to the requested page and
-         deletes the row from the category table that includes the taken key.
+                  deletes the row from the category table that includes the taken key.
+                  And also it deletes the row from topic table that its categoryId parameter equals the taken key.
+
          | DELETE FROM CATEGORY WHERE (ID = %s)
-         And also it deletes the row from topic table that its categoryId parameter equals the taken key.
          | DELETE FROM TOPIC WHERE (TOPIC.CATEGORYID = %s)
 
+
 * Get operation: get_category operation takes a key as parameter related to the requested page and
-         selects the row from the category table that includes the taken key,
-         then returns the found category to the user.
+                 selects the row from the category table that includes the taken key,
+                 then returns the found category to the user.
+
          | SELECT TITLE,TYPEE FROM CATEGORY WHERE (ID = %s)
 
+
 * Get List Operation: get_categories operation does not take any argument. It selects all rows from the
-         category table and returns categories to the user.
+                      category table and returns categories to the user.
+
          | SELECT * FROM CATEGORY ORDER BY ID
 
+
 * Search Operation:search_category operation takes a key as parameter related to the requested page and
-         selects the rows from the category table that include the key parameter in the
-         specified columns.
+                   selects the rows from the category table that include the key parameter in the
+                   specified columns.
+
          | SELECT * FROM CATEGORY WHERE (TITLE ILIKE %s OR TYPEE ILIKE %s)
 
+
 * Update Operation:update_category operation takes a key and related fields that are wanted to update that is
-         related to the requested page. Then, the rows including the key are selected and the requested
-         fields are updated in the category table.
+                   related to the requested page. Then, the rows including the key are selected and
+                   the requested fields are updated in the category table.
+
         | UPDATE CATEGORY SET TITLE = %s, TYPEE= %s WHERE (ID = %s))
 
 
@@ -127,28 +152,40 @@ Category Class Operation
 Topic Class Operation
 ---------------------
 * Add operation:add_topic operation takes a topic object as parameter related to the requested page and
-         insert a new row into the topic table.
+                insert a new row into the topic table.
+
          | INSERT INTO TOPIC (TITLE,TEXT,CURTIME, CATEGORYID) VALUES (%s,%s,%s,%s) RETURNING TOPIC.ID
 
+
 * Delete operation:delete_topic operation takes a key as parameter related to the requested page and
-         deletes the row from the topic table that includes the taken key.
+                   deletes the row from the topic table that includes the taken key.
+
          | DELETE FROM TOPIC WHERE (ID = %s)
 
+
 * Get operation: get_topic operation takes a key as parameter related to the requested page and
-         selects the row from the topic table that includes the taken key,
-         then returns the found topic to the user.
+                 selects the row from the topic table that includes the taken key,
+                 then returns the found topic to the user.
+
          | SELECT TITLE, TEXT, CURTIME,CATEGORYID FROM TOPIC WHERE (ID = %s)
 
+
 * Get List Operation: get_topics operation does not take any argument. It selects all rows from the
-         topic table and returns topics to the user.
+                      topic table and returns topics to the user.
+
          | SELECT * FROM TOPIC ORDER BY ID
 
+
 * Search Operation:search_topic operation takes a key as parameter related to the requested page and
-         selects the rows from the topic table that include the key parameter in the
-         specified columns.
+                   selects the rows from the topic table that include the key parameter in the
+                   specified columns.
+
          | SELECT * FROM TOPIC WHERE (TITLE ILIKE %s OR TEXT ILIKE %s)
 
+
 * Update Operation:update_topic operation takes a key and related fields that are wanted to update that is
-         related to the requested page. Then, the rows including the key are selected and the requested
-         fields are updated in the topic table.
+                   related to the requested page. Then, the rows including the key are selected and
+                   the requested fields are updated in the topic table.
+
          | UPDATE TOPIC SET TITLE = %s, TEXT = %s, CURTIME = %s, CATEGORYID = %s WHERE (ID = %s)
+
