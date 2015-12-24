@@ -61,7 +61,9 @@ Implementation of 2nd and 3rd classes:Member Table
             |  ON DELETE RESTRICT
             |  )
 
-
+- Note that we designed our project has 2 type of members. So we dont have any add interface for professional member. We assume that all members are basic in registering phase. Then according to the score and awards they will become professional. But race results are not listed also weekly experience results and the members who takes first,second and third place according to score from their experience is not listed. So that, I cannot realize the promotion from basic member to professional member.
+            
+            
 Additional Tables
 -----------------
 - In our structure both members could get different awards such as Gold, Silver or Bronze. So that we hold the memberid in our table. Here memberid column is foreign key to the same column in members table.
