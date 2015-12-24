@@ -75,6 +75,7 @@ Announcement Pages
 
 .. figure:: member4/editannouncement.png
    :align: center
+--
 
  * Delete Announcement
 
@@ -90,6 +91,7 @@ Announcement Pages
 
 .. figure:: member4/searchannouncement.png
    :align: center
+--
 
 
 Topic Pages
@@ -103,6 +105,7 @@ Topic Pages
 
 .. figure:: member4/addtopicpage.png
    :align: center
+--
 
 
  * List Topic
@@ -111,6 +114,7 @@ Topic Pages
 
 .. figure:: member4/listtopics.png
    :align: center
+--
 
 
  * Update Topic
@@ -119,6 +123,7 @@ Topic Pages
 
 .. figure:: member4/edittopic.png
    :align: center
+--
 
  * Delete Topic
 
@@ -126,6 +131,7 @@ Topic Pages
 
 .. figure:: member4/deletetopic.png
    :align: center
+--
 
  * Search Topic
 
@@ -133,3 +139,4 @@ Topic Pages
 
 .. figure:: member4/searchtopic.png
    :align: center
+--
