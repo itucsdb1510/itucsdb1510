@@ -81,7 +81,7 @@ Announcement Pages
 
     To delete an announcement, checkbox should be selected next to the title of the announcement.
 
-.. figure:: member4/deleteannouncement.png
+.. figure:: member4/deleteannounement.png
    :align: center
 --
 
