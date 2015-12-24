@@ -8,11 +8,11 @@ Tables
   only if a user trigger to "/intdb".
 
 
-CycRoute Table 
+CycRoute Table:: 
 -------------
 
                 
-::  CREATE TABLE IF NOT EXISTS CYCROUTE (
+  CREATE TABLE IF NOT EXISTS CYCROUTE (
                  ID SERIAL PRIMARY KEY,
                  TITLE VARCHAR(40) UNIQUE,
                  USERNAME VARCHAR(40),
@@ -24,10 +24,10 @@ CycRoute Table
 
    ALTER TABLE CYCROUTE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
 
-Bike Table 
+Bike Table ::
 ----------
 
-:: CREATE TABLE IF NOT EXISTS BIKE (
+ CREATE TABLE IF NOT EXISTS BIKE (
                 ID SERIAL PRIMARY KEY,
                 MODEL VARCHAR(40),
                 BRAND VARCHAR(40),
@@ -37,14 +37,14 @@ Bike Table
                 PRICE FLOAT,
                 USERNAME VARCHAR(40) unique ,
                 DATE DATE DEFAULT current_timestamp
-                )
+                )::
                 
-::  ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE 
+  ALTER TABLE BIKE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE 
 
-Experience Table 
+Experience Table:: 
 ---------------
  
-::  CREATE TABLE IF NOT EXISTS EXPERIENCE (
+  CREATE TABLE IF NOT EXISTS EXPERIENCE (
                 ID SERIAL PRIMARY KEY,
                 TITLE VARCHAR(40),
                 USERNAME VARCHAR(40),
@@ -54,9 +54,9 @@ Experience Table
                 LENGTH FLOAT,
                 USERID INTEGER,
                 DATE DATE DEFAULT current_timestamp
-                )
+                )::
                 
-::  ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
+  ALTER TABLE EXPERIENCE ADD  FOREIGN KEY(USERNAME) REFERENCES MEMBERS(USERNAME) ON DELETE CASCADE
 
 - TOPMEMBERS table holds best five users ::
    CREATE TABLE IF NOT EXISTS TOPMEMBERS (ID SERIAL PRIMARY KEY,USERID INTEGER,COUNT INTEGER)
@@ -77,7 +77,8 @@ Software Design
  
     @app.route('/cycroutes', methods=['GET', 'POST']) 
     def cycroutes_page(): 
- - If the method is GET to access the page defined by html files this function returns the 'cycroutes .html' with cycroutes and list     all routes in the page ::
+ - If the method is GET to access the page defined by html files this function returns the 'cycroutes .html'
+ with cycroutes and list     all routes in the page ::
             if request.method == 'GET': 
             cycroutes = app.store.get_cycroutes() 
             now = datetime.datetime.now() 
@@ -100,7 +101,8 @@ Software Design
                 return render_template('cycroutes.html', cycroutes=cycroutes,
                                    current_time=now.ctime())
   -If submit button is clicked in cycroute_edit.html, in the route defined by '@app.route('/cycroutes/add')' , 
-   a new row is added to cycroutes table. Attributes of this row are pulled from the form in 'cycroute_edit.html'::
+   a new row is added to cycroutes table. Attributes of this row are pulled 
+   from the form in 'cycroute_edit.html'::
     else:
             title = request.form['title']
             start = request.form['start']
@@ -165,7 +167,9 @@ Software Design
                 connection.commit()
             with dbapi2.connect(app.config['dsn']) as connection:
                 cursor = connection.cursor()
-                cursor.execute("(select userid, count(userid) from members inner join experience on(userid=memberid) group by userid                  limit 5) order by count(userid) desc")
+                cursor.execute("(select userid, count(userid) from members inner join
+                experience on(userid=memberid) group by userid limit 5)
+                order by count(userid) desc")
                 cr=cursor.fetchall()
                 topmembers = [(row[0],row[1] )
                               for row in cr]
@@ -177,13 +181,14 @@ Software Design
                     cursor.execute(query, (userid, count))
                 counter=0
                 for userid, count in topmembers:
-                    cursor.execute("select username from members where memberid='%s';"%userid)
+                    cursor.execute("select username from members
+                    where memberid='%s';"%userid)
                     user= cursor.fetchone()
                     topmembers[counter]=user[0],count*10
                     counter=counter+1
                 connection.commit()
-                return render_template('experiences.html', experiences=experiences,topmembers=topmembers,
-                                       current_time=now.ctime())
+                return render_template('experiences.html', experiences=experiences,
+                topmembers=topmembers,current_time=now.ctime())
             with dbapi2.connect(app.config['dsn']) as connection:
                 cursor = connection.cursor()
                 cursor.execute("""DROP TABLE TOPMEMBERS""")
@@ -203,7 +208,8 @@ Theese operations are defined in 'store.py' for all related tables.
 - delete_nameofclass(self, key): Delete functions get a id as a parameter an include that query ::
     DELETE FROM NAMEOFCLASS WHERE (ID = key)
 | 
-- get_nameofclass(self,key): This function gets a id as a parameter and returns a object that is created by using selected attributes   ::
+- get_nameofclass(self,key): This function gets a id as a parameter and returns a object that is
+created by using selected attributes   ::
     SELECT [ATTRIBUTE1, ATTRIBUTE2,...] FROM EXPERIENCE WHERE (ID = key)
 |   
 - get_(nameofclass)s(self) : This function returns a list of related objects by creating a array from table using that query::
@@ -211,7 +217,8 @@ Theese operations are defined in 'store.py' for all related tables.
 |   
 - update_activity(self, key, attribute1, attribute2,..):This function gets attributes of related object and update related row in 
   table::
-    UPDATE NAMEOFCLASS SET ATTRIBUTE1 =attribute1, ATTRIBUTE2 = attribute2,.. WHERE (ID = key)
+    UPDATE NAMEOFCLASS SET ATTRIBUTE1 =attribute1, ATTRIBUTE2 = attribute2,..
+    WHERE (ID = key)
 |  
 - search_nameofclass(self,keyword): This function searches keyword into related table and returns a list of results of that query:
   SELECT * FROM NAMEOFCLASS WHERE (ATTRIBUTE1 ILIKE '%'+keyword+'%' OR ATTRIBUTE2 ILIKE '%'+keyword+'%' OR ..)
