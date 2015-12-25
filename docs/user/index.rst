@@ -1,16 +1,9 @@
 User Guide
 ==========
+In project we consider to create a website about bicycling which users can share their experiences, compete with each other, sell or buy bikes, keep in touch with news from all over the World. Also they can socialize with several social activities.
 
-**explain how your application works from the user perspective, use
-screenshots whereever appropriate**
+For our project, we need some classes. Basically these classes are listed as Activity, Race, Team, Admin, ProfessionalUser, BasicUser, Cycroutes, Experience, Bike, Forum, Announcement, Topic, Comment, News.
 
-**to add a picture, use the following example**::
-
-   .. figure:: picture.png
-      :scale: 50 %
-      :alt: map to buried treasure
-
-      This is the caption of the figure (a simple paragraph).
 
 .. toctree::
 
@@ -18,5 +11,5 @@ screenshots whereever appropriate**
    member2
    member3
    member4
-   member5
+
    
