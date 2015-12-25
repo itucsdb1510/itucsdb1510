@@ -103,19 +103,20 @@ Software Design
             app.store.add_cycroute(cycroute)
             return redirect(url_for('cycroute_page', key=app.store.cycroute_last_key)) 
   
-  |
-  |
+  Then::
   
+      @app.route('/cycroute/<int:key>', methods=['GET', 'POST'])
+      def cycroute_page(key):
   
-   @app.route('/cycroute/<int:key>', methods=['GET', 'POST'])
-   def cycroute_page(key):
-   
- - If the title of a route in '/cycroutes ' is clicked, cycroute.html with related cycroute object is returned::
-       if request.method == 'GET':
-            cycroute = app.store.get_cycroute(key)
-            now = datetime.datetime.now()
-            return render_template('cycroute.html', cycroute=cycroute,
-                                   current_time=now.ctime())
+
+- If the title of a route in '/cycroutes ' is clicked, cycroute.html with related cycroute object is returned::
+      if request.method == 'GET':
+        cycroute = app.store.get_cycroute(key)
+        now = datetime.datetime.now()
+        return render_template('cycroute.html', cycroute=cycroute,
+                                current_time=now.ctime())
+
+
  - If the edit button is clicked in the cycroute.html, the attributes of form in cycroute_edit html is pulled and
     cycroute_page is returned with updated attributes::
         else:
