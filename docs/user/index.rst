@@ -4,6 +4,7 @@ In project we consider to create a website about bicycling which users can share
 
 For our project, we need some classes. Basically these classes are listed as Activity, Race, Team, Admin, ProfessionalUser, BasicUser, Cycroutes, Experience, Bike, Forum, Announcement, Topic, Comment, News.
 
+In this document we aimed to give users brief information about how our website works from the external perspective.
 
 .. toctree::
 
