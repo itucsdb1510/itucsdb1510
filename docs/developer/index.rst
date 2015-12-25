@@ -3,24 +3,14 @@ Developer Guide
 
 Database Design
 ---------------
+We have 17 tables in our database. Some of them have foreign keys to each others which are represented in below figure.
 
-**explain the database design of your project**
 
-**include the E/R diagram(s)**
+**Entity - Relation ship Diagram of the Project**
 
-Code
-----
+.. figure:: general/er.jpg
+   :align: center
 
-**explain the technical structure of your code**
-
-**to include a code listing, use the following example**::
-
-   .. code-block:: python
-
-      class Foo:
-
-         def __init__(self, x):
-            self.x = x
 
 .. toctree::
 
