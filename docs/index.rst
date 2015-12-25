@@ -9,9 +9,11 @@ Welcome to itucsdb1510's documentation!
    * Nurefşan Sertbaş
    * Esin Ersoğan
    * Zehra Özer
-   * Member 5
 
-**project description goes here (a few paragraphs)**
+
+**Project Description**
+
+In project we consider to create a website about bicycling which users can share their experiences, compete with each other, sell or buy bikes, keep in touch with news from all over the World. Also they can socialize with several social activities.
 
 Contents:
 
