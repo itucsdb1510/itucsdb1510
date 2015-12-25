@@ -117,18 +117,15 @@ team_views.py ::
 
    @app.route('/teams', methods=['GET', 'POST'])
    def teams_page():
-- If the method is GET to access the page defined by html files this function returns the 'teams .html'
-   with teams and list all members of the team in the page ::
-    if 'username' in session:
-        if request.method == 'GET':
+- If the method is GET to access the page defined by html files this function returns the 'teams .html' with teams and list all         members of the team in the page ::
+      if 'username' in session:
+         if request.method == 'GET':
             teams = app.store.get_teams()
             now = datetime.datetime.now()
             return render_template('teams.html', teams=teams,
                                    current_time=now.ctime())
-- If the method is POST in related page 
-   and if delete button is clicked, the marked checkboxes are taken from 'teams.html' and delete operation are called,
-   if search button is clicked, the keyword in search line is taken is returned the same page ::
-        elif  'teams_to_delete' in request.form or 'search' in request.form:
+- If the method is POST in related page and if delete button is clicked, the marked checkboxes are taken from 'teams.html' and delete   operation are called, if search button is clicked, the keyword in search line is taken is returned the same page ::
+      elif  'teams_to_delete' in request.form or 'search' in request.form:
             if request.form['submit'] == 'Delete':
                 keys = request.form.getlist('teams_to_delete')
                 for key in keys:
@@ -140,9 +137,8 @@ team_views.py ::
                 now = datetime.datetime.now()
                 return render_template('teams.html', teams=teams,
                                    current_time=now.ctime())
- -If submit button is clicked in team_edit.html, in the route defined by '@app.route('/teams/add')' , 
-   a new row is added to cycroutes table. Attributes of this row are pulled 
-   from the form in 'team_edit.html'::
+ - If submit button is clicked in team_edit.html, in the route defined by '@app.route('/teams/add')' , a new row is added to teams       table. Attributes of this row are pulled from the form in 'team_edit.html'::
+ 
         else:
             title = request.form['title']
             score = request.form['score']
@@ -182,8 +178,7 @@ team_views.py ::
         now = datetime.datetime.now()
         return render_template('team.html', team=team, members=members,
                            current_time=now.ctime())
-- If the edit button is clicked in the team.html, the attributes of form in team_edit html is pulled and
-    team_page is returned with updated attributes::
+- If the edit button is clicked in the team.html, the attributes of form in team_edit html is pulled and team_page is returned with     updated attributes::
     else:
         title = request.form['title']
         score = request.form['score']
@@ -203,7 +198,7 @@ team_views.py ::
 @app.route('/teams/add')
 @app.route('/team/<int:key>/edit')
 def team_edit_page(key=None):
-- If the 'Add Team' button in layout is clicked, team_edit.html is returned with blank form or if edit button in team.html are clicked   , the team_edit.html with attributes of related object is returned::
+- If the 'Add Team' button in layout is clicked, team_edit.html is returned with blank form or if edit button in team.html are clicked   the team_edit.html with attributes of related object is returned::
     team = app.store.get_team(key) if key is not None else None
     now = datetime.datetime.now()
     return render_template('team_edit.html', team=team,
@@ -216,7 +211,7 @@ def team_edit_page(key=None):
 @app.route('/team/<int:key>')
 @app.route('/team/<int:key>/join')
 def team_join_page(key=None):
-- If the 'Join Team' button is clicked on the team page, the members of this team are listed in the team's page::
+- If the 'Join Team' button is clicked on the team page, the members of this team are listed in the team's page ::
     if 'username' in session:
         name = session['username']
         with dbapi2.connect(app.config['dsn']) as connection:
