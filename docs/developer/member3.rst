@@ -112,6 +112,225 @@ Interfaces
       -  activity.html, activities.html, activity_edit.html
       pages are implemented.
 
+team_views.py ::
+-------------
+
+   @app.route('/teams', methods=['GET', 'POST'])
+   def teams_page():
+- If the method is GET to access the page defined by html files this function returns the 'teams .html'
+   with teams and list all members of the team in the page ::
+    if 'username' in session:
+        if request.method == 'GET':
+            teams = app.store.get_teams()
+            now = datetime.datetime.now()
+            return render_template('teams.html', teams=teams,
+                                   current_time=now.ctime())
+- If the method is POST in related page 
+   and if delete button is clicked, the marked checkboxes are taken from 'teams.html' and delete operation are called,
+   if search button is clicked, the keyword in search line is taken is returned the same page ::
+        elif  'teams_to_delete' in request.form or 'search' in request.form:
+            if request.form['submit'] == 'Delete':
+                keys = request.form.getlist('teams_to_delete')
+                for key in keys:
+                    app.store.delete_team(int(key))
+                return redirect(url_for('teams_page'))
+            elif  request.form['submit'] == 'Search' :
+                search_name=request.form['search']
+                teams = app.store.search_team(search_name)
+                now = datetime.datetime.now()
+                return render_template('teams.html', teams=teams,
+                                   current_time=now.ctime())
+ -If submit button is clicked in team_edit.html, in the route defined by '@app.route('/teams/add')' , 
+   a new row is added to cycroutes table. Attributes of this row are pulled 
+   from the form in 'team_edit.html'::
+        else:
+            title = request.form['title']
+            score = request.form['score']
+            year = request.form['year']
+            team_type = request.form.get('team_type')
+            location = request.form['location']
+            if 'username' in session:
+                name = session['username']
+                with dbapi2.connect(app.config['dsn']) as connection:
+                    cursor = connection.cursor()
+                    cursor.execute("SELECT memberid FROM MEMBERS WHERE username='%s';"%name)
+                    founder = cursor.fetchone()
+                    founder=founder[0]
+                    connection.commit()
+                member_count = 1
+                team = Team(title, score, founder, member_count, year, team_type, location)
+                app.store.add_team(team)
+                image=request.files['file']
+                if image:
+                    image.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/image/teams/' + str(app.store.team_last_key) + '.jpg'))
+                return redirect(url_for('team_page', key=app.store.team_last_key))
+
+   |
+   |
+   
+   @app.route('/team/<int:key>', methods=['GET', 'POST'])
+   def team_page(key):
+- If the title of a route in '/teams ' is clicked, team.html with related team object is returned::
+    if request.method == 'GET':
+        team = app.store.get_team(key)
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT * FROM MEMBERS WHERE teamid='%s';"%key)
+            members = [(key, Basicmember(name, surname, username, gender, email, password, byear, city, interests, lastlogin, regtime, role))
+                      for key, name, surname, username, gender, membertype, email, password, city, interests, score, byear,teamid, lastlogin, regtime, role in cursor]
+            connection.commit()
+        now = datetime.datetime.now()
+        return render_template('team.html', team=team, members=members,
+                           current_time=now.ctime())
+- If the edit button is clicked in the team.html, the attributes of form in team_edit html is pulled and
+    team_page is returned with updated attributes::
+    else:
+        title = request.form['title']
+        score = request.form['score']
+        year = request.form['year']
+        team_type = request.form.get('team_type')
+        location = request.form['location']
+        image=request.files['file']
+        if image:
+            image.save(os.path.join(app.config['UPLOAD_FOLDER'] + '/image/teams/' + str(key) + '.jpg'))
+        app.store.update_team(key, title, score, year, team_type, location)
+        return redirect(url_for('team_page', key=key))
+
+|
+|
+|
+
+@app.route('/teams/add')
+@app.route('/team/<int:key>/edit')
+def team_edit_page(key=None):
+- If the 'Add Team' button in layout is clicked, team_edit.html is returned with blank form or if edit button in team.html are clicked   , the team_edit.html with attributes of related object is returned::
+    team = app.store.get_team(key) if key is not None else None
+    now = datetime.datetime.now()
+    return render_template('team_edit.html', team=team,
+                           current_time=now.ctime())
+
+|
+|
+|
+
+@app.route('/team/<int:key>')
+@app.route('/team/<int:key>/join')
+def team_join_page(key=None):
+- If the 'Join Team' button is clicked on the team page, the members of this team are listed in the team's page::
+    if 'username' in session:
+        name = session['username']
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT memberid FROM MEMBERS WHERE username='%s';"%name)
+            id = cursor.fetchone()
+            connection.commit()
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = ("UPDATE MEMBERS SET teamid=%s  WHERE (memberid=%s)")
+            cursor.execute(query, (key, id))
+            connection.commit()
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT member_count FROM TEAM WHERE id='%s';"%key)
+            connection.commit()
+            member_count = cursor.fetchone()[0]
+            member_count = member_count + 1
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = ("UPDATE TEAM SET member_count=%s  WHERE (id=%s)")
+            cursor.execute(query, (member_count, key))
+            connection.commit()
+            now = datetime.datetime.now()
+            return redirect(url_for('team_page', key=key))
+- If the current user is not included in the session::
+    else:
+        team = app.store.get_team(key) if key is not None else None
+        now = datetime.datetime.now()
+        return redirect(url_for('team_page', key=key))
+
+- race_view and activity_view operations has the same concept with teams’ functions which are stated above. 
+- Additionally, races.html has MEMBERS list that is defined in races_page():
+
+@app.route('/race/<int:key>')
+@app.route('/race/<int:key>/join')
+def race_join_page(key=None):
+- If the 'Join Race' button is clicked on the race page, the participants of this race are listed in the race's page::
+    if 'username' in session:
+        name = session['username']
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT memberid FROM MEMBERS WHERE username='%s';"%name)
+            id = cursor.fetchone()
+            connection.commit()
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = ("INSERT INTO RACE_RESULTS (MEMBERID, RACEID ) VALUES (%s, %s)")
+            cursor.execute(query, (id, key))
+            connection.commit()
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            cursor.execute("SELECT participant_count FROM RACE WHERE id='%s';"%key)
+            participant_count = cursor.fetchone()[0]
+            participant_count = participant_count + 1
+            connection.commit()
+        with dbapi2.connect(app.config['dsn']) as connection:
+            cursor = connection.cursor()
+            query = ("UPDATE RACE SET participant_count=%s  WHERE (id=%s)")
+            cursor.execute(query, (participant_count, key))
+            connection.commit()
+        now = datetime.datetime.now()
+        return redirect(url_for('race_page', key=key))
+
+- If the current user is not included in the session::
+    else:
+        race = app.store.get_race(key) if key is not None else None
+        now = datetime.datetime.now()
+        return redirect(url_for('race_page', key=key))
+
+|
+|
+
+- Additionally, activities.html has MEMBERS list that is defined in activities_page():
+
+@app.route('/activity/<int:key>')
+@app.route('/activity/<int:key>/join')
+def activity_join_page(key=None):
+- If the 'Join Activity' button is clicked on the activity page, the participants of this activity are listed in the activity's page::
+    if 'username' in session:
+        name = session['username']
+        with dbapi2.connect(app.config['dsn']) as connection:
+                    cursor = connection.cursor()
+                    cursor.execute("SELECT memberid FROM MEMBERS WHERE username='%s';"%name)
+                    connection.commit()
+        id = cursor.fetchone()
+        with dbapi2.connect(app.config['dsn']) as connection:
+                    cursor = connection.cursor()
+                    query = ("INSERT INTO ACTIVITY_MEMBERS (MEMBERID, ACTIVITYID ) VALUES (%s, %s)")
+                    cursor.execute(query, (id, key))
+                    connection.commit()
+        with dbapi2.connect(app.config['dsn']) as connection:
+                    cursor = connection.cursor()
+                    cursor.execute("SELECT participant_count FROM ACTIVITY WHERE id='%s';"%key)
+                    connection.commit()
+        participant_count = cursor.fetchone()
+        participant_count = participant_count[0]
+        participant_count = participant_count + 1
+        with dbapi2.connect(app.config['dsn']) as connection:
+                    cursor = connection.cursor()
+                    query = ("UPDATE ACTIVITY SET participant_count=%s  WHERE (id=%s)")
+                    cursor.execute(query, (participant_count, key))
+                    connection.commit()
+        now = datetime.datetime.now()
+        return redirect(url_for('activity_page', key=key))
+        
+- If the current user is not included in the session::
+    else:
+        activity = app.store.get_activity(key) if key is not None else None
+        now = datetime.datetime.now()
+        return redirect(url_for('activity_page', key=key))
+
+
+
 
 
 DATABASE OPERATIONS
