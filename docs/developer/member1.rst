@@ -110,38 +110,38 @@ Software Design
   
 
 - If the title of a route in '/cycroutes ' is clicked, cycroute.html with related cycroute object is returned::
+
       if request.method == 'GET':
         cycroute = app.store.get_cycroute(key)
         now = datetime.datetime.now()
         return render_template('cycroute.html', cycroute=cycroute,
-                                current_time=now.ctime())
+                               current_time=now.ctime())
+
+- If the edit button is clicked in the cycroute.html, the attributes of form in cycroute_edit html is pulled and
+cycroute_page is returned with updated attributes::
+
+      else:
+        title = request.form['title']
+        start = request.form['start']
+        finish = request.form['finish']
+        length=request.form['length']
+        app.store.update_cycroute(key, title,start, finish,length)
+        return redirect(url_for('cycroute_page', key=key))
 
 
- - If the edit button is clicked in the cycroute.html, the attributes of form in cycroute_edit html is pulled and
-    cycroute_page is returned with updated attributes::
-        else:
-            title = request.form['title']
-            start = request.form['start']
-            finish = request.form['finish']
-            length=request.form['length']
-            app.store.update_cycroute(key, title,start, finish,length)
-            return redirect(url_for('cycroute_page', key=key))
-  |
-  |
-  |        
-            
-            
- @app.route('/cycroutes/add')
- @app.route('/cycroute/<int:key>/edit')
- def cycroute_edit_page(key=None):
+  Then ::
+
+    @app.route('/cycroutes/add')
+    @app.route('/cycroute/<int:key>/edit')
+    def cycroute_edit_page(key=None)
+ 
 - If the 'Add Cycroute' button in layout is clicked, cycroute_edit.html is returned with blank form or if edit button in                cycroute.html are clicked, the edit_cycroute.html with attributes of related object is returned::
+
     cycroute = app.store.get_cycroute(key) if key is not None else None
     now = datetime.datetime.now()
     return render_template('cycroute_edit.html',cycroute=cycroute, current_time=now.ctime())
   
-  |
-  |
-  |
+
 - bike_view and experience_view operations has the same concept with cycroutes’ functions which are stated above. 
 - Additionally, experiences.html has TOPMEMBERS list that is defined in experiences_page():
 - If the method is GET, TOPMEMBERS table is cleaned. Then, from union of experience and members tables, best five members' ids 
@@ -189,27 +189,33 @@ Database Operations
 Theese operations are defined in 'store.py' for all related tables.
 
 - add_nameofclass(self, nameofclass): Add functions get a object  as a parameter and include that query ::
-     INSERT INTO NAMEOFCLASS (COLUMN1,COLUMN2,..) VALUES (ATTRIBUTE1, ATTRIBUTE2,...) RETURNING NAMEOFCLASS.ID
-  This query's parameters are attributes of the object and it add a new row to related table.
-| 
+
+    INSERT INTO NAMEOFCLASS (COLUMN1,COLUMN2,..) VALUES (ATTRIBUTE1, ATTRIBUTE2,...) RETURNING NAMEOFCLASS.ID
+    This query's parameters are attributes of the object and it add a new row to related table.
+ 
   
 - delete_nameofclass(self, key): Delete functions get a id as a parameter an include that query ::
+
     DELETE FROM NAMEOFCLASS WHERE (ID = key)
-| 
+
 - get_nameofclass(self,key): This function gets a id as a parameter and returns a object that is
 created by using selected attributes   ::
+
     SELECT [ATTRIBUTE1, ATTRIBUTE2,...] FROM EXPERIENCE WHERE (ID = key)
-|   
+  
 - get_(nameofclass)s(self) : This function returns a list of related objects by creating a array from table using that query::
+
     SELECT * FROM NAMEOFCLASS ORDER BY ID
-|   
+  
 - update_activity(self, key, attribute1, attribute2,..):This function gets attributes of related object and update related row in 
   table::
+  
     UPDATE NAMEOFCLASS SET ATTRIBUTE1 =attribute1, ATTRIBUTE2 = attribute2,..
     WHERE (ID = key)
-|  
-- search_nameofclass(self,keyword): This function searches keyword into related table and returns a list of results of that query:
-  SELECT * FROM NAMEOFCLASS WHERE (ATTRIBUTE1 ILIKE '%'+keyword+'%' OR ATTRIBUTE2 ILIKE '%'+keyword+'%' OR ..)
+ 
+- search_nameofclass(self,keyword): This function searches keyword into related table and returns a list of results of that query::
+
+    SELECT * FROM NAMEOFCLASS WHERE (ATTRIBUTE1 ILIKE '%'+keyword+'%' OR ATTRIBUTE2 ILIKE '%'+keyword+'%' OR ..)
   
   
   
