@@ -21,8 +21,8 @@ Some extra sections written by this developer:
 
   - Members belong to a team are listed in the team page.
 
-Team Operations:
-----------------
+Team Pages
+----------
   Team class has adding, editing, deleting, search, join this team operations.
 
   * Add Team Operation:
@@ -75,8 +75,8 @@ Team Operations:
    :align: center
 --
 
-Race Operations:
-----------------
+Race Pages
+----------
   Race class has adding, editing, deleting, search, and join this race operations.
 
   * Add Race Operation:
@@ -131,8 +131,8 @@ Race Operations:
    :align: center
 --
 
-Activity Operations:
---------------------
+Activity Pages
+--------------
   Race class has adding, editing, deleting, search, and join this activity operations.
 
   * Add Activity Operation:
